@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.Network.Core.Packets.OutgoingPacket&lt;TCommands&gt;" Collapsed="true">
+    <Position X="1" Y="1.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Packets\OutgoingPacket.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.Network.Core.Packets.Packet" Collapsed="true">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CCIAAAYCEAAAAAgAAAIAAAABICAEAVAAAEAxEAAAAAA=</HashCode>
+      <FileName>Core\Packets\Packet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.Network.Core.Packets.ParsedPacket&lt;TCommands&gt;" Collapsed="true">
+    <Position X="4.25" Y="1.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Packets\ParsedPacket.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.Network.Core.Packets.RawPacket&lt;TCommands&gt;" Collapsed="true">
+    <Position X="8" Y="4.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Core\Packets\RawPacket.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.Network.Core.Parsers.PacketParser&lt;TCommands&gt;" Collapsed="true">
+    <Position X="5.5" Y="4.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Parsers\PacketParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.Network.Core.Extractors.FrameHeaderReader&lt;TCommands&gt;" Collapsed="true">
+    <Position X="1" Y="3.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAEAAAEAAgABAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Readers\FrameHeaderReader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.Network.Core.Extractors.FrameReader&lt;TCommands&gt;" Collapsed="true">
+    <Position X="1" Y="2.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAgAAAAACAgAAAAAAAAAAACAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Core\Readers\FrameReader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.Network.Core.Registry.OpcodeRegistry&lt;TCommands&gt;" Collapsed="true">
+    <Position X="3.75" Y="5.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAgAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Registry\OpcodeRegistry.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.Network.Core.Tools.BytesExtensions" Collapsed="true">
+    <Position X="8.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAgAAAAAQAAAAIKAACAAAAAAAQAQAgACAAAAAAA=</HashCode>
+      <FileName>Core\Tools\BytesExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.Network.Core.Tools.StringExtensions" Collapsed="true">
+    <Position X="8.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Core\Tools\StringExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.Network.Core.Writers.FrameHeaderWriter&lt;TCommands&gt;" Collapsed="true">
+    <Position X="4.25" Y="3.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Writers\FrameHeaderWriter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.Network.Core.Writers.FrameWriter&lt;TCommands&gt;" Collapsed="true">
+    <Position X="4.25" Y="2.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAEAAAAAA=</HashCode>
+      <FileName>Core\Writers\FrameWriter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.Network.Core.ConnectionManager" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="1" Y="4.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AABEEAAAACAAQEgAAAAAAAAAAAoIAAgAAAAABgAAABA=</HashCode>
+      <FileName>Core\ConnectionManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.Network.Core.NetworkEventBus&lt;TCommands&gt;" Collapsed="true">
+    <Position X="1" Y="5.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAgAAAAAAAAAAACAAAAQAAAACAAAAA=</HashCode>
+      <FileName>Core\NetworkEventBus.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.Network.NetworkClient&lt;TCommands&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3" Y="4.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AABEAAIAACAAQAAAAAAAAAAIACggABoAAAAAUgAgAAA=</HashCode>
+      <FileName>NetworkClient.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

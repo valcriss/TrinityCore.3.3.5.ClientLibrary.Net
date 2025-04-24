@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Messages.AuthLogonChallenge" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Messages\AuthLogonChallenge.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Messages.AuthProofRequest" Collapsed="true">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Messages\AuthProofRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Messages.AuthProofResponse" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAQAAAAAAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Messages\AuthProofResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Messages.LogonChallengeResponse" Collapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABgAEAAAAAAAQQAAIAAAAAAAAAAAAAAAAAACBEAAAA=</HashCode>
+      <FileName>Models\Messages\LogonChallengeResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Messages.RealmListRequest" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Messages\RealmListRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Messages.RealmListResponse" Collapsed="true">
+    <Position X="2.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Models\Messages\RealmListResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Network.AuthFrameHeaderReader" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Network\AuthFrameHeaderReader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Network.AuthFrameHeaderWriter" Collapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Network\AuthFrameHeaderWriter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Process.AuthenticationProcess" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgCAIAAEAAAAAAAgiAAABAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Models\Process\AuthenticationProcess.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Process.RealmProcess" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAACAAAAABAAAAAAAAAAABA=</HashCode>
+      <FileName>Models\Process\RealmProcess.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Models.AuthenticationResult" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Models\Results\AuthenticationResult.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Models.Realm" Collapsed="true">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAChAAgBAAAAAAMgAAAAAQAiAgAgAACAQAAAAAAAAA=</HashCode>
+      <FileName>Models\Results\Realm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RealmListResult" Collapsed="true">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Models\Results\RealmListResult.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Security.AuthProof" Collapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAYAEAAAAAAAAAAECAAAQAAAAIAA=</HashCode>
+      <FileName>Models\Security\AuthProof.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Security.HashHelper" Collapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAIAAAAAAAEAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>Models\Security\HashHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrinityCore._3._3._5.ClientLibrary.AuthNetwork.AuthNetworkClient" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEgAIAgGAIwAEAAAAAAAgCAAgBABIAgEAAFgDGEAA=</HashCode>
+      <FileName>AuthNetworkClient.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Enum Name="TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Enums.AuthResult" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IgAAAACAEYAAIABAgAQAAAAgAiABAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Enums\AuthResult.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Enums.ConnexionResult" Collapsed="true">
+    <Position X="2.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACEAAAAAAAAAQQAAAAAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>Enums\ConnexionResult.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Security.HashAlgorithm" Collapsed="true">
+    <Position X="4" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Security\HashHelper.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

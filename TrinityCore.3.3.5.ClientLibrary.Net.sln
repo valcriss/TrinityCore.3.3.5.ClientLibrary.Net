@@ -1,0 +1,67 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrinityCore.3.3.5.ClientLibrary.Net", "TrinityCore.3.3.5.ClientLibrary.Net\TrinityCore.3.3.5.ClientLibrary.Net.csproj", "{CF705F35-B021-4E38-8715-158DCBA561E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrinityCore.3.3.5.ClientLibrary.Network", "TrinityCore.3.3.5.ClientLibrary.Network\TrinityCore.3.3.5.ClientLibrary.Network.csproj", "{AB95B351-EC1B-418D-BFEC-8FBD7EA0E8BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrinityCore.3.3.5.ClientLibrary.Pathfinding", "TrinityCore.3.3.5.ClientLibrary.Pathfinding\TrinityCore.3.3.5.ClientLibrary.Pathfinding.csproj", "{63AFAC43-6D98-42E5-A4FE-122E7953AFC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrinityCore.3.3.5.ClientLibrary.Shared", "TrinityCore.3.3.5.ClientLibrary.Shared\TrinityCore.3.3.5.ClientLibrary.Shared.csproj", "{CFFBBECF-8EB7-41A8-870B-0B3FBB1F01A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrinityCore.3.3.5.ClientLibrary.Console", "TrinityCore.3.3.5.ClientLibrary.Console\TrinityCore.3.3.5.ClientLibrary.Console.csproj", "{D627F8F7-10B8-4CC4-AC55-C4FFC2BB8F28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrinityCore.3.3.5.ClientLibrary.Client", "TrinityCore.3.3.5.ClientLibrary.Client\TrinityCore.3.3.5.ClientLibrary.Client.csproj", "{A6D51996-A726-4B63-9D27-5C92EA5CDCDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrinityCore.3.3.5.ClientLibrary.AuthNetwork", "TrinityCore.3.3.5.ClientLibrary.AuthNetwork\TrinityCore.3.3.5.ClientLibrary.AuthNetwork.csproj", "{BAD00B20-13BB-481F-A7A9-1985A7B96AFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrinityCore.3.3.5.ClientLibrary.AuthNetworkTest", "TrinityCore.3.3.5.ClientLibrary.AuthNetworkTest\TrinityCore.3.3.5.ClientLibrary.AuthNetworkTest.csproj", "{91657DD2-CCAD-493D-B3BA-A0FC81716821}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CF705F35-B021-4E38-8715-158DCBA561E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF705F35-B021-4E38-8715-158DCBA561E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF705F35-B021-4E38-8715-158DCBA561E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF705F35-B021-4E38-8715-158DCBA561E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB95B351-EC1B-418D-BFEC-8FBD7EA0E8BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB95B351-EC1B-418D-BFEC-8FBD7EA0E8BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB95B351-EC1B-418D-BFEC-8FBD7EA0E8BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB95B351-EC1B-418D-BFEC-8FBD7EA0E8BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63AFAC43-6D98-42E5-A4FE-122E7953AFC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63AFAC43-6D98-42E5-A4FE-122E7953AFC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63AFAC43-6D98-42E5-A4FE-122E7953AFC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63AFAC43-6D98-42E5-A4FE-122E7953AFC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFFBBECF-8EB7-41A8-870B-0B3FBB1F01A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFFBBECF-8EB7-41A8-870B-0B3FBB1F01A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFFBBECF-8EB7-41A8-870B-0B3FBB1F01A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFFBBECF-8EB7-41A8-870B-0B3FBB1F01A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D627F8F7-10B8-4CC4-AC55-C4FFC2BB8F28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D627F8F7-10B8-4CC4-AC55-C4FFC2BB8F28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D627F8F7-10B8-4CC4-AC55-C4FFC2BB8F28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D627F8F7-10B8-4CC4-AC55-C4FFC2BB8F28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6D51996-A726-4B63-9D27-5C92EA5CDCDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6D51996-A726-4B63-9D27-5C92EA5CDCDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6D51996-A726-4B63-9D27-5C92EA5CDCDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6D51996-A726-4B63-9D27-5C92EA5CDCDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAD00B20-13BB-481F-A7A9-1985A7B96AFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAD00B20-13BB-481F-A7A9-1985A7B96AFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAD00B20-13BB-481F-A7A9-1985A7B96AFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAD00B20-13BB-481F-A7A9-1985A7B96AFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91657DD2-CCAD-493D-B3BA-A0FC81716821}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91657DD2-CCAD-493D-B3BA-A0FC81716821}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91657DD2-CCAD-493D-B3BA-A0FC81716821}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91657DD2-CCAD-493D-B3BA-A0FC81716821}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3790F25A-8FF3-431B-9989-EBD5C954F217}
+	EndGlobalSection
+EndGlobal

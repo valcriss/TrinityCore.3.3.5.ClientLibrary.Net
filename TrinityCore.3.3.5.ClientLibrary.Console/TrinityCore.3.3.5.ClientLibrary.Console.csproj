@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>TrinityCore._3._3._5.ClientLibrary.Console</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TrinityCore.3.3.5.ClientLibrary.AuthNetwork\TrinityCore.3.3.5.ClientLibrary.AuthNetwork.csproj" />
+    <ProjectReference Include="..\TrinityCore.3.3.5.ClientLibrary.Client\TrinityCore.3.3.5.ClientLibrary.Client.csproj" />
+  </ItemGroup>
+
+</Project>
