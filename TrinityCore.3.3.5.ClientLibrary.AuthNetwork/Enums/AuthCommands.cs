@@ -1,4 +1,4 @@
-﻿namespace TrinityCore._3._3._5.ClientLibrary.Shared.Enums;
+﻿namespace TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Enums;
 
 public enum AuthCommands:byte
 {

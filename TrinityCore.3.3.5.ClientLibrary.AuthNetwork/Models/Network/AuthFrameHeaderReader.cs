@@ -1,5 +1,5 @@
-﻿using TrinityCore._3._3._5.ClientLibrary.Network.Core.Readers;
-using TrinityCore._3._3._5.ClientLibrary.Shared.Enums;
+﻿using TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Enums;
+using TrinityCore._3._3._5.ClientLibrary.Network.Core.Readers;
 
 namespace TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Network;
 

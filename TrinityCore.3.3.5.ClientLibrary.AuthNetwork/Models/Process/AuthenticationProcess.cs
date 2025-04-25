@@ -2,7 +2,6 @@ using TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Enums;
 using TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Messages;
 using TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Security;
 using TrinityCore._3._3._5.ClientLibrary.Network;
-using TrinityCore._3._3._5.ClientLibrary.Shared.Enums;
 using TrinityCore._3._3._5.ClientLibrary.Shared.Logger;
 
 namespace TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Process;

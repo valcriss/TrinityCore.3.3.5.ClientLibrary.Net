@@ -1,5 +1,5 @@
-﻿using TrinityCore._3._3._5.ClientLibrary.Network.Core.Packets;
-using TrinityCore._3._3._5.ClientLibrary.Shared.Enums;
+﻿using TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Enums;
+using TrinityCore._3._3._5.ClientLibrary.Network.Core.Packets;
 
 namespace TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Messages;
 

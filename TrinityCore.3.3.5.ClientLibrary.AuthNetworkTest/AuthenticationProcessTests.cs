@@ -6,7 +6,6 @@ using TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Process;
 using TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Security;
 using TrinityCore._3._3._5.ClientLibrary.Network;
 using TrinityCore._3._3._5.ClientLibrary.Network.Core.Readers;
-using TrinityCore._3._3._5.ClientLibrary.Shared.Enums;
 
 namespace TrinityCore._3._3._5.ClientLibrary.AuthNetworkTest;
 
@@ -28,8 +27,8 @@ public class AuthenticationProcessTests
     [TestInitialize]
     public void Initialize()
     {
-        AuthFrameHeaderReader headerReader = new AuthFrameHeaderReader();
-        FrameReader<AuthCommands> frameReader = new FrameReader<AuthCommands>(headerReader);
+        AuthFrameHeaderReader headerReader = new();
+        FrameReader<AuthCommands> frameReader = new(headerReader);
         _mockNetworkClient = new Mock<NetworkClient<AuthCommands>>(
             "localhost", 
             1234,

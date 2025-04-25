@@ -10,7 +10,6 @@ using TrinityCore._3._3._5.ClientLibrary.Network.Core.Parsers;
 using TrinityCore._3._3._5.ClientLibrary.Network.Core.Readers;
 using TrinityCore._3._3._5.ClientLibrary.Network.Core.Registry;
 using TrinityCore._3._3._5.ClientLibrary.Network.Core.Writers;
-using TrinityCore._3._3._5.ClientLibrary.Shared.Enums;
 
 namespace TrinityCore._3._3._5.ClientLibrary.AuthNetwork
 {
@@ -113,7 +112,7 @@ namespace TrinityCore._3._3._5.ClientLibrary.AuthNetwork
         }
 
 
-        private void CloseEventBus()
+        private void ReleaseEventBus()
         {
             _eventBus.Unsubscribe<LogonChallengeResponse>(AuthCommands.LOGON_CHALLENGE, OnLogonChallengeResponse);
             _eventBus.Unsubscribe<AuthProofResponse>(AuthCommands.LOGON_PROOF, OnAuthProofResponse);
@@ -144,7 +143,7 @@ namespace TrinityCore._3._3._5.ClientLibrary.AuthNetwork
 
             _realmProcess.Dispose();
 
-            CloseEventBus();
+            ReleaseEventBus();
         }
     }
 }

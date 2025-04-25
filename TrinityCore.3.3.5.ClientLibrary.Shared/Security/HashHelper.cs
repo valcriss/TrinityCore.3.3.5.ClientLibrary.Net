@@ -1,8 +1,8 @@
-﻿namespace TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Security;
+﻿namespace TrinityCore._3._3._5.ClientLibrary.Shared.Security;
 
 using CryptoNS = System.Security.Cryptography;
 
-internal static class HashHelper
+public static class HashHelper
 {
     #region Private Delegates
 
@@ -18,7 +18,7 @@ internal static class HashHelper
 
     #region Internal Methods
 
-    internal static byte[] Hash(this HashAlgorithm algorithm, params byte[][] data)
+    public static byte[] Hash(this HashAlgorithm algorithm, params byte[][] data)
     {
         return HashFunctions[algorithm](data);
     }
@@ -55,7 +55,7 @@ internal static class HashHelper
     #endregion Private Methods
 }
 
-internal enum HashAlgorithm
+public enum HashAlgorithm
 {
     SHA1
 }
