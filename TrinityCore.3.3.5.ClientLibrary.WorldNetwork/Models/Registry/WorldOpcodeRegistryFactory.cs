@@ -12,6 +12,7 @@ public class WorldOpcodeRegistryFactory
         registry.Register(WorldCommands.SERVER_AUTH_CHALLENGE, ServerAuthChallengeRequest.Parse);
         registry.Register(WorldCommands.SERVER_AUTH_RESPONSE, ServerAuthChallengeResult.Parse);
         registry.Register(WorldCommands.SMSG_CHAR_ENUM, ServerCharactersListResponse.Parse);
+        registry.Register(WorldCommands.SMSG_LOGIN_VERIFY_WORLD, ServerCharacterLoginResponse.Parse);
         return registry;
     }
 }

@@ -42,6 +42,16 @@ namespace TrinityCore._3._3._5.ClientLibrary.Console
                         {
                             Log.Info($"Personnage : {character.Name}, Niveau : {character.Level}, Classe : {character.Class}");
                         }
+                        Character selectedCharacter = characters.First();
+                        bool loggedIn = await worldNetworkClient.LoginCharacter(selectedCharacter.GUID);
+                        if (loggedIn)
+                        {
+                            Log.Success($"Connecté au personnage : {selectedCharacter.Name}");
+                        }
+                        else
+                        {
+                            Log.Error($"Échec de la connexion au personnage : {selectedCharacter.Name}");
+                        }
                     }
                     else
                     {
