@@ -5,6 +5,7 @@ using TrinityCore._3._3._5.ClientLibrary.Network.Core.Tools;
 using TrinityCore._3._3._5.ClientLibrary.Shared.Logger;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Enums;
+using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Results;
 
 namespace TrinityCore._3._3._5.ClientLibrary.Console
 {
@@ -36,6 +37,11 @@ namespace TrinityCore._3._3._5.ClientLibrary.Console
                     if (authenticate)
                     {
                         Log.Success("Authentification au royaume réussie.");
+                        Character[] characters = await worldNetworkClient.GetCharacterListAsync();
+                        foreach (Character character in characters)
+                        {
+                            Log.Info($"Personnage : {character.Name}, Niveau : {character.Level}, Classe : {character.Class}");
+                        }
                     }
                     else
                     {

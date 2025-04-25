@@ -9,7 +9,7 @@ public class Packet
     private int ReadIndex { get; set; }
     private byte[] Data { get; set; }
 
-    protected Packet(byte[]? content = null, int readIndex = 0)
+    public Packet(byte[]? content = null, int readIndex = 0)
     {
         ReadIndex = readIndex;
         Data = content ?? [];
@@ -20,27 +20,27 @@ public class Packet
         return Data;
     }
 
-    protected void Append(byte value)
+    public void Append(byte value)
     {
         Data = Data.Append(value);
     }
 
-    protected void Append(ushort value)
+    public void Append(ushort value)
     {
         Data = Data.Append(BitConverter.GetBytes(value));
     }
 
-    protected void Append(float value)
+    public void Append(float value)
     {
         Data = Data.Append(BitConverter.GetBytes(value));
     }
 
-    protected void Append(uint value)
+    public void Append(uint value)
     {
         Data = Data.Append(BitConverter.GetBytes(value));
     }
 
-    protected void Append(string message)
+    public void Append(string message)
     {
         byte[] value = Encoding.UTF8.GetBytes(message);
         byte[] content = new byte[value.Length + 1];
@@ -48,17 +48,17 @@ public class Packet
         Append(content);
     }
 
-    protected void Append(ulong value)
+    public void Append(ulong value)
     {
         Data = Data.Append(BitConverter.GetBytes(value));
     }
 
-    protected void Append(byte[] value)
+    public void Append(byte[] value)
     {
         Data = Data.Append(value);
     }
 
-    protected DateTime ReadPackedTime()
+    public DateTime ReadPackedTime()
     {
         var packedDate = ReadInt32();
         var minute = packedDate & 0x3F;
@@ -71,30 +71,30 @@ public class Packet
             .AddMinutes(minute);
     }
 
-    protected bool IsDataLeft()
+    public bool IsDataLeft()
     {
         return Data.Length > ReadIndex;
     }
 
-    protected byte PeekByte()
+    public byte PeekByte()
     {
         return Data[ReadIndex];
     }
 
-    protected bool ReadBoolean()
+    public bool ReadBoolean()
     {
         byte b = ReadByte();
         return b > 0;
     }
 
-    protected byte ReadByte()
+    public byte ReadByte()
     {
         byte value = Data[ReadIndex];
         ReadIndex++;
         return value;
     }
 
-    protected byte[] ReadBytes(int length)
+    public byte[] ReadBytes(int length)
     {
         byte[] buffer = new byte[length];
         Array.ConstrainedCopy(Data, ReadIndex, buffer, 0, length);
@@ -102,21 +102,21 @@ public class Packet
         return buffer;
     }
 
-    protected string ReadCString()
+    public string ReadCString()
     {
         string value = Data.ReadCString(ReadIndex, out int length);
         ReadIndex += length;
         return value;
     }
 
-    protected int ReadInt32()
+    public int ReadInt32()
     {
         int value = BitConverter.ToInt32(Data, ReadIndex);
         ReadIndex += 4;
         return value;
     }
 
-    protected string ReadInt32String()
+    public string ReadInt32String()
     {
         Int32 length = ReadInt32();
         byte[] raw = ReadBytes(length);
@@ -130,14 +130,14 @@ public class Packet
         return builder.ToString();
     }
 
-    protected long ReadInt64()
+    public long ReadInt64()
     {
         long value = BitConverter.ToInt64(Data, ReadIndex);
         ReadIndex += 8;
         return value;
     }
 
-    protected DateTime ReadPackedDate()
+    public DateTime ReadPackedDate()
     {
         uint packed = ReadUInt32();
 
@@ -150,7 +150,7 @@ public class Packet
         return new DateTime(year, mon, day, hour, min, 0);
     }
 
-    protected ulong ReadPackedGuid()
+    public ulong ReadPackedGuid()
     {
         var mask = ReadByte();
 
@@ -171,14 +171,14 @@ public class Packet
         return res;
     }
 
-    protected sbyte ReadSByte()
+    public sbyte ReadSByte()
     {
         sbyte value = (sbyte)Data[ReadIndex];
         ReadIndex++;
         return value;
     }
 
-    protected float ReadSingle()
+    public float ReadSingle()
     {
         if (Data.Length - 4 > ReadIndex)
         {
@@ -191,21 +191,21 @@ public class Packet
         return 0;
     }
 
-    protected ushort ReadUInt16()
+    public ushort ReadUInt16()
     {
         ushort value = BitConverter.ToUInt16(Data, ReadIndex);
         ReadIndex += 2;
         return value;
     }
 
-    protected uint ReadUInt32()
+    public uint ReadUInt32()
     {
         uint value = BitConverter.ToUInt32(Data, ReadIndex);
         ReadIndex += 4;
         return value;
     }
 
-    protected string ReadUInt32String()
+    public string ReadUInt32String()
     {
         UInt32 length = ReadUInt32();
         if (length == 0) return string.Empty;
@@ -220,14 +220,14 @@ public class Packet
         return builder.ToString();
     }
 
-    protected ulong ReadUInt64()
+    public ulong ReadUInt64()
     {
         ulong value = BitConverter.ToUInt64(Data, ReadIndex);
         ReadIndex += 8;
         return value;
     }
 
-    protected Vector3 ReadVector3()
+    public Vector3 ReadVector3()
     {
         return new Vector3(ReadSingle(), ReadSingle(), ReadSingle());
     }
