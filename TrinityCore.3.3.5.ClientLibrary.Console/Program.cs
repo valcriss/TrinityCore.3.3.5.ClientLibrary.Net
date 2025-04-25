@@ -14,7 +14,7 @@ namespace TrinityCore._3._3._5.ClientLibrary.Console
         static async Task Main(string[] args)
         {
             Log.SetLogger(new ConsoleLogger());
-            Log.SetLogLevel(LogLevel.Debug);
+            Log.SetLogLevel(LogLevel.Info);
             Log.Success("Démarrage du client AuthNetwork...");
 
             AuthNetworkClient authNetworkClient = new("127.0.0.1", 3724, "daniel", "daniel");
