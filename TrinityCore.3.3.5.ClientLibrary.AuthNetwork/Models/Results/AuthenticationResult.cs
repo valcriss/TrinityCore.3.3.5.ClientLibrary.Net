@@ -5,11 +5,6 @@ namespace TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Results;
 
 public class AuthenticationResult
 {
-    public string Username { get; private set; }
-    public bool IsAuthenticated { get; private set; }
-    public BigInteger SessionKey { get; set; }
-    public ConnexionResult ConnexionResult { get; set; }
-
     public AuthenticationResult(string username, BigInteger sessionKey)
     {
         Username = username;
@@ -17,6 +12,11 @@ public class AuthenticationResult
         SessionKey = sessionKey;
         ConnexionResult = ConnexionResult.NONE;
     }
+
+    public string Username { get; private set; }
+    public bool IsAuthenticated { get; private set; }
+    public BigInteger SessionKey { get; set; }
+    public ConnexionResult ConnexionResult { get; set; }
 
     public void Reset()
     {

@@ -6,15 +6,15 @@ namespace TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages;
 
 public class ServerCharactersListResponse : ParsedPacket<WorldCommands>
 {
-    public Character[] Characters { get; set; } = [];
-
     public ServerCharactersListResponse(byte[]? data = null) : base(WorldCommands.SMSG_CHAR_ENUM, data)
     {
     }
 
+    public Character[] Characters { get; set; } = [];
+
     public static ServerCharactersListResponse? Parse(RawPacket<WorldCommands> rawPacket)
     {
-        ServerCharactersListResponse packet = new ServerCharactersListResponse(rawPacket.Payload);
+        ServerCharactersListResponse packet = new(rawPacket.Payload);
         byte count = packet.ReadByte();
         if (count == 0)
         {
@@ -23,10 +23,7 @@ public class ServerCharactersListResponse : ParsedPacket<WorldCommands>
         else
         {
             packet.Characters = new Character[count];
-            for (byte i = 0; i < count; ++i)
-            {
-                packet.Characters[i] = new Character(packet);
-            }
+            for (byte i = 0; i < count; ++i) packet.Characters[i] = new Character(packet);
         }
 
         return packet;

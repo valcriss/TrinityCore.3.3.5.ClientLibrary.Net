@@ -2,12 +2,12 @@
 
 public abstract class FrameHeaderReader<TCommands> where TCommands : struct, Enum
 {
-    public TCommands Command { get; set; }
-    public int ExpectedTotalLength { get;set; }
-    public int HeaderLength { get;set; }
-    
-    public bool IsValid { get; set; }
+    public TCommands Command { get; protected set; }
+    public int ExpectedTotalLength { get; protected set; }
+    public int HeaderLength { get; protected set; }
+
+    public bool IsValid { get; protected set; }
     public int ContentLength => ExpectedTotalLength - HeaderLength;
-    
+
     public abstract bool ReadHeader(List<byte>? data);
 }

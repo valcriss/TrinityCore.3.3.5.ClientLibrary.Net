@@ -7,7 +7,7 @@ namespace TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Messages;
 
 public class AuthLogonChallenge : OutgoingPacket<AuthCommands>
 {
-    public AuthLogonChallenge(string username, IPAddress ipAddress): base(AuthCommands.LOGON_CHALLENGE)
+    public AuthLogonChallenge(string username, IPAddress ipAddress) : base(AuthCommands.LOGON_CHALLENGE)
     {
         Append(6);
         Append((ushort)(username.Length + 30));

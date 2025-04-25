@@ -10,13 +10,6 @@ namespace TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Security;
 
 public class AuthCredentials
 {
-    public BigInteger SessionKey { get; set; }
-    public byte[] M1Hash { get; set; }
-    public byte[] Proof { get; set; }
-    public byte[] Y { get; set; }
-    public string Username { get; set; }
-    public string Password { get; set; }
-
     public AuthCredentials(string username, string password)
     {
         Username = username;
@@ -26,6 +19,13 @@ public class AuthCredentials
         Proof = new byte[20];
         Y = new byte[32];
     }
+
+    public BigInteger SessionKey { get; set; }
+    public byte[] M1Hash { get; set; }
+    public byte[] Proof { get; set; }
+    public byte[] Y { get; set; }
+    public string Username { get; set; }
+    public string Password { get; set; }
 
     public void ComputeAuthProof(LogonChallengeResponse challenge)
     {
@@ -79,7 +79,7 @@ public class AuthCredentials
         if (sData.Length < 32)
         {
             byte[] tmpBuffer = new byte[32];
-            System.Buffer.BlockCopy(sData, 0, tmpBuffer, 32 - sData.Length, sData.Length);
+            Buffer.BlockCopy(sData, 0, tmpBuffer, 32 - sData.Length, sData.Length);
             sData = tmpBuffer;
         }
 

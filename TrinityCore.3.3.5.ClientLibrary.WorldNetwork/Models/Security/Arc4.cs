@@ -4,14 +4,14 @@ public class Arc4
 {
     private readonly byte[] _state;
     private byte _x, _y;
-    
+
     internal Arc4(byte[] key)
     {
         _state = new byte[256];
         _x = _y = 0;
         KeySetup(key);
     }
-    
+
     internal int Process(byte[] buffer, int start, int count)
     {
         return InternalTransformBlock(buffer, start, count, buffer, start);
@@ -20,14 +20,14 @@ public class Arc4
     private int InternalTransformBlock(byte[] inputBuffer, int inputOffset, int inputCount, byte[] outputBuffer,
         int outputOffset)
     {
-        for (var counter = 0; counter < inputCount; counter++)
+        for (int counter = 0; counter < inputCount; counter++)
         {
             _x = (byte)(_x + 1);
             _y = (byte)(_state[_x] + _y);
             // swap byte
             (_state[_y], _state[_x]) = (_state[_x], _state[_y]);
 
-            var xorIndex = (byte)(_state[_x] + _state[_y]);
+            byte xorIndex = (byte)(_state[_x] + _state[_y]);
             outputBuffer[outputOffset + counter] = (byte)(inputBuffer[inputOffset + counter] ^ _state[xorIndex]);
         }
 

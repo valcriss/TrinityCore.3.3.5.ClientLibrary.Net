@@ -1,6 +1,6 @@
 ﻿namespace TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Enums;
 
-public enum AuthCommands:byte
+public enum AuthCommands : byte
 {
     LOGON_CHALLENGE = 0x00,
     LOGON_PROOF = 0x01,

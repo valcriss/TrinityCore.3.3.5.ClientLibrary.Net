@@ -5,12 +5,12 @@ namespace TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Messages;
 
 public class AuthProofResponse : ParsedPacket<AuthCommands>
 {
-    public AuthResult Error { get; set; }
-    public byte[]? M2 { get; set; }
-
     public AuthProofResponse(byte[]? data = null) : base(AuthCommands.LOGON_PROOF, data)
     {
     }
+
+    public AuthResult Error { get; set; }
+    public byte[]? M2 { get; set; }
 
     public static AuthProofResponse? Parse(RawPacket<AuthCommands> rawPacket)
     {

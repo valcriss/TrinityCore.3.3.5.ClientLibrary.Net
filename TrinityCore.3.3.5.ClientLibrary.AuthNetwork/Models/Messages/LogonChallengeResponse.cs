@@ -6,6 +6,10 @@ namespace TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Messages;
 
 public class LogonChallengeResponse : ParsedPacket<AuthCommands>
 {
+    public LogonChallengeResponse(byte[]? data = null) : base(AuthCommands.LOGON_CHALLENGE, data)
+    {
+    }
+
     public byte[]? B { get; set; }
     public AuthResult Error { get; set; }
     public byte[]? G { get; set; }
@@ -14,10 +18,7 @@ public class LogonChallengeResponse : ParsedPacket<AuthCommands>
     private byte[]? Proof { get; set; }
     public byte[]? Salt { get; set; }
     public byte[]? Unk3 { get; set; }
-    public LogonChallengeResponse(byte[]? data = null) : base(AuthCommands.LOGON_CHALLENGE, data)
-    {
-    }
-    
+
     public static LogonChallengeResponse? Parse(RawPacket<AuthCommands> rawPacket)
     {
         LogonChallengeResponse packet = new(rawPacket.Payload);

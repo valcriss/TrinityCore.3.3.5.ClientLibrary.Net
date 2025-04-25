@@ -3,19 +3,18 @@ using TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Messages;
 using TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Results;
 using TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Security;
 using TrinityCore._3._3._5.ClientLibrary.Network;
-using TrinityCore._3._3._5.ClientLibrary.Shared.Logger;
 
 namespace TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Process;
 
 public class AuthenticationProcess : IDisposable
 {
     private const int AUTHENTIFICATION_TIMEOUT = 3000;
-    
-    private readonly NetworkClient<AuthCommands> _networkClient;
-    private readonly AuthCredentials _credentials;
     private readonly ManualResetEvent _authenticateDone;
     private readonly AuthenticationResult _authenticationResult;
-    
+    private readonly AuthCredentials _credentials;
+
+    private readonly NetworkClient<AuthCommands> _networkClient;
+
     public AuthenticationProcess(NetworkClient<AuthCommands> networkClient, AuthCredentials credentials)
     {
         _authenticateDone = new ManualResetEvent(false);
@@ -23,7 +22,13 @@ public class AuthenticationProcess : IDisposable
         _credentials = credentials;
         _authenticationResult = new AuthenticationResult(credentials.Username, credentials.SessionKey);
     }
-    
+
+    public void Dispose()
+    {
+        _networkClient.Dispose();
+        _authenticateDone.Dispose();
+    }
+
     public async Task<AuthenticationResult> AuthenticateAsync()
     {
         try
@@ -52,7 +57,7 @@ public class AuthenticationProcess : IDisposable
 
         _credentials.ComputeAuthProof(logonChallengeResponse);
         _authenticationResult.SessionKey = _credentials.SessionKey;
-        
+
         if (_credentials.Y == null || _credentials.M1Hash == null)
             throw new Exception("Y or M1Hash is null");
 
@@ -77,11 +82,5 @@ public class AuthenticationProcess : IDisposable
 
         _authenticationResult.Success();
         _authenticateDone.Set();
-    }
-
-    public void Dispose()
-    {
-        _networkClient.Dispose();
-        _authenticateDone.Dispose();
     }
 }

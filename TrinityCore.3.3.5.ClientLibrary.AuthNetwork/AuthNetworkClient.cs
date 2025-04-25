@@ -9,80 +9,92 @@ using TrinityCore._3._3._5.ClientLibrary.Network;
 using TrinityCore._3._3._5.ClientLibrary.Network.Core;
 using TrinityCore._3._3._5.ClientLibrary.Network.Core.Parsers;
 using TrinityCore._3._3._5.ClientLibrary.Network.Core.Readers;
-using TrinityCore._3._3._5.ClientLibrary.Network.Core.Registry;
 using TrinityCore._3._3._5.ClientLibrary.Network.Core.Writers;
 
-namespace TrinityCore._3._3._5.ClientLibrary.AuthNetwork
+namespace TrinityCore._3._3._5.ClientLibrary.AuthNetwork;
+
+public class AuthNetworkClient : IDisposable
 {
-    public class AuthNetworkClient : IDisposable
+    private readonly AuthenticationProcess _authenticationProcess;
+    private readonly AuthCredentials _credentials;
+    private readonly NetworkEventBus<AuthCommands> _eventBus;
+
+    private readonly NetworkClient<AuthCommands> _networkClient;
+    private readonly AuthOpcodeRegistryFactory _opcodeRegistryFactory = new();
+    private readonly RealmProcess _realmProcess;
+    public Action? Connected;
+    public Action? Disconnected;
+
+    public AuthNetworkClient(string host, int port, string username, string password)
     {
-        public Action? Connected;
-        public Action? Disconnected;
+        FrameReader<AuthCommands> frameReader = new(new AuthFrameHeaderReader());
+        FrameWriter<AuthCommands> frameWriter = new(new AuthFrameHeaderWriter());
+        PacketParser<AuthCommands> authPacketParser = new(_opcodeRegistryFactory.Create());
 
-        private readonly NetworkClient<AuthCommands> _networkClient;
-        private readonly NetworkEventBus<AuthCommands> _eventBus;
-        private readonly AuthCredentials _credentials;
-        private readonly AuthenticationProcess _authenticationProcess;
-        private readonly RealmProcess _realmProcess;
-        private readonly AuthOpcodeRegistryFactory _opcodeRegistryFactory = new();
+        _eventBus = new NetworkEventBus<AuthCommands>();
 
-        public AuthNetworkClient(string host, int port, string username, string password)
-        {
-            
-            FrameReader<AuthCommands> frameReader = new(new AuthFrameHeaderReader());
-            FrameWriter<AuthCommands> frameWriter = new(new AuthFrameHeaderWriter());
-            PacketParser<AuthCommands> authPacketParser = new(_opcodeRegistryFactory.Create());
-            
-            _eventBus = new();
-            
-            _credentials = new AuthCredentials(username.ToUpper(), password);
-            
-            _networkClient = new NetworkClient<AuthCommands>(host, port, frameReader, frameWriter, authPacketParser, _eventBus);
-            _networkClient.Connected += OnConnected;
-            _networkClient.Disconnected += OnDisconnected;
-            
-            _authenticationProcess = new AuthenticationProcess(_networkClient, _credentials);
-            _realmProcess = new RealmProcess(_networkClient);
-            
-            InitializeEventBus();
-        }
+        _credentials = new AuthCredentials(username.ToUpper(), password);
 
-        public async Task<AuthenticationResult> AuthenticateAsync() => await _authenticationProcess.AuthenticateAsync();
-        public async Task<Realm[]?> GetRealmListAsync() => await _realmProcess.GetRealmListAsync();
-        public async Task DisconnectAsync() => await _networkClient.DisconnectAsync();
-        private void OnDisconnected() => Disconnected?.Invoke();
+        _networkClient = new NetworkClient<AuthCommands>(host, port, frameReader, frameWriter, authPacketParser, _eventBus);
+        _networkClient.Connected += OnConnected;
+        _networkClient.Disconnected += OnDisconnected;
 
-        private void OnConnected()
-        {
-            Connected?.Invoke();
-            _networkClient.SendAsync(new AuthLogonChallenge(_credentials.Username, _networkClient.GetIpAddress())).Wait();
-        }
+        _authenticationProcess = new AuthenticationProcess(_networkClient, _credentials);
+        _realmProcess = new RealmProcess(_networkClient);
 
-        private void InitializeEventBus()
-        {
-            _eventBus.Subscribe<LogonChallengeResponse>(AuthCommands.LOGON_CHALLENGE, _authenticationProcess.OnLogonChallengeResponse);
-            _eventBus.Subscribe<AuthProofResponse>(AuthCommands.LOGON_PROOF, _authenticationProcess.OnAuthProofResponse);
-            _eventBus.Subscribe<RealmListResponse>(AuthCommands.REALM_LIST, _realmProcess.OnRealmListResponse);
-        }
-        
-        private void ReleaseEventBus()
-        {
-            _eventBus.Unsubscribe<LogonChallengeResponse>(AuthCommands.LOGON_CHALLENGE, _authenticationProcess.OnLogonChallengeResponse);
-            _eventBus.Unsubscribe<AuthProofResponse>(AuthCommands.LOGON_PROOF, _authenticationProcess.OnAuthProofResponse);
-            _eventBus.Unsubscribe<RealmListResponse>(AuthCommands.REALM_LIST, _realmProcess.OnRealmListResponse);
-        }
+        InitializeEventBus();
+    }
 
-        public void Dispose()
-        {
-            _networkClient.Connected -= OnConnected;
-            _networkClient.Disconnected -= OnDisconnected;
-            _networkClient.Dispose();
-            
-            _authenticationProcess.Dispose();
+    public void Dispose()
+    {
+        _networkClient.Connected -= OnConnected;
+        _networkClient.Disconnected -= OnDisconnected;
+        _networkClient.Dispose();
 
-            _realmProcess.Dispose();
+        _authenticationProcess.Dispose();
 
-            ReleaseEventBus();
-        }
+        _realmProcess.Dispose();
+
+        ReleaseEventBus();
+    }
+
+    public async Task<AuthenticationResult> AuthenticateAsync()
+    {
+        return await _authenticationProcess.AuthenticateAsync();
+    }
+
+    public async Task<Realm[]?> GetRealmListAsync()
+    {
+        return await _realmProcess.GetRealmListAsync();
+    }
+
+    public async Task DisconnectAsync()
+    {
+        await _networkClient.DisconnectAsync();
+    }
+
+    private void OnDisconnected()
+    {
+        Disconnected?.Invoke();
+    }
+
+    private void OnConnected()
+    {
+        Connected?.Invoke();
+        _networkClient.SendAsync(new AuthLogonChallenge(_credentials.Username, _networkClient.GetIpAddress())).Wait();
+    }
+
+    private void InitializeEventBus()
+    {
+        _eventBus.Subscribe<LogonChallengeResponse>(AuthCommands.LOGON_CHALLENGE, _authenticationProcess.OnLogonChallengeResponse);
+        _eventBus.Subscribe<AuthProofResponse>(AuthCommands.LOGON_PROOF, _authenticationProcess.OnAuthProofResponse);
+        _eventBus.Subscribe<RealmListResponse>(AuthCommands.REALM_LIST, _realmProcess.OnRealmListResponse);
+    }
+
+    private void ReleaseEventBus()
+    {
+        _eventBus.Unsubscribe<LogonChallengeResponse>(AuthCommands.LOGON_CHALLENGE, _authenticationProcess.OnLogonChallengeResponse);
+        _eventBus.Unsubscribe<AuthProofResponse>(AuthCommands.LOGON_PROOF, _authenticationProcess.OnAuthProofResponse);
+        _eventBus.Unsubscribe<RealmListResponse>(AuthCommands.REALM_LIST, _realmProcess.OnRealmListResponse);
     }
 }

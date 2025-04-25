@@ -37,11 +37,11 @@ public class WorldFrameHeaderReader : FrameHeaderReader<WorldCommands>
         switch (HeaderLength)
         {
             case 4:
-                ExpectedTotalLength = (HeaderLength + (int)(((uint)dataBuffer[0] << 8) | dataBuffer[1])) - 2;
+                ExpectedTotalLength = HeaderLength + (int)(((uint)dataBuffer[0] << 8) | dataBuffer[1]) - 2;
                 Command = (WorldCommands)BitConverter.ToUInt16(dataBuffer, 2);
                 break;
             case 5:
-                ExpectedTotalLength = (HeaderLength + (int)((((uint)dataBuffer[0] & 0x7F) << 16) | ((uint)dataBuffer[1] << 8) | dataBuffer[2])) - 2;
+                ExpectedTotalLength = HeaderLength + (int)((((uint)dataBuffer[0] & 0x7F) << 16) | ((uint)dataBuffer[1] << 8) | dataBuffer[2]) - 2;
                 Command = (WorldCommands)BitConverter.ToUInt16(dataBuffer, 3);
                 break;
             default:

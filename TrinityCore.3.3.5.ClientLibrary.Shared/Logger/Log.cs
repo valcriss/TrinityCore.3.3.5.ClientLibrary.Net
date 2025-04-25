@@ -3,17 +3,18 @@
 public static class Log
 {
     private static ILog? _logger;
-    private static int _logLevel = 0;
+    private static int _logLevel;
+
     public static void SetLogger(ILog log)
     {
         _logger = log;
     }
-    
+
     public static void SetLogLevel(LogLevel value)
     {
         _logLevel = (int)value;
     }
-    
+
     public static void Debug(string message)
     {
         if (_logger == null) return;
@@ -41,13 +42,11 @@ public static class Log
         if (_logLevel > (int)LogLevel.Error) return;
         _logger.Error(message);
     }
-    
+
     public static void Success(string message)
     {
         if (_logger == null) return;
         if (_logLevel > (int)LogLevel.Success) return;
         _logger.Success(message);
     }
-
-
 }

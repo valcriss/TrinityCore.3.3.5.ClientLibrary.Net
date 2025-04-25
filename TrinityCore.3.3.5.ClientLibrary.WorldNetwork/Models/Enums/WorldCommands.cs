@@ -1,6 +1,8 @@
-﻿namespace TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Enums;
+﻿using System.Diagnostics.CodeAnalysis;
 
-[System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1069:Les valeurs enum ne doivent pas être dupliquées", Justification = "Mixed CMSG and SMSG")]
+namespace TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Enums;
+
+[SuppressMessage("Design", "CA1069:Les valeurs enum ne doivent pas être dupliquées", Justification = "Mixed CMSG and SMSG")]
 public enum WorldCommands : uint
 {
     MSG_NULL_ACTION = 0,
@@ -55,7 +57,7 @@ public enum WorldCommands : uint
     CMSG_ADVANCE_SPAWN_TIME = 49,
 
     /// <summary>
-    /// pguid pguid pguid int int spellId
+    ///     pguid pguid pguid int int spellId
     /// </summary>
     SMSG_DESTRUCTIBLE_BUILDING_DAMAGE = 50,
 
@@ -322,7 +324,7 @@ public enum WorldCommands : uint
 
     //SMSG_UPDATE_AURA_DURATION_OBSOLETE = 311,
     /// <summary>
-    /// Looks like it might clear out a set int setId pguid setGuid
+    ///     Looks like it might clear out a set int setId pguid setGuid
     /// </summary>
     SMSG_EQUIPMENT_SET_SAVED = 311,
 
@@ -334,12 +336,12 @@ public enum WorldCommands : uint
     CMSG_SET_SELECTION = 317,
 
     /// <summary>
-    /// pguid
+    ///     pguid
     /// </summary>
     CMSG_DELETE_EQUIPMENT_SET = 318,
 
     /// <summary>
-    /// Added 3.1.0.9658 bool unk
+    ///     Added 3.1.0.9658 bool unk
     /// </summary>
     CMSG_INSTANCE_LOCK_WARNING_RESPONSE = 319, // 3.2.2 updated
 
@@ -357,14 +359,14 @@ public enum WorldCommands : uint
 
     //SMSG_VICTIMSTATEUPDATE_OBSOLETE = 331,
     /// <summary>
-    /// New in 3.1
+    ///     New in 3.1
     /// </summary>
     SMSG_BATTLEFIELD_PORT_DENIED = 331,
 
     SMSG_DAMAGE_DONE_OBSOLETE = 332,
 
     /// <summary>
-    /// SMSG_DAMAGE_TAKEN_OBSOLETE before 3.3.x
+    ///     SMSG_DAMAGE_TAKEN_OBSOLETE before 3.3.x
     /// </summary>
     SMSG_UNIT_SPELLCAST_START = 333,
 
@@ -385,14 +387,14 @@ public enum WorldCommands : uint
     CMSG_RESURRECT_RESPONSE = 348,
 
     /// <summary>
-    /// 349 / 0x15D
+    ///     349 / 0x15D
     /// </summary>
     CMSG_LOOT = 349,
 
     CMSG_LOOT_MONEY = 350,
 
     /// <summary>
-    /// 351
+    ///     351
     /// </summary>
     CMSG_LOOT_RELEASE = 351,
 
@@ -488,7 +490,7 @@ public enum WorldCommands : uint
     CMSG_BUY_BANK_SLOT = 441,
 
     /// <summary>
-    /// uint32 errCode
+    ///     uint32 errCode
     /// </summary>
     SMSG_BUY_BANK_SLOT_RESULT = 442,
 
@@ -593,7 +595,7 @@ public enum WorldCommands : uint
     CMSG_SET_STAT_CHEAT = 541,
 
     /// <summary>
-    /// Force-remove quest, uint32 questId
+    ///     Force-remove quest, uint32 questId
     /// </summary>
     SMSG_QUEST_FORCE_REMOVE = 542,
 
@@ -628,27 +630,27 @@ public enum WorldCommands : uint
     SMSG_MAIL_LIST_RESULT = 571,
 
     /// <summary>
-    /// Requests the list of a particular BG
+    ///     Requests the list of a particular BG
     /// </summary>
     CMSG_BATTLEFIELD_LIST = 572,
 
     /// <summary>
-    /// Shows the list of all BGs (since 3.10)
+    ///     Shows the list of all BGs (since 3.10)
     /// </summary>
     SMSG_BATTLEFIELD_LIST = 573,
 
     /// <summary>
-    /// Obsolete
+    ///     Obsolete
     /// </summary>
     CMSG_BATTLEFIELD_JOIN = 574,
 
     /// <summary>
-    /// Obsolete
+    ///     Obsolete
     /// </summary>
     SMSG_BATTLEFIELD_WIN_OBSOLETE = 575,
 
     /// <summary>
-    /// Obsolete
+    ///     Obsolete
     /// </summary>
     SMSG_BATTLEFIELD_LOSE_OBSOLETE = 576,
 
@@ -821,7 +823,7 @@ public enum WorldCommands : uint
     CMSG_WARDEN_DATA = 743,
 
     /// <summary>
-    /// Error message in disguise?
+    ///     Error message in disguise?
     /// </summary>
     SMSG_GROUP_JOINED_BATTLEGROUND = 744,
 
@@ -838,7 +840,7 @@ public enum WorldCommands : uint
     CMSG_PET_SPELL_AUTOCAST = 755,
 
     /// <summary>
-    /// Implement this...
+    ///     Implement this...
     /// </summary>
     SMSG_WEATHER = 756,
 
@@ -993,7 +995,7 @@ public enum WorldCommands : uint
     CMSG_SET_TAXI_BENCHMARK_MODE = 905,
 
     /// <summary>
-    /// Unused
+    ///     Unused
     /// </summary>
     SMSG_JOINED_BATTLEGROUND_QUEUE = 906,
 
@@ -1038,20 +1040,22 @@ public enum WorldCommands : uint
     SMSG_VOICE_PARENTAL_CONTROLS = 945,
     CMSG_GM_WHISPER = 946,
 
-    /// <summary> byte chatType int ulong int if ( chatType == MonsterSay (12) || chatType ==
-    /// MonsterParty (13) || chatType == MonsterYell (14) || chatType == MonsterWhisper (15) ||
-    /// chatType == MonsterEmote (16) || chatType == RaidBossWhisper (41) || || chatType ==
-    /// RaidBossEmote (42) || chatType == BN (47) ) { int str1Len byte[str1Len] str1Data ulong
-    /// guid2 if ((guid2.HighPart & 0xF0400000) != 0) // if its not a player and not a pet { int
-    /// str2Len byte[str2Len] str2Data } int str3Len byte[str3Len] str3Data byte chatTag } if
-    /// (chatType == WhisperInform (8)) { int str1Len byte[str1Len] str1Data ulong guid2 int
-    /// str2Len byte[str2Len] str2Data byte chatTag } if ( chatType == BGSystemNeutral (36) ||
-    /// chatType == BGSystemAlliance (37) || chatType == BGSystemHorde (38) ) { ulong guid2 if
-    /// ((guid2.HighPart & 0xF0000000) != 0) { int str1Len byte[str1Len] str1Data } int str2Len
-    /// byte[str2Len] str2Data byte chatTag } if ( chatType == Type_48 (48) || chatType ==
-    /// Type_49 (49) ) { ulong guid2 int str1Len byte[str1Len] str1Data byte chatTag int } if
-    /// (isGMMessageOpcode) { int gmMsgLen byte[gmMsgLen] msg? } if (chatType == Channel (17)) {
-    /// cstring channelName } ulong int strLen byte[strLen] str byte chatTag </summary>
+    /// <summary>
+    ///     byte chatType int ulong int if ( chatType == MonsterSay (12) || chatType ==
+    ///     MonsterParty (13) || chatType == MonsterYell (14) || chatType == MonsterWhisper (15) ||
+    ///     chatType == MonsterEmote (16) || chatType == RaidBossWhisper (41) || || chatType ==
+    ///     RaidBossEmote (42) || chatType == BN (47) ) { int str1Len byte[str1Len] str1Data ulong
+    ///     guid2 if ((guid2.HighPart & 0xF0400000) != 0) // if its not a player and not a pet { int
+    ///     str2Len byte[str2Len] str2Data } int str3Len byte[str3Len] str3Data byte chatTag } if
+    ///     (chatType == WhisperInform (8)) { int str1Len byte[str1Len] str1Data ulong guid2 int
+    ///     str2Len byte[str2Len] str2Data byte chatTag } if ( chatType == BGSystemNeutral (36) ||
+    ///     chatType == BGSystemAlliance (37) || chatType == BGSystemHorde (38) ) { ulong guid2 if
+    ///     ((guid2.HighPart & 0xF0000000) != 0) { int str1Len byte[str1Len] str1Data } int str2Len
+    ///     byte[str2Len] str2Data byte chatTag } if ( chatType == Type_48 (48) || chatType ==
+    ///     Type_49 (49) ) { ulong guid2 int str1Len byte[str1Len] str1Data byte chatTag int } if
+    ///     (isGMMessageOpcode) { int gmMsgLen byte[gmMsgLen] msg? } if (chatType == Channel (17)) {
+    ///     cstring channelName } ulong int strLen byte[strLen] str byte chatTag
+    /// </summary>
     SMSG_GM_MESSAGECHAT = 947,
 
     MSG_GM_GEARRATING = 948,
@@ -1189,137 +1193,139 @@ public enum WorldCommands : uint
      * */
 
     /// <summary>
-    /// Empty
+    ///     Empty
     /// </summary>
     CMSG_CALENDAR_GET_CALENDAR = 1065,
 
     /// <summary>
-    /// ulong guid? or some kind of id
+    ///     ulong guid? or some kind of id
     /// </summary>
     CMSG_CALENDAR_GET_EVENT = 1066,
 
     /// <summary>
-    /// Might be a bad name, as its called from lua_CalendarMassInviteGuild int minLevel int
-    /// maxLevel int minRank
+    ///     Might be a bad name, as its called from lua_CalendarMassInviteGuild int minLevel int
+    ///     maxLevel int minRank
     /// </summary>
     CMSG_CALENDAR_GUILD_FILTER = 1067,
 
     /// <summary>
-    /// int arenaId?
+    ///     int arenaId?
     /// </summary>
     CMSG_CALENDAR_ARENA_TEAM = 1068,
 
-    /// <summary> cstring Title cstring Description byte eventType byte resetOption int maxSize
-    /// int packedDate eventDate packedDate lockoutDate int eventFlags if ((eventFlags &
-    /// CalendarEventFlags.GuildAnnouncement) == 0) { int count for (count) { pguid player (yes
-    /// the client writes a pguid) byte byte } } </summary>
+    /// <summary>
+    ///     cstring Title cstring Description byte eventType byte resetOption int maxSize
+    ///     int packedDate eventDate packedDate lockoutDate int eventFlags if ((eventFlags &
+    ///     CalendarEventFlags.GuildAnnouncement) == 0) { int count for (count) { pguid player (yes
+    ///     the client writes a pguid) byte byte } }
+    /// </summary>
     CMSG_CALENDAR_ADD_EVENT = 1069,
 
     /// <summary>
-    /// ulong eventId? ulong creator? cstring Title cstring Description byte eventType byte
-    /// resetOption int maxSize int packedDate eventDate packedDate lockoutDate int eventFlags
+    ///     ulong eventId? ulong creator? cstring Title cstring Description byte eventType byte
+    ///     resetOption int maxSize int packedDate eventDate packedDate lockoutDate int eventFlags
     /// </summary>
     CMSG_CALENDAR_UPDATE_EVENT = 1070,
 
     /// <summary>
-    /// ulong ulong int
+    ///     ulong ulong int
     /// </summary>
     CMSG_CALENDAR_REMOVE_EVENT = 1071,
 
     /// <summary>
-    /// ulong ulong packedDate
+    ///     ulong ulong packedDate
     /// </summary>
     CMSG_CALENDAR_COPY_EVENT = 1072,
 
     /// <summary>
-    /// ulong eventId ulong creatorGuid cstring name? eventName? byte byte isGuildEvent
+    ///     ulong eventId ulong creatorGuid cstring name? eventName? byte byte isGuildEvent
     /// </summary>
     CMSG_CALENDAR_EVENT_INVITE = 1073,
 
     /// <summary>
-    /// ulong ulong int
+    ///     ulong ulong int
     /// </summary>
     CMSG_CALENDAR_EVENT_RSVP = 1074,
 
     /// <summary>
-    /// pguid ulong ulong ulong
+    ///     pguid ulong ulong ulong
     /// </summary>
     CMSG_CALENDAR_EVENT_REMOVE_INVITE = 1075,
 
     /// <summary>
-    /// pguid ulong ulong ulong int
+    ///     pguid ulong ulong ulong int
     /// </summary>
     CMSG_CALENDAR_EVENT_STATUS = 1076,
 
     /// <summary>
-    /// pguid ulong ulong ulong int
+    ///     pguid ulong ulong ulong int
     /// </summary>
     CMSG_CALENDAR_EVENT_MODERATOR_STATUS = 1077,
 
     /// <summary>
-    /// int inviteCount for (inviteCount) { ulong ulong byte byte byte pguid } int eventCount
-    /// for (eventCount) { ulong cstring int int int eventFlags int pguid } int unixTime?
-    /// packedDate currentDate int instanceSaveCount for (instanceSaveCount) { int mapId int
-    /// difficulty int timeUntilReset ulong instanceId } int int instanceResetCount for
-    /// (instanceResetCount) { int int int } int count5 for (count5) { int int int int int for
-    /// (26) { int } for (10) { int } for (10) { int } cstring }
+    ///     int inviteCount for (inviteCount) { ulong ulong byte byte byte pguid } int eventCount
+    ///     for (eventCount) { ulong cstring int int int eventFlags int pguid } int unixTime?
+    ///     packedDate currentDate int instanceSaveCount for (instanceSaveCount) { int mapId int
+    ///     difficulty int timeUntilReset ulong instanceId } int int instanceResetCount for
+    ///     (instanceResetCount) { int int int } int count5 for (count5) { int int int int int for
+    ///     (26) { int } for (10) { int } for (10) { int } cstring }
     /// </summary>
     SMSG_CALENDAR_SEND_CALENDAR = 1078,
 
     /// <summary>
-    /// byte type? pguid ulong cstring cstring byte byte int int int packedDate packedDate int
-    /// count1 for (count1) { pguid byte byte byte byte ulong int }
+    ///     byte type? pguid ulong cstring cstring byte byte int int int packedDate packedDate int
+    ///     count1 for (count1) { pguid byte byte byte byte ulong int }
     /// </summary>
     SMSG_CALENDAR_SEND_EVENT = 1079,
 
     /// <summary>
-    /// int count for (count) { pguid byte }
+    ///     int count for (count) { pguid byte }
     /// </summary>
     SMSG_CALENDAR_FILTER_GUILD = 1080,
 
     /// <summary>
-    /// Exact same handler as 1080 int count for (count) { pguid byte }
+    ///     Exact same handler as 1080 int count for (count) { pguid byte }
     /// </summary>
     SMSG_CALENDAR_ARENA_TEAM = 1081,
 
     /// <summary>
-    /// pguid ulong eventId ulong byte byte byte b3 if (b3 == 1) { int } byte
+    ///     pguid ulong eventId ulong byte byte byte b3 if (b3 == 1) { int } byte
     /// </summary>
     SMSG_CALENDAR_EVENT_INVITE = 1082,
 
     /// <summary>
-    /// pguid playerGuid ulong eventId byte
+    ///     pguid playerGuid ulong eventId byte
     /// </summary>
     SMSG_CALENDAR_EVENT_INVITE_REMOVED = 1083,
 
     /// <summary>
-    /// pguid ulong int int byte byte int
+    ///     pguid ulong int int byte byte int
     /// </summary>
     SMSG_CALENDAR_EVENT_STATUS = 1084,
 
     /// <summary>
-    /// int (seems to be ignored) cstring cstring extra int error Errors
-    /// "CALENDAR_ERROR_GUILD_EVENTS_EXCEEDED" = 1, "CALENDAR_ERROR_EVENTS_EXCEEDED" = 2,
-    /// "CALENDAR_ERROR_SELF_INVITES_EXCEEDED" = 3, "CALENDAR_ERROR_OTHER_INVITES_EXCEEDED" = 4,
-    /// (extra string used) "CALENDAR_ERROR_PERMISSIONS" = 5, "CALENDAR_ERROR_EVENT_INVALID" =
-    /// 6, "CALENDAR_ERROR_NOT_INVITED" = 7, "CALENDAR_ERROR_INTERNAL" = 8,
-    /// "ERR_GUILD_PLAYER_NOT_IN_GUILD" = 9, "CALENDAR_ERROR_ALREADY_INVITED_TO_EVENT_S" = 10,
-    /// (extra string used) "PLAYER_NOT_FOUND" = 11, "CALENDAR_ERROR_NOT_ALLIED" = 12,
-    /// "ERR_IGNORING_YOU_S" = 13, (extra string used) "CALENDAR_ERROR_INVITES_EXCEEDED" = 14,
-    /// "CALENDAR_ERROR_INVALID_DATE" = 16, "CALENDAR_ERROR_INVALID_TIME" = 17,
-    /// "CALENDAR_ERROR_NEEDS_TITLE" = 19, "CALENDAR_ERROR_EVENT_PASSED" = 20,
-    /// "CALENDAR_ERROR_EVENT_LOCKED" = 21, "CALENDAR_ERROR_DELETE_CREATOR_FAILED" = 22,
-    /// "ERR_SYSTEM_DISABLED" = 24, "ERR_RESTRICTED_ACCOUNT" = 25,
-    /// "CALENDAR_ERROR_ARENA_EVENTS_EXCEEDED" = 26, "CALENDAR_ERROR_RESTRICTED_LEVEL" = 27,
-    /// "ERR_USER_SQUELCHED" = 28, "CALENDAR_ERROR_NO_INVITE" = 29,
-    /// "CALENDAR_ERROR_EVENT_WRONG_SERVER" = 36, "CALENDAR_ERROR_INVITE_WRONG_SERVER" = 37,
-    /// "CALENDAR_ERROR_NO_GUILD_INVITES" = 38, "CALENDAR_ERROR_INVALID_SIGNUP" = 39,
-    /// "CALENDAR_ERROR_NO_MODERATOR" = 40,
+    ///     int (seems to be ignored) cstring cstring extra int error Errors
+    ///     "CALENDAR_ERROR_GUILD_EVENTS_EXCEEDED" = 1, "CALENDAR_ERROR_EVENTS_EXCEEDED" = 2,
+    ///     "CALENDAR_ERROR_SELF_INVITES_EXCEEDED" = 3, "CALENDAR_ERROR_OTHER_INVITES_EXCEEDED" = 4,
+    ///     (extra string used) "CALENDAR_ERROR_PERMISSIONS" = 5, "CALENDAR_ERROR_EVENT_INVALID" =
+    ///     6, "CALENDAR_ERROR_NOT_INVITED" = 7, "CALENDAR_ERROR_INTERNAL" = 8,
+    ///     "ERR_GUILD_PLAYER_NOT_IN_GUILD" = 9, "CALENDAR_ERROR_ALREADY_INVITED_TO_EVENT_S" = 10,
+    ///     (extra string used) "PLAYER_NOT_FOUND" = 11, "CALENDAR_ERROR_NOT_ALLIED" = 12,
+    ///     "ERR_IGNORING_YOU_S" = 13, (extra string used) "CALENDAR_ERROR_INVITES_EXCEEDED" = 14,
+    ///     "CALENDAR_ERROR_INVALID_DATE" = 16, "CALENDAR_ERROR_INVALID_TIME" = 17,
+    ///     "CALENDAR_ERROR_NEEDS_TITLE" = 19, "CALENDAR_ERROR_EVENT_PASSED" = 20,
+    ///     "CALENDAR_ERROR_EVENT_LOCKED" = 21, "CALENDAR_ERROR_DELETE_CREATOR_FAILED" = 22,
+    ///     "ERR_SYSTEM_DISABLED" = 24, "ERR_RESTRICTED_ACCOUNT" = 25,
+    ///     "CALENDAR_ERROR_ARENA_EVENTS_EXCEEDED" = 26, "CALENDAR_ERROR_RESTRICTED_LEVEL" = 27,
+    ///     "ERR_USER_SQUELCHED" = 28, "CALENDAR_ERROR_NO_INVITE" = 29,
+    ///     "CALENDAR_ERROR_EVENT_WRONG_SERVER" = 36, "CALENDAR_ERROR_INVITE_WRONG_SERVER" = 37,
+    ///     "CALENDAR_ERROR_NO_GUILD_INVITES" = 38, "CALENDAR_ERROR_INVALID_SIGNUP" = 39,
+    ///     "CALENDAR_ERROR_NO_MODERATOR" = 40,
     /// </summary>
     SMSG_CALENDAR_COMMAND_RESULT = 1085,
 
     /// <summary>
-    /// packedDate lockoutTime? int int int ulong
+    ///     packedDate lockoutTime? int int int ulong
     /// </summary>
     SMSG_CALENDAR_RAID_LOCKOUT_ADDED = 1086,
 
@@ -1327,32 +1333,32 @@ public enum WorldCommands : uint
     SMSG_CALENDAR_RAID_LOCKOUT_REMOVED = 1087,
 
     /// <summary>
-    /// ulong cstring packedDate date int eventFlags int int ulong byte byte pguid pguid
+    ///     ulong cstring packedDate date int eventFlags int int ulong byte byte pguid pguid
     /// </summary>
     SMSG_CALENDAR_EVENT_INVITE_ALERT = 1088,
 
     /// <summary>
-    /// ulong eventId packedDate date int eventFlags
+    ///     ulong eventId packedDate date int eventFlags
     /// </summary>
     SMSG_CALENDAR_EVENT_INVITE_REMOVED_ALERT = 1089,
 
     /// <summary>
-    /// ulong eventId packedDate date int eventFlags byte
+    ///     ulong eventId packedDate date int eventFlags byte
     /// </summary>
     SMSG_CALENDAR_EVENT_INVITE_STATUS_ALERT = 1090,
 
     /// <summary>
-    /// byte ulong packedDate date
+    ///     byte ulong packedDate date
     /// </summary>
     SMSG_CALENDAR_EVENT_REMOVED_ALERT = 1091,
 
     /// <summary>
-    /// byte ulong int int eventFlags int byte int cstring
+    ///     byte ulong int int eventFlags int byte int cstring
     /// </summary>
     SMSG_CALENDAR_EVENT_UPDATED_ALERT = 1092,
 
     /// <summary>
-    /// pguid ulong byte byte
+    ///     pguid ulong byte byte
     /// </summary>
     SMSG_CALENDAR_EVENT_MODERATOR_STATUS_ALERT = 1093,
 
@@ -1360,7 +1366,7 @@ public enum WorldCommands : uint
     CMSG_CALENDAR_GET_NUM_PENDING = 1095,
 
     /// <summary>
-    /// int numPending
+    ///     int numPending
     /// </summary>
     SMSG_CALENDAR_SEND_NUM_PENDING = 1096,
 
@@ -1372,7 +1378,7 @@ public enum WorldCommands : uint
     CMSG_PLAY_DANCE = 1099,
 
     /// <summary>
-    /// ulong guid, int danceId (used to lookup in cache), int, int, int
+    ///     ulong guid, int danceId (used to lookup in cache), int, int, int
     /// </summary>
     SMSG_PLAY_DANCE = 1100,
 
@@ -1380,22 +1386,24 @@ public enum WorldCommands : uint
     CMSG_STOP_DANCE = 1102,
 
     /// <summary>
-    /// ulong player guid
+    ///     ulong player guid
     /// </summary>
     SMSG_STOP_DANCE = 1103,
 
     CMSG_SYNC_DANCE = 1104,
     CMSG_DANCE_QUERY = 1105,
 
-    /// <summary> dance query response int id [ if (id & 0x80000000) do nothing] pguid creator?
-    /// cstring (128 max) name? int bufferSize byte[bufferSize*4] int </summary>
+    /// <summary>
+    ///     dance query response int id [ if (id & 0x80000000) do nothing] pguid creator?
+    ///     cstring (128 max) name? int bufferSize byte[bufferSize*4] int
+    /// </summary>
     SMSG_DANCE_QUERY_RESPONSE = 1106,
 
     SMSG_INVALIDATE_DANCE = 1107,
     CMSG_DELETE_DANCE = 1108,
 
     /// <summary>
-    /// learn dance move? ulong mask
+    ///     learn dance move? ulong mask
     /// </summary>
     SMSG_LEARNED_DANCE_MOVES = 1109,
 
@@ -1406,7 +1414,7 @@ public enum WorldCommands : uint
     MSG_MOVE_SET_PITCH_RATE_CHEAT = 1114,
 
     /// <summary>
-    /// pguid unitGuid float
+    ///     pguid unitGuid float
     /// </summary>
     MSG_MOVE_SET_PITCH_RATE = 1115,
 
@@ -1414,7 +1422,7 @@ public enum WorldCommands : uint
     CMSG_FORCE_PITCH_RATE_CHANGE_ACK = 1117,
 
     /// <summary>
-    /// pguid unitGuid float
+    ///     pguid unitGuid float
     /// </summary>
     SMSG_SPLINE_SET_PITCH_RATE = 1118,
 
@@ -1424,12 +1432,12 @@ public enum WorldCommands : uint
     CMSG_UPDATE_MISSILE_TRAJECTORY = 1122,
 
     /// <summary>
-    /// int int. client does nothing with values
+    ///     int int. client does nothing with values
     /// </summary>
     SMSG_UPDATE_ACCOUNT_DATA_COMPLETE = 1123,
 
     /// <summary>
-    /// int
+    ///     int
     /// </summary>
     SMSG_TRIGGER_MOVIE = 1124,
 
@@ -1438,21 +1446,21 @@ public enum WorldCommands : uint
     CMSG_SET_GLYPH = 1127,
 
     /// <summary>
-    /// pguid recipient int achievementId (Achievement.dbc)
+    ///     pguid recipient int achievementId (Achievement.dbc)
     /// </summary>
     SMSG_ACHIEVEMENT_EARNED = 1128,
 
     SMSG_DYNAMIC_DROP_ROLL_RESULT = 1129,
 
     /// <summary>
-    /// int criteriaId (AchievementCriteria.dbc) pguid pguid int int packedDate int time (client
-    /// calculates time(NULL) - this for something) int time2 (client calculates time(NULL) -
-    /// this for something)
+    ///     int criteriaId (AchievementCriteria.dbc) pguid pguid int int packedDate int time (client
+    ///     calculates time(NULL) - this for something) int time2 (client calculates time(NULL) -
+    ///     this for something)
     /// </summary>
     SMSG_CRITERIA_UPDATE = 1130,
 
     /// <summary>
-    /// pguid of comparison player
+    ///     pguid of comparison player
     /// </summary>
     CMSG_QUERY_INSPECT_ACHIEVEMENTS = 1131,
 
@@ -1461,7 +1469,7 @@ public enum WorldCommands : uint
     CMSG_COMPLETE_ACHIEVEMENT_CHEAT = 1134,
 
     /// <summary>
-    /// int questId int
+    ///     int questId int
     /// </summary>
     SMSG_QUESTUPDATE_ADD_PVP_KILL = 1135,
 
@@ -1471,13 +1479,13 @@ public enum WorldCommands : uint
     CMSG_CHAR_CUSTOMIZE = 1139,
 
     /// <summary>
-    /// Char customize byte if (more data in packet) { ulong guid cstring byte byte byte byte
-    /// byte byte }
+    ///     Char customize byte if (more data in packet) { ulong guid cstring byte byte byte byte
+    ///     byte byte }
     /// </summary>
     SMSG_CHAR_CUSTOMIZE = 1140,
 
     /// <summary>
-    /// Empty
+    ///     Empty
     /// </summary>
     SMSG_PET_RENAMEABLE = 1141,
 
@@ -1487,14 +1495,14 @@ public enum WorldCommands : uint
     CMSG_REQUEST_VEHICLE_SWITCH_SEAT = 1145,
 
     /// <summary>
-    /// guid, int, int
+    ///     guid, int, int
     /// </summary>
     CMSG_PET_LEARN_TALENT = 1146,
 
     CMSG_PET_UNLEARN_TALENTS = 1147,
 
     /// <summary>
-    /// int
+    ///     int
     /// </summary>
     SMSG_SET_PHASE_SHIFT = 1148,
 
@@ -1502,77 +1510,77 @@ public enum WorldCommands : uint
     CMSG_FORCE_SAY_CHEAT = 1150,
 
     /// <summary>
-    /// Used if cvar "predictedHealth" is true pguid uint newValue
+    ///     Used if cvar "predictedHealth" is true pguid uint newValue
     /// </summary>
     SMSG_HEALTH_UPDATE = 1151,
 
     /// <summary>
-    /// Used if cvar "predictedPower" is true pguid byte powerType uint newValue
+    ///     Used if cvar "predictedPower" is true pguid byte powerType uint newValue
     /// </summary>
     SMSG_POWER_UPDATE = 1152,
 
     /// <summary>
-    /// ulong guid
+    ///     ulong guid
     /// </summary>
     CMSG_GAMEOBJ_REPORT_USE = 1153,
 
     /// <summary>
-    /// pguid pguid newPrimaryTarget int count for(count) { pguid, int }
+    ///     pguid pguid newPrimaryTarget int count for(count) { pguid, int }
     /// </summary>
     SMSG_HIGHEST_THREAT_UPDATE = 1154,
 
     /// <summary>
-    /// pguid, int count, for(count) { pguid, int }
+    ///     pguid, int count, for(count) { pguid, int }
     /// </summary>
     SMSG_THREAT_UPDATE = 1155,
 
     /// <summary>
-    /// pguid, pguid
+    ///     pguid, pguid
     /// </summary>
     SMSG_THREAT_REMOVE = 1156,
 
     /// <summary>
-    /// pguid
+    ///     pguid
     /// </summary>
     SMSG_THREAT_CLEAR = 1157,
 
     SMSG_CONVERT_RUNE = 1158,
 
     /// <summary>
-    /// int count, stored in dword_1175648 for (count) { byte byte }
+    ///     int count, stored in dword_1175648 for (count) { byte byte }
     /// </summary>
     SMSG_RESYNC_RUNES = 1159,
 
     /// <summary>
-    /// int mask
+    ///     int mask
     /// </summary>
     SMSG_ADD_RUNE_POWER = 1160,
 
     CMSG_START_QUEST = 1161,
 
     /// <summary>
-    /// int index
+    ///     int index
     /// </summary>
     CMSG_REMOVE_GLYPH = 1162,
 
     /// <summary>
-    /// Debug Client only
+    ///     Debug Client only
     /// </summary>
     CMSG_DUMP_OBJECTS = 1163,
 
     /// <summary>
-    /// Debug Client only
+    ///     Debug Client only
     /// </summary>
     SMSG_DUMP_OBJECTS_DATA = 1164,
 
     /// <summary>
-    /// ulong guid
+    ///     ulong guid
     /// </summary>
     CMSG_DISMISS_CRITTER = 1165,
 
     /// <summary>
-    /// read as byte[56], but actually has a struct ulong guid int spellId float float float
-    /// float float float int int int int
+    ///     read as byte[56], but actually has a struct ulong guid int spellId float float float
+    ///     float float float int int int int
     /// </summary>
     SMSG_NOTIFY_DEST_LOC_SPELL_CAST = 1166,
 
@@ -1580,65 +1588,67 @@ public enum WorldCommands : uint
     SMSG_AUCTION_LIST_PENDING_SALES = 1168,
 
     /// <summary>
-    /// int a1, ulong guid, int a2. If a1 &gt; 0, call sub_768A20
+    ///     int a1, ulong guid, int a2. If a1 &gt; 0, call sub_768A20
     /// </summary>
     SMSG_MODIFY_COOLDOWN = 1169,
 
     /// <summary>
-    /// pguid petGuid pguid targetGuid byte comboPoints
+    ///     pguid petGuid pguid targetGuid byte comboPoints
     /// </summary>
     SMSG_PET_UPDATE_COMBO_POINTS = 1170,
 
     CMSG_ENABLETAXI = 1171,
 
     /// <summary>
-    /// pguid
+    ///     pguid
     /// </summary>
     SMSG_PRE_RESURRECT = 1172,
 
-    /// <summary> pguid unit until end (up to 256 bytes) { byte index int spellId if (spellId >
-    /// 0) { byte flags; byte level; byte count; if (flags & 8) { caster is unit.guid } else {
-    /// caster = read pguid } if (flags & 0x20) { // these 2 may be the same int duration; int
-    /// mstimelength; // this is added to current mstime to calculate expiration expiration =
-    /// currentmstime + mstimelength if ((mstimelength+currentmstime) == 0) { expiration = 1; }
-    /// } else { duration = 0; expiration = 0; } } } </summary>
+    /// <summary>
+    ///     pguid unit until end (up to 256 bytes) { byte index int spellId if (spellId >
+    ///     0) { byte flags; byte level; byte count; if (flags & 8) { caster is unit.guid } else {
+    ///     caster = read pguid } if (flags & 0x20) { // these 2 may be the same int duration; int
+    ///     mstimelength; // this is added to current mstime to calculate expiration expiration =
+    ///     currentmstime + mstimelength if ((mstimelength+currentmstime) == 0) { expiration = 1; }
+    ///     } else { duration = 0; expiration = 0; } } }
+    /// </summary>
     SMSG_AURA_UPDATE_ALL = 1173,
 
     SMSG_AURA_UPDATE = 1174,
     CMSG_FLOOD_GRACE_CHEAT = 1175,
 
     /// <summary>
-    /// guid, int achievementId, int type. if type &gt; 0, "PLAYER_SERVER_FIRST_ACHIEVEMENT",
-    /// else "SERVER_FIRST_ACHIEVEMENT"
+    ///     guid, int achievementId, int type. if type &gt; 0, "PLAYER_SERVER_FIRST_ACHIEVEMENT",
+    ///     else "SERVER_FIRST_ACHIEVEMENT"
     /// </summary>
     SMSG_SERVER_FIRST_ACHIEVEMENT = 1176,
 
     /// <summary>
-    /// ushort spellId
+    ///     ushort spellId
     /// </summary>
     SMSG_PET_LEARNED_SPELL = 1177,
 
     /// <summary>
-    /// 1178 ushort spellId
+    ///     1178 ushort spellId
     /// </summary>
     SMSG_PET_REMOVED_SPELL = 1178,
 
     CMSG_CHANGE_SEATS_ON_CONTROLLED_VEHICLE = 1179,
 
     /// <summary>
-    /// Called when leaving Wintergrasp PVP zone
+    ///     Called when leaving Wintergrasp PVP zone
     /// </summary>
     CMSG_HEARTH_AND_RESURRECT = 1180,
 
     SMSG_ON_CANCEL_EXPECTED_RIDE_VEHICLE_AURA = 1181,
 
     /// <summary>
-    /// int criteriaId
+    ///     int criteriaId
     /// </summary>
     SMSG_CRITERIA_DELETED = 1182,
 
     /// <summary>
-    /// int achievementId
+    ///     int achievementId
     /// </summary>
     SMSG_ACHIEVEMENT_DELETED = 1183,
 
@@ -1652,124 +1662,124 @@ public enum WorldCommands : uint
     SMSG_1190 = 1190,
 
     /// <summary>
-    /// Vehicle related pguid unitGuid int vehicleId (Vehicle.dbc)
+    ///     Vehicle related pguid unitGuid int vehicleId (Vehicle.dbc)
     /// </summary>
     SMSG_VEHICLE_1191 = 1191,
 
     /// <summary>
-    /// Activates a service? called from the same method that sends out other NPCFlag related
-    /// "hello" opcodes guid
+    ///     Activates a service? called from the same method that sends out other NPCFlag related
+    ///     "hello" opcodes guid
     /// </summary>
     CMSG_PLAYER_VEHICLE_ENTER = 1192,
 
     /// <summary>
-    /// guid passengerId
+    ///     guid passengerId
     /// </summary>
     CMSG_EJECT_PASSENGER = 1193,
 
     /// <summary>
-    /// int count for (count) { guid }
+    ///     int count for (count) { guid }
     /// </summary>
     SMSG_PET_GUIDS = 1194,
 
     /// <summary>
-    /// Structure:
-    /// uint32: version
+    ///     Structure:
+    ///     uint32: version
     /// </summary>
     SMSG_CLIENTCACHE_VERSION = 1195, // 1190 in 3.0.9
 
     // no 1196 no 1197 no 1198 no 1199 no 1200 no 1201
     /// <summary>
-    /// int64 itemGuid int int honorPoints int arenaPoints for (5) { int tokenItemId int
-    /// tokenCount } int int
+    ///     int64 itemGuid int int honorPoints int arenaPoints for (5) { int tokenItemId int
+    ///     tokenCount } int int
     /// </summary>
     SMSG_REFUND_UNKNOWN_1202 = 1202,
 
     /// <summary>
-    /// refund request? int64 guid
+    ///     refund request? int64 guid
     /// </summary>
     CMSG_ITEM_REFUND_INFO_REQUEST = 1203,
 
     /// <summary>
-    /// lua_ContainerRefundItemPurchase int64 itemGuid
+    ///     lua_ContainerRefundItemPurchase int64 itemGuid
     /// </summary>
     CMSG_UNKNOWN_1204 = 1204, // prolly info request, somesort
 
     /// <summary>
-    /// int64 itemGuid int response if (response) { "UNABLE_TO_REFUND_ITEM" packet ends } int
-    /// int honorPoints int arenaPoints for (5) { int tokenItemId int tokenCount }
+    ///     int64 itemGuid int response if (response) { "UNABLE_TO_REFUND_ITEM" packet ends } int
+    ///     int honorPoints int arenaPoints for (5) { int tokenItemId int tokenCount }
     /// </summary>
     SMSG_REFUND_UNKNOWN_1205 = 1205,
 
     /// <summary>
-    /// int - same as new last int sent in MSG_CORPSE_QUERY (corpse low guid)
+    ///     int - same as new last int sent in MSG_CORPSE_QUERY (corpse low guid)
     /// </summary>
     CMSG_CORPSE_MAP_POSITION_QUERY = 1206,
 
     /// <summary>
-    /// 4*float
+    ///     4*float
     /// </summary>
     SMSG_CORPSE_MAP_POSITION_QUERY_RESPONSE = 1207,
 
     /// <summary>
-    /// lua_SetLFGRoles byte roleMask 0x1 - leader 0x2 - tank 0x4 - healer 0x8 - damage
+    ///     lua_SetLFGRoles byte roleMask 0x1 - leader 0x2 - tank 0x4 - healer 0x8 - damage
     /// </summary>
     CMSG_LFG_SET_ROLES = 1208,
 
     /// <summary>
-    /// Not in client as of 9733
+    ///     Not in client as of 9733
     /// </summary>
     UMSG_UNKNOWN_1209 = 1209,
 
     /// <summary>
-    /// lua_CalendarContextEventSignUp int64
+    ///     lua_CalendarContextEventSignUp int64
     /// </summary>
     CMSG_CALENDAR_UNKNOWN_1210 = 1210,
 
     SMSG_CALENDAR_UNKNOWN_1211 = 1211,
 
     /// <summary>
-    /// For equipment manager. int setCount for (setCount) { pguid int setId cstring cstring for
-    /// (19) { pguid itemGuid (corresponds to inventoryslot) } }
+    ///     For equipment manager. int setCount for (setCount) { pguid int setId cstring cstring for
+    ///     (19) { pguid itemGuid (corresponds to inventoryslot) } }
     /// </summary>
     SMSG_EQUIPMENT_SET_LIST = 1212,
 
     /// <summary>
-    /// lua_SaveEquipmentSet Set equipment set pguid - maybe not an actual object guid, but a
-    /// set identifier? only this is sent in the delete set packet int setId cstring cstring for
-    /// (19) { pguid itemGuid (corresponds to inventoryslot) }
+    ///     lua_SaveEquipmentSet Set equipment set pguid - maybe not an actual object guid, but a
+    ///     set identifier? only this is sent in the delete set packet int setId cstring cstring for
+    ///     (19) { pguid itemGuid (corresponds to inventoryslot) }
     /// </summary>
     CMSG_EQUIPMENT_SET_SAVE = 1213,
 
     /// <summary>
-    /// called from CMissile::CalcPosition int64 guid int byte byte[12] (read as 12 bytes, could
-    /// be vector3?)
+    ///     called from CMissile::CalcPosition int64 guid int byte byte[12] (read as 12 bytes, could
+    ///     be vector3?)
     /// </summary>
     CMSG_MISSILE_UNKNOWN_1214 = 1214,
 
     /// <summary>
-    /// int64 byte float float float
+    ///     int64 byte float float float
     /// </summary>
     SMSG_UNKNOWN_1215 = 1215,
 
     /// <summary>
-    /// byte type - branches to 2 diff structs depending on this if (type == 1) // pet { int
-    /// unspentTalentPoints byte talentCount for (talentCount) { int talentId (Talent.dbc) byte
-    /// rank } } if (type == 0) // player { int unspentTalentPoints byte talentGroupCount (1 or
-    /// 2) byte talentGroupIndex (0 or 1) if (talentGroupCount) // when would this not occur?
-    /// unless count can be 0? { for (talentGroupCount) { byte talentIdCount for (talentIdCount)
-    /// { int talentId (Talent.dbc) byte rank (0 is 1 point, 4 is 5 points) } byte glyphCount
-    /// (up to 6) for (glyphCount) { int16 glyphPropertiesId } } } }
+    ///     byte type - branches to 2 diff structs depending on this if (type == 1) // pet { int
+    ///     unspentTalentPoints byte talentCount for (talentCount) { int talentId (Talent.dbc) byte
+    ///     rank } } if (type == 0) // player { int unspentTalentPoints byte talentGroupCount (1 or
+    ///     2) byte talentGroupIndex (0 or 1) if (talentGroupCount) // when would this not occur?
+    ///     unless count can be 0? { for (talentGroupCount) { byte talentIdCount for (talentIdCount)
+    ///     { int talentId (Talent.dbc) byte rank (0 is 1 point, 4 is 5 points) } byte glyphCount
+    ///     (up to 6) for (glyphCount) { int16 glyphPropertiesId } } } }
     /// </summary>
     SMSG_TALENTS_INFO = 1216,
 
     /// <summary>
-    /// lua_LearnPreviewTalents int count for (count) { int talentId int rank }
+    ///     lua_LearnPreviewTalents int count for (count) { int talentId int rank }
     /// </summary>
     CMSG_LEARN_PREVIEW_TALENTS = 1217,
 
     /// <summary>
-    /// lua_LearnPreviewTalents int64 petGuid int count for (count) { int talentId int rank }
+    ///     lua_LearnPreviewTalents int64 petGuid int count for (count) { int talentId int rank }
     /// </summary>
     CMSG_PET_LEARN_PREVIEWED_TALENTS = 1218,
 
@@ -1779,12 +1789,12 @@ public enum WorldCommands : uint
     UMSG_UNKNOWN_1222 = 1222, // not found
 
     /// <summary>
-    /// battleground pet related only useful if the player is currently in an arena
+    ///     battleground pet related only useful if the player is currently in an arena
     /// </summary>
     SMSG_1223 = 1223,
 
     /// <summary>
-    /// if != 0, broadcasts ERR_ARENA_TEAM_CHANGE_FAILED_QUEUED
+    ///     if != 0, broadcasts ERR_ARENA_TEAM_CHANGE_FAILED_QUEUED
     /// </summary>
     SMSG_1224 = 1224, // int, used as a bool.
 
@@ -1805,12 +1815,12 @@ public enum WorldCommands : uint
     SMSG_UNKNOWN_1236 = 1236,
 
     /// <summary>
-    /// for (19) { pguid itemId byte srcContainer byte srcSlot }
+    ///     for (19) { pguid itemId byte srcContainer byte srcSlot }
     /// </summary>
     CMSG_USE_EQUIPMENT_SET = 1237, // moved in 3.2.2, prev. 1227
 
     /// <summary>
-    /// byte result (0 = ok, 4 = bags full, &gt; 0 = error)
+    ///     byte result (0 = ok, 4 = bags full, &gt; 0 = error)
     /// </summary>
     SMSG_USE_EQUIPMENT_SET_RESULT = 1238, // moved in 3.2.2, prev. 1228
 

@@ -16,9 +16,10 @@ public class AuthenticationCrypto
         0x34, 0x3C, 0x53, 0xEE, 0x2F, 0x43, 0x67, 0xCE
     };
 
+    private readonly Arc4 _decryptionStream;
+    private readonly Arc4 _encryptionStream;
+
     private CryptoAuthStatus _status = CryptoAuthStatus.WAITING;
-    private Arc4 _decryptionStream;
-    private Arc4 _encryptionStream;
 
     public AuthenticationCrypto(byte[] sessionKey)
     {
@@ -45,7 +46,7 @@ public class AuthenticationCrypto
     {
         _status = CryptoAuthStatus.READY;
     }
-    
+
     public void Deactivate()
     {
         _status = CryptoAuthStatus.WAITING;

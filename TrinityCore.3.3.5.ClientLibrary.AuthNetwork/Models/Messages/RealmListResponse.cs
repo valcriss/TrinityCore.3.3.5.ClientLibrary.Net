@@ -6,11 +6,11 @@ namespace TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Messages;
 
 public class RealmListResponse : ParsedPacket<AuthCommands>
 {
-    public List<Realm> Realms { get; } = new();
-
     private RealmListResponse(byte[]? data = null) : base(AuthCommands.REALM_LIST, data)
     {
     }
+
+    public List<Realm> Realms { get; } = new();
 
     public static RealmListResponse? Parse(RawPacket<AuthCommands> rawPacket)
     {

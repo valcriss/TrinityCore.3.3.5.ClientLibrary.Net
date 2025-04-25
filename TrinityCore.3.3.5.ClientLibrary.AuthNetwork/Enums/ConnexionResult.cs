@@ -7,5 +7,5 @@ public enum ConnexionResult : byte
     AUTH_PROOF_FAILED = 2,
     AUTH_INVALID_PROOF = 3,
     AUTHENTIFICATION_FAILED = 4,
-    SUCCESS = 99,
+    SUCCESS = 99
 }

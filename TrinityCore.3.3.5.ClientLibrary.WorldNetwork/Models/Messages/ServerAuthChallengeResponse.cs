@@ -13,7 +13,7 @@ public class ServerAuthChallengeResponse : OutgoingPacket<WorldCommands>
 {
     public ServerAuthChallengeResponse(uint realmId, string username, byte[] sessionKey, uint serverSeed) : base(WorldCommands.CLIENT_AUTH_SESSION)
     {
-        var rand = RandomNumberGenerator.Create();
+        RandomNumberGenerator rand = RandomNumberGenerator.Create();
         byte[] bytes = new byte[4];
         rand.GetBytes(bytes);
         BigInteger ourSeed = bytes.ToBigInteger();

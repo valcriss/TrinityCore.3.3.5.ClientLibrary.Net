@@ -1,6 +1,6 @@
 ﻿namespace TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Enums;
 
-public  enum AuthResult : byte
+public enum AuthResult : byte
 {
     SUCCESS = 0,
     FAILURE = 0x01,

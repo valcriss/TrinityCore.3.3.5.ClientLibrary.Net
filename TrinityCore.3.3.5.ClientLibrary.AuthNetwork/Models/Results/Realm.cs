@@ -16,7 +16,7 @@ public class Realm
     public byte VersionBugFix { get; set; }
     public byte VersionMajor { get; set; }
     public byte VersionMinor { get; set; }
-    
+
     public override string ToString()
     {
         return Name;

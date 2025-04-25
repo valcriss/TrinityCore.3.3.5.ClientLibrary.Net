@@ -9,14 +9,13 @@ namespace TrinityCore._3._3._5.ClientLibrary.Network;
 
 public class NetworkClient<TCommands> : IDisposable where TCommands : struct, Enum
 {
-    public Action? Connected;
-    public Action? Disconnected;
-
     private readonly ConnectionManager _connectionManager;
+    private readonly NetworkEventBus<TCommands> _eventBus;
     private readonly FrameReader<TCommands> _frameReader;
     private readonly FrameWriter<TCommands> _frameWriter;
     private readonly PacketParser<TCommands> _packetParser;
-    private readonly NetworkEventBus<TCommands> _eventBus;
+    public Action? Connected;
+    public Action? Disconnected;
 
     public NetworkClient(string host,
         int port,
@@ -36,6 +35,16 @@ public class NetworkClient<TCommands> : IDisposable where TCommands : struct, En
         _eventBus = eventBus;
     }
 
+    public void Dispose()
+    {
+        _frameReader.PacketExtracted -= OnPacketExtracted;
+        _connectionManager.Disconnected -= OnDisconnected;
+        _connectionManager.Connected -= OnConnected;
+        _connectionManager.DataReceived -= OnDataReceived;
+        _connectionManager.DisconnectAsync().Wait();
+        _connectionManager.Dispose();
+    }
+
     public async Task ConnectAsync()
     {
         await _connectionManager.ConnectAsync();
@@ -49,10 +58,7 @@ public class NetworkClient<TCommands> : IDisposable where TCommands : struct, En
     public async Task SendAsync(OutgoingPacket<TCommands> packet)
     {
         byte[]? data = _frameWriter.Create(packet);
-        if (data == null)
-        {
-            throw new InvalidOperationException("Failed to create packet data.");
-        }
+        if (data == null) throw new InvalidOperationException("Failed to create packet data.");
 
         await _connectionManager.SendAsync(data);
     }
@@ -65,10 +71,7 @@ public class NetworkClient<TCommands> : IDisposable where TCommands : struct, En
     private void OnPacketExtracted(RawPacket<TCommands> rawPacket)
     {
         ParsedPacket<TCommands>? packet = _packetParser.Parse(rawPacket);
-        if (packet != null)
-        {
-            _eventBus.Dispatch(packet.Command, packet.GetType(), packet);
-        }
+        if (packet != null) _eventBus.Dispatch(packet.Command, packet.GetType(), packet);
     }
 
     private void OnDataReceived(byte[]? data)
@@ -84,15 +87,5 @@ public class NetworkClient<TCommands> : IDisposable where TCommands : struct, En
     private void OnDisconnected()
     {
         Disconnected?.Invoke();
-    }
-
-    public void Dispose()
-    {
-        _frameReader.PacketExtracted -= OnPacketExtracted;
-        _connectionManager.Disconnected -= OnDisconnected;
-        _connectionManager.Connected -= OnConnected;
-        _connectionManager.DataReceived -= OnDataReceived;
-        _connectionManager.DisconnectAsync().Wait();
-        _connectionManager.Dispose();
     }
 }

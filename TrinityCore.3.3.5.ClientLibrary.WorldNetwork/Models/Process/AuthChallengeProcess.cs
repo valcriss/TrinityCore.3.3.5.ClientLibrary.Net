@@ -10,12 +10,12 @@ public class AuthChallengeProcess : IDisposable
     private const int AUTHENTIFICATION_TIMEOUT = 5000;
 
     private readonly ManualResetEvent _authenticateDone;
-    private readonly NetworkClient<WorldCommands> _networkClient;
     private readonly AuthenticationCrypto _crypto;
+    private readonly NetworkClient<WorldCommands> _networkClient;
     private readonly uint _realmId;
-    private readonly string _username;
     private readonly byte[] _sessionKey;
-    private bool _authenticated = false;
+    private readonly string _username;
+    private bool _authenticated;
 
     public AuthChallengeProcess(NetworkClient<WorldCommands> networkClient, uint realmId, string username, byte[] sessionKey, AuthenticationCrypto crypto)
     {
@@ -25,6 +25,12 @@ public class AuthChallengeProcess : IDisposable
         _sessionKey = sessionKey;
         _crypto = crypto;
         _authenticateDone = new ManualResetEvent(false);
+    }
+
+    public void Dispose()
+    {
+        _authenticateDone.Dispose();
+        _networkClient.Dispose();
     }
 
     public async Task<bool> AuthenticateAsync()
@@ -53,11 +59,5 @@ public class AuthChallengeProcess : IDisposable
     {
         _authenticated = serverAuthChallengeResult.Success;
         _authenticateDone.Set();
-    }
-
-    public void Dispose()
-    {
-        _authenticateDone.Dispose();
-        _networkClient.Dispose();
     }
 }

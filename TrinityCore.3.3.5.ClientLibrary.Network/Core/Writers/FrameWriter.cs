@@ -5,6 +5,7 @@ namespace TrinityCore._3._3._5.ClientLibrary.Network.Core.Writers;
 public class FrameWriter<TCommands> where TCommands : struct, Enum
 {
     private readonly FrameHeaderWriter<TCommands> _headerWriter;
+
     public FrameWriter(FrameHeaderWriter<TCommands> headerWriter)
     {
         _headerWriter = headerWriter;
@@ -14,10 +15,7 @@ public class FrameWriter<TCommands> where TCommands : struct, Enum
     {
         // Create the packet data using the header writer
         byte[]? header = _headerWriter.Create(packet);
-        if (header == null)
-        {
-            return null;
-        }
+        if (header == null) return null;
 
         // Combine header and packet data
         byte[] packetData = packet.GetData();

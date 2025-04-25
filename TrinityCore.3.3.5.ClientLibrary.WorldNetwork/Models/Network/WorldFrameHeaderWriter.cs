@@ -6,7 +6,7 @@ using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Security;
 
 namespace TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Network;
 
-public class WorldFrameHeaderWriter: FrameHeaderWriter<WorldCommands>
+public class WorldFrameHeaderWriter : FrameHeaderWriter<WorldCommands>
 {
     private readonly AuthenticationCrypto _crypto;
 
@@ -14,7 +14,7 @@ public class WorldFrameHeaderWriter: FrameHeaderWriter<WorldCommands>
     {
         _crypto = crypto;
     }
-    
+
     public override byte[]? Create(OutgoingPacket<WorldCommands> packet)
     {
         byte[] buffer = packet.GetData();
@@ -24,10 +24,10 @@ public class WorldFrameHeaderWriter: FrameHeaderWriter<WorldCommands>
 
         Array.Copy(size, 0, data, 0, 2);
         Array.Copy(command, 0, data, 2, 4);
-        
+
         return data;
     }
-    
+
     private byte[] EncryptedCommand(WorldCommands command)
     {
         byte[] encryptedCommand = BitConverter.GetBytes((uint)command);

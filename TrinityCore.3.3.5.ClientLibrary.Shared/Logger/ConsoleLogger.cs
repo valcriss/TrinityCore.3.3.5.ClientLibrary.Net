@@ -29,7 +29,7 @@ public class ConsoleLogger : ILog
         Console.WriteLine(message);
         Console.ResetColor();
     }
-    
+
     public void Success(string message)
     {
         Console.ForegroundColor = ConsoleColor.Green;

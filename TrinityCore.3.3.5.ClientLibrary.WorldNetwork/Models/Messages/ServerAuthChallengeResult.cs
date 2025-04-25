@@ -3,13 +3,14 @@ using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Enums;
 
 namespace TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages;
 
-public class ServerAuthChallengeResult: ParsedPacket<WorldCommands>
+public class ServerAuthChallengeResult : ParsedPacket<WorldCommands>
 {
-    public bool Success { get; set; }
     public ServerAuthChallengeResult(byte[]? data = null) : base(WorldCommands.SERVER_AUTH_RESPONSE, data)
     {
     }
-    
+
+    public bool Success { get; set; }
+
     public static ServerAuthChallengeResult? Parse(RawPacket<WorldCommands> rawPacket)
     {
         ServerAuthChallengeResult packet = new(rawPacket.Payload);

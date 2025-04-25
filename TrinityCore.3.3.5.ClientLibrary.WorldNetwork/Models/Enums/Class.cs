@@ -1,4 +1,5 @@
 ﻿namespace TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Enums;
+
 public enum Class : byte
 {
     Warrior = 1,
