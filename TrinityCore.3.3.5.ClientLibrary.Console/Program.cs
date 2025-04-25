@@ -45,7 +45,7 @@ namespace TrinityCore._3._3._5.ClientLibrary.Console
                     }
                     else
                     {
-                        Log.Error("Échec de l'authentification au royaume.");
+                        Log.Error($"Échec de l'authentification au royaume.");
                     }
                 }
                 else
@@ -55,7 +55,7 @@ namespace TrinityCore._3._3._5.ClientLibrary.Console
             }
             else
             {
-                Log.Error($"Échec d'authentification");
+                Log.Error($"Échec d'authentification : {authentication.ConnexionResult}");
             }
 
             while (System.Console.ReadKey(true).Key != ConsoleKey.Q)

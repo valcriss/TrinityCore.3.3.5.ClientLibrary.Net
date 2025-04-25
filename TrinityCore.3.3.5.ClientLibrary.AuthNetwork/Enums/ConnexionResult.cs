@@ -6,5 +6,6 @@ public enum ConnexionResult : byte
     LOGON_CHALLENGE_FAILED = 1,
     AUTH_PROOF_FAILED = 2,
     AUTH_INVALID_PROOF = 3,
-    SUCCESS = 99
+    AUTHENTIFICATION_FAILED = 4,
+    SUCCESS = 99,
 }

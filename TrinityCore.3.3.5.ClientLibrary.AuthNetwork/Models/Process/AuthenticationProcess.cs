@@ -9,7 +9,7 @@ namespace TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Process;
 
 public class AuthenticationProcess : IDisposable
 {
-    private const int AUTHENTIFICATION_TIMEOUT = 5000;
+    private const int AUTHENTIFICATION_TIMEOUT = 3000;
     
     private readonly NetworkClient<AuthCommands> _networkClient;
     private readonly AuthCredentials _credentials;
@@ -28,18 +28,15 @@ public class AuthenticationProcess : IDisposable
     {
         try
         {
-            _authenticationResult.Reset();
+            _authenticationResult.Fail(ConnexionResult.AUTHENTIFICATION_FAILED);
             await _networkClient.ConnectAsync();
-            _authenticateDone.Reset();
             _authenticateDone.WaitOne(AUTHENTIFICATION_TIMEOUT);
             return _authenticationResult;
         }
-        catch(Exception ex)
+        catch
         {
-            Log.Error($"Authentication failed: {ex.Message}");
-            Log.Error($"{ex.StackTrace}");
+            _authenticationResult.Fail(ConnexionResult.AUTHENTIFICATION_FAILED);
             _authenticateDone.Set();
-            _authenticationResult.Reset();
             return _authenticationResult;
         }
     }

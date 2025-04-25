@@ -1,6 +1,6 @@
 ﻿namespace TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Enums;
 
-internal enum CommandDetail : byte
+public enum CommandDetail : byte
 {
     AUTH_OK = 12,
     AUTH_FAILED = 13,
