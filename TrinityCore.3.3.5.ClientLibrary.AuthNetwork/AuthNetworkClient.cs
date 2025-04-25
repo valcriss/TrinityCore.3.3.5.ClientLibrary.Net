@@ -2,6 +2,7 @@
 using TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Messages;
 using TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Network;
 using TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Process;
+using TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Registry;
 using TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Results;
 using TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Security;
 using TrinityCore._3._3._5.ClientLibrary.Network;
@@ -23,12 +24,14 @@ namespace TrinityCore._3._3._5.ClientLibrary.AuthNetwork
         private readonly AuthCredentials _credentials;
         private readonly AuthenticationProcess _authenticationProcess;
         private readonly RealmProcess _realmProcess;
+        private readonly AuthOpcodeRegistryFactory _opcodeRegistryFactory = new();
 
         public AuthNetworkClient(string host, int port, string username, string password)
         {
+            
             FrameReader<AuthCommands> frameReader = new(new AuthFrameHeaderReader());
             FrameWriter<AuthCommands> frameWriter = new(new AuthFrameHeaderWriter());
-            PacketParser<AuthCommands> authPacketParser = new(CreateOpcodeRegistry());
+            PacketParser<AuthCommands> authPacketParser = new(_opcodeRegistryFactory.Create());
             
             _eventBus = new();
             
@@ -67,15 +70,6 @@ namespace TrinityCore._3._3._5.ClientLibrary.AuthNetwork
             _eventBus.Unsubscribe<LogonChallengeResponse>(AuthCommands.LOGON_CHALLENGE, _authenticationProcess.OnLogonChallengeResponse);
             _eventBus.Unsubscribe<AuthProofResponse>(AuthCommands.LOGON_PROOF, _authenticationProcess.OnAuthProofResponse);
             _eventBus.Unsubscribe<RealmListResponse>(AuthCommands.REALM_LIST, _realmProcess.OnRealmListResponse);
-        }
-
-        private OpcodeRegistry<AuthCommands> CreateOpcodeRegistry()
-        {
-            OpcodeRegistry<AuthCommands> registry = new();
-            registry.Register(AuthCommands.LOGON_CHALLENGE, LogonChallengeResponse.Parse);
-            registry.Register(AuthCommands.LOGON_PROOF, AuthProofResponse.Parse);
-            registry.Register(AuthCommands.REALM_LIST, RealmListResponse.Parse);
-            return registry;
         }
 
         public void Dispose()

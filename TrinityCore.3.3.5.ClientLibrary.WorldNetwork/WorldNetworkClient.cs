@@ -8,6 +8,7 @@ using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Enums;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Network;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Process;
+using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Registry;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Results;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Security;
 
@@ -23,6 +24,7 @@ namespace TrinityCore._3._3._5.ClientLibrary.WorldNetwork
 
         private readonly AuthChallengeProcess _authChallengeProcess;
         private readonly CharactersListProcess _charactersListProcess;
+        private readonly WorldOpcodeRegistryFactory _opcodeRegistryFactory = new();
 
         public WorldNetworkClient(string host, int port, uint realmId, string username, byte[] sessionKey, NetworkEventBus<WorldCommands> eventBus)
         {
@@ -30,7 +32,7 @@ namespace TrinityCore._3._3._5.ClientLibrary.WorldNetwork
             AuthenticationCrypto crypto = new(sessionKey);
             FrameReader<WorldCommands> frameReader = new(new WorldFrameHeaderReader(crypto));
             FrameWriter<WorldCommands> frameWriter = new(new WorldFrameHeaderWriter(crypto));
-            PacketParser<WorldCommands> authPacketParser = new(CreateOpcodeRegistry());
+            PacketParser<WorldCommands> authPacketParser = new(_opcodeRegistryFactory.Create());
 
             _networkClient = new NetworkClient<WorldCommands>(host, port, frameReader, frameWriter, authPacketParser, _eventBus);
             _networkClient.Connected += OnConnected;
@@ -57,15 +59,6 @@ namespace TrinityCore._3._3._5.ClientLibrary.WorldNetwork
             _eventBus.Subscribe<ServerAuthChallengeRequest>(WorldCommands.SERVER_AUTH_CHALLENGE, _authChallengeProcess.OnServerAuthChallengeRequest);
             _eventBus.Subscribe<ServerAuthChallengeResult>(WorldCommands.SERVER_AUTH_RESPONSE, _authChallengeProcess.OnServerAuthChallengeResult);
             _eventBus.Subscribe<ServerCharactersListResponse>(WorldCommands.SMSG_CHAR_ENUM, _charactersListProcess.OnServerCharactersListResponse);
-        }
-
-        private OpcodeRegistry<WorldCommands> CreateOpcodeRegistry()
-        {
-            OpcodeRegistry<WorldCommands> registry = new();
-            registry.Register(WorldCommands.SERVER_AUTH_CHALLENGE, ServerAuthChallengeRequest.Parse);
-            registry.Register(WorldCommands.SERVER_AUTH_RESPONSE, ServerAuthChallengeResult.Parse);
-            registry.Register(WorldCommands.SMSG_CHAR_ENUM, ServerCharactersListResponse.Parse);
-            return registry;
         }
 
         public void Dispose()
