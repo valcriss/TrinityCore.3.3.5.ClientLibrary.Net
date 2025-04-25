@@ -17,7 +17,7 @@ namespace TrinityCore._3._3._5.ClientLibrary.Console
             Log.SetLogLevel(LogLevel.Info);
             Log.Success("Démarrage du client AuthNetwork...");
 
-            AuthNetworkClient authNetworkClient = new("127.0.0.1", 3724, "daniel", "daniel");
+            AuthNetworkClient authNetworkClient = new("127.0.0.1", 3724, "test", "test");
             AuthenticationResult authentication = await authNetworkClient.AuthenticateAsync();
 
             if (authentication.IsAuthenticated)

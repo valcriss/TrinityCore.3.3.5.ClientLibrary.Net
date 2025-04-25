@@ -1,4 +1,5 @@
 ﻿using TrinityCore._3._3._5.ClientLibrary.Network.Core.Packets;
+using TrinityCore._3._3._5.ClientLibrary.Shared.Logger;
 
 namespace TrinityCore._3._3._5.ClientLibrary.Network.Core.Registry
 {
@@ -26,6 +27,7 @@ namespace TrinityCore._3._3._5.ClientLibrary.Network.Core.Registry
             {
                 return true;
             }
+            Log.Warn($"OpcodeRegistry : Parser not found for opcode: {opcode}");
             parser = null;
             return false;
         }

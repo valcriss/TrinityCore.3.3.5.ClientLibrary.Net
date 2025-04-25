@@ -1,21 +1,29 @@
-﻿using TrinityCore._3._3._5.ClientLibrary.Network;
+﻿using System.Timers;
+using TrinityCore._3._3._5.ClientLibrary.Network;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Enums;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages;
 
 namespace TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Process;
 
-public class CharacterLoginProcess
+public class CharacterLoginProcess : IDisposable
 {
     private const int CHARACTER_LOGIN_TIMEOUT = 5000;
+    private const int CHARACTER_KEEP_ALIVE_INTERVAL = 15000;
 
     private readonly ManualResetEvent _characterLoginDone;
     private readonly NetworkClient<WorldCommands> _networkClient;
+    private readonly System.Timers.Timer _timer;
     private PlayerState _playerState;
-
+    
     public CharacterLoginProcess(NetworkClient<WorldCommands> networkClient)
     {
         _networkClient = networkClient;
         _characterLoginDone = new ManualResetEvent(false);
+        _playerState = PlayerState.NOT_LOGGED_IN;
+        _timer = new System.Timers.Timer(CHARACTER_KEEP_ALIVE_INTERVAL);
+        _timer.Enabled = true;
+        _timer.Elapsed += OnTimerElapsed;
+        _timer.Start();
     }
 
     public async Task<bool> LoginCharacter(ulong characterGuid)
@@ -38,5 +46,20 @@ public class CharacterLoginProcess
     {
         _playerState = PlayerState.LOGGED_IN;
         _characterLoginDone.Set();
+    }
+    
+    private void OnTimerElapsed(object? sender, ElapsedEventArgs e)
+    {
+        if (_playerState != PlayerState.LOGGED_IN) return;
+        _networkClient.SendAsync(new ClientKeepAliveRequest()).Wait();
+    }
+
+    public void Dispose()
+    {
+        _timer.Stop();
+        _timer.Dispose();
+        _playerState = PlayerState.NOT_LOGGED_IN;
+        _characterLoginDone.Dispose();
+        _networkClient.Dispose();
     }
 }
