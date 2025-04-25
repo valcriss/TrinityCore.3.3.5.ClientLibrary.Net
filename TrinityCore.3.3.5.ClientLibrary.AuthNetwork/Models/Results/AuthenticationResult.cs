@@ -6,7 +6,6 @@ public class AuthenticationResult
 {
     public string AccountName { get; private set; }
     public bool IsAuthenticated { get; private set; }
-
     public BigInteger SessionKey { get; set; }
 
     public AuthenticationResult(string accountName, BigInteger sessionKey, bool isAuthenticated)
