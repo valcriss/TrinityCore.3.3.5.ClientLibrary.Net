@@ -7,6 +7,7 @@ using TrinityCore._3._3._5.ClientLibrary.Network.Core.Writers;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Enums;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Network;
+using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Process;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Results;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Security;
 
@@ -14,118 +15,48 @@ namespace TrinityCore._3._3._5.ClientLibrary.WorldNetwork
 {
     public class WorldNetworkClient : IDisposable
     {
-        private const int AUTHENTIFICATION_TIMEOUT = 5000;
-        private const int CHARACTER_LIST_TIMEOUT = 5000;
         public Action? Connected;
         public Action? Disconnected;
 
         private readonly NetworkClient<WorldCommands> _networkClient;
         private readonly NetworkEventBus<WorldCommands> _eventBus;
-        private readonly ManualResetEvent _authenticateDone;
-        private readonly ManualResetEvent _characterListDone;
-        private readonly uint _realmId;
-        private readonly string _username;
-        private readonly byte[] _sessionKey;
-        private readonly AuthenticationCrypto _crypto;
-        private Character[] _characters;
-        
-        private bool _authenticated;
 
-        public WorldNetworkClient(string host, int port, uint reamlId, string username, byte[] sessionKey, NetworkEventBus<WorldCommands> eventBus)
+        private readonly AuthChallengeProcess _authChallengeProcess;
+        private readonly CharactersListProcess _charactersListProcess;
+
+        public WorldNetworkClient(string host, int port, uint realmId, string username, byte[] sessionKey, NetworkEventBus<WorldCommands> eventBus)
         {
-            _realmId = reamlId;
-            _username = username;
-            _sessionKey = sessionKey;
-            _authenticateDone = new ManualResetEvent(false);
-            _characterListDone = new ManualResetEvent(false);
             _eventBus = eventBus;
-            _authenticated = false;
-            _characters = [];
-            _crypto = new(_sessionKey);
-            FrameReader<WorldCommands> frameReader = new(new WorldFrameHeaderReader(_crypto));
-            FrameWriter<WorldCommands> frameWriter = new(new WorldFrameHeaderWriter(_crypto));
+            AuthenticationCrypto crypto = new(sessionKey);
+            FrameReader<WorldCommands> frameReader = new(new WorldFrameHeaderReader(crypto));
+            FrameWriter<WorldCommands> frameWriter = new(new WorldFrameHeaderWriter(crypto));
             PacketParser<WorldCommands> authPacketParser = new(CreateOpcodeRegistry());
 
             _networkClient = new NetworkClient<WorldCommands>(host, port, frameReader, frameWriter, authPacketParser, _eventBus);
             _networkClient.Connected += OnConnected;
             _networkClient.Disconnected += OnDisconnected;
-
+            _authChallengeProcess = new(_networkClient, realmId, username, sessionKey, crypto);
+            _charactersListProcess = new(_networkClient);
             InitializeEventBus();
         }
 
-        public async Task<bool> AuthenticateAsync()
-        {
-            try
-            {
-                await _networkClient.ConnectAsync();
-                _authenticated = false;
-                _authenticateDone.Reset();
-                _authenticateDone.WaitOne(AUTHENTIFICATION_TIMEOUT);
-                return _authenticated;
-            }
-            catch
-            {
-                _authenticateDone.Set();
-                return false;
-            }
-        }
-        
-        public async Task<Character[]> GetCharacterListAsync()
-        {
-            try
-            {
-                await _networkClient.SendAsync(new ClientCharactersListRequest());
-                _characters = [];
-                _characterListDone.Reset();
-                _characterListDone.WaitOne(CHARACTER_LIST_TIMEOUT);
-                return _characters;
-            }
-            catch
-            {
-                _authenticateDone.Set();
-                return [];
-            }
-        }
-
+        public async Task<bool> AuthenticateAsync() => await _authChallengeProcess.AuthenticateAsync();
+        public async Task<Character[]> GetCharacterListAsync() => await _charactersListProcess.GetCharacterListAsync();
         private void OnConnected() => Connected?.Invoke();
-        private void OnDisconnected()
-        {
-            _authenticated = false;
-            Disconnected?.Invoke();
-        }
-
-        private void OnServerAuthChallengeRequest(ServerAuthChallengeRequest serverAuthChallenge)
-        {
-            _networkClient.SendAsync(new ServerAuthChallengeResponse(_realmId, _username, _sessionKey, serverAuthChallenge.ServerSeed)).Wait();
-            _crypto.Activate();
-        }
+        private void OnDisconnected() => Disconnected?.Invoke();
         
-        private void OnServerAuthChallengeResult(ServerAuthChallengeResult serverAuthChallengeResult)
-        {
-            _authenticated = serverAuthChallengeResult.Success;
-            _authenticateDone.Set();
-        }
-        
-        private void OnServerCharactersListResponse(ServerCharactersListResponse serverCharactersListResponse)
-        {
-            _characters = serverCharactersListResponse.Characters;
-            _characterListDone.Set();
-        }
-
         private void InitializeEventBus()
         {
-            _eventBus.Subscribe<ServerAuthChallengeRequest>(WorldCommands.SERVER_AUTH_CHALLENGE, OnServerAuthChallengeRequest);
-            _eventBus.Subscribe<ServerAuthChallengeResult>(WorldCommands.SERVER_AUTH_RESPONSE, OnServerAuthChallengeResult);
-            _eventBus.Subscribe<ServerCharactersListResponse>(WorldCommands.SMSG_CHAR_ENUM, OnServerCharactersListResponse);
+            _eventBus.Subscribe<ServerAuthChallengeRequest>(WorldCommands.SERVER_AUTH_CHALLENGE, _authChallengeProcess.OnServerAuthChallengeRequest);
+            _eventBus.Subscribe<ServerAuthChallengeResult>(WorldCommands.SERVER_AUTH_RESPONSE, _authChallengeProcess.OnServerAuthChallengeResult);
+            _eventBus.Subscribe<ServerCharactersListResponse>(WorldCommands.SMSG_CHAR_ENUM, _charactersListProcess.OnServerCharactersListResponse);
         }
-
-
 
         private void ReleaseEventBus()
         {
-            _eventBus.Subscribe<ServerAuthChallengeRequest>(WorldCommands.SERVER_AUTH_CHALLENGE, OnServerAuthChallengeRequest);
-            _eventBus.Subscribe<ServerAuthChallengeResult>(WorldCommands.SERVER_AUTH_RESPONSE, OnServerAuthChallengeResult);
-            _eventBus.Subscribe<ServerCharactersListResponse>(WorldCommands.SMSG_CHAR_ENUM, OnServerCharactersListResponse);
+            _eventBus.Subscribe<ServerAuthChallengeRequest>(WorldCommands.SERVER_AUTH_CHALLENGE, _authChallengeProcess.OnServerAuthChallengeRequest);
+            _eventBus.Subscribe<ServerAuthChallengeResult>(WorldCommands.SERVER_AUTH_RESPONSE, _authChallengeProcess.OnServerAuthChallengeResult);
+            _eventBus.Subscribe<ServerCharactersListResponse>(WorldCommands.SMSG_CHAR_ENUM, _charactersListProcess.OnServerCharactersListResponse);
         }
 
         private OpcodeRegistry<WorldCommands> CreateOpcodeRegistry()
@@ -142,7 +73,8 @@ namespace TrinityCore._3._3._5.ClientLibrary.WorldNetwork
             _networkClient.Connected -= OnConnected;
             _networkClient.Disconnected -= OnDisconnected;
             _networkClient.Dispose();
-            _authenticateDone.Dispose();
+            _authChallengeProcess.Dispose();
+            _charactersListProcess.Dispose();
             ReleaseEventBus();
         }
     }

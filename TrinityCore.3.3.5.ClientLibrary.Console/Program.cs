@@ -23,11 +23,11 @@ namespace TrinityCore._3._3._5.ClientLibrary.Console
             if (authentication.IsAuthenticated)
             {
                 Log.Success($"Authentifié avec succès. Bienvenue {authentication.Username}");
-                RealmListResult? realms = await authNetworkClient.GetRealmListAsync();
+                Realm[]? realms = await authNetworkClient.GetRealmListAsync();
                 if (realms != null)
                 {
-                    Log.Success($"Récupération de la liste des royaumes réussie. Nombre de royaumes : {realms.Realms.Count}");
-                    Realm realm = realms.Realms.First();
+                    Log.Success($"Récupération de la liste des royaumes réussie. Nombre de royaumes : {realms.Length}");
+                    Realm realm = realms.First();
                     Log.Info($"Sélection du royaume : {realm.Name}, IP : {realm.Address}, Port : {realm.Port}");
                     NetworkEventBus<WorldCommands> eventBus = new();
                     WorldNetworkClient worldNetworkClient = new(realm.Address, realm.Port, realm.Id, authentication.Username, authentication.SessionKey.ToCleanByteArray(), eventBus);

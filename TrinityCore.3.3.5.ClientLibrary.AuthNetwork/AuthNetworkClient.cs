@@ -15,87 +15,38 @@ namespace TrinityCore._3._3._5.ClientLibrary.AuthNetwork
 {
     public class AuthNetworkClient : IDisposable
     {
-        private const int AUTHENTIFICATION_TIMEOUT = 5000;
-        private const int REALM_LIST_TIMEOUT = 5000;
-
         public Action? Connected;
         public Action? Disconnected;
-        public Action<ConnexionResult>? AuthenticationFailed;
-        public Action<ConnexionResult>? AuthenticationSucceeded;
 
         private readonly NetworkClient<AuthCommands> _networkClient;
         private readonly NetworkEventBus<AuthCommands> _eventBus;
         private readonly AuthCredentials _credentials;
         private readonly AuthenticationProcess _authenticationProcess;
         private readonly RealmProcess _realmProcess;
-        private readonly ManualResetEvent _authenticateDone;
-        private readonly ManualResetEvent _realmListDone;
 
         public AuthNetworkClient(string host, int port, string username, string password)
         {
-            _authenticateDone = new ManualResetEvent(false);
-            _realmListDone = new ManualResetEvent(false);
-
             FrameReader<AuthCommands> frameReader = new(new AuthFrameHeaderReader());
             FrameWriter<AuthCommands> frameWriter = new(new AuthFrameHeaderWriter());
             PacketParser<AuthCommands> authPacketParser = new(CreateOpcodeRegistry());
-
+            
             _eventBus = new();
-            InitializeEventBus();
-
+            
+            _credentials = new AuthCredentials(username.ToUpper(), password);
+            
             _networkClient = new NetworkClient<AuthCommands>(host, port, frameReader, frameWriter, authPacketParser, _eventBus);
             _networkClient.Connected += OnConnected;
             _networkClient.Disconnected += OnDisconnected;
-
-            _credentials = new AuthCredentials(username.ToUpper(), password);
-
-            _authenticationProcess = new AuthenticationProcess(_networkClient, _credentials, _authenticateDone);
-            _authenticationProcess.AuthenticationFailed += OnAuthenticationFailed;
-            _authenticationProcess.AuthenticationSucceeded += OnAuthenticationSucceeded;
-
-            _realmProcess = new RealmProcess(_realmListDone);
+            
+            _authenticationProcess = new AuthenticationProcess(_networkClient, _credentials);
+            _realmProcess = new RealmProcess(_networkClient);
+            
+            InitializeEventBus();
         }
 
-        private void OnAuthenticationSucceeded(ConnexionResult result) => AuthenticationSucceeded?.Invoke(result);
-        private void OnAuthenticationFailed(ConnexionResult result) => AuthenticationFailed?.Invoke(result);
-        private void OnLogonChallengeResponse(LogonChallengeResponse logonChallengeResponse) => _authenticationProcess.OnLogonChallengeResponse(logonChallengeResponse);
-        private void OnAuthProofResponse(AuthProofResponse authProofResponse) => _authenticationProcess.OnAuthProofResponse(authProofResponse);
-        private void OnRealmListResponse(RealmListResponse realmListResponse) => _realmProcess.OnRealmListResponse(realmListResponse);
-
-        public async Task<AuthenticationResult> AuthenticateAsync()
-        {
-            try
-            {
-                await _networkClient.ConnectAsync();
-                _authenticateDone.Reset();
-                _authenticateDone.WaitOne(AUTHENTIFICATION_TIMEOUT);
-                return new AuthenticationResult(_credentials.Username, _credentials.SessionKey, true);
-            }
-            catch
-            {
-                _authenticateDone.Set();
-                return new AuthenticationResult(_credentials.Username, _credentials.SessionKey, false);
-            }
-        }
-
-        public async Task<RealmListResult?> GetRealmListAsync()
-        {
-            try
-            {
-                await _networkClient.SendAsync(new RealmListRequest());
-                _realmListDone.Reset();
-                _realmListDone.WaitOne(REALM_LIST_TIMEOUT);
-                return new RealmListResult(_realmProcess.Realms);
-            }
-            catch
-            {
-                _realmListDone.Set();
-                return null;
-            }
-        }
-
+        public async Task<AuthenticationResult> AuthenticateAsync() => await _authenticationProcess.AuthenticateAsync();
+        public async Task<Realm[]?> GetRealmListAsync() => await _realmProcess.GetRealmListAsync();
         public async Task DisconnectAsync() => await _networkClient.DisconnectAsync();
-
         private void OnDisconnected() => Disconnected?.Invoke();
 
         private void OnConnected()
@@ -106,17 +57,16 @@ namespace TrinityCore._3._3._5.ClientLibrary.AuthNetwork
 
         private void InitializeEventBus()
         {
-            _eventBus.Subscribe<LogonChallengeResponse>(AuthCommands.LOGON_CHALLENGE, OnLogonChallengeResponse);
-            _eventBus.Subscribe<AuthProofResponse>(AuthCommands.LOGON_PROOF, OnAuthProofResponse);
-            _eventBus.Subscribe<RealmListResponse>(AuthCommands.REALM_LIST, OnRealmListResponse);
+            _eventBus.Subscribe<LogonChallengeResponse>(AuthCommands.LOGON_CHALLENGE, _authenticationProcess.OnLogonChallengeResponse);
+            _eventBus.Subscribe<AuthProofResponse>(AuthCommands.LOGON_PROOF, _authenticationProcess.OnAuthProofResponse);
+            _eventBus.Subscribe<RealmListResponse>(AuthCommands.REALM_LIST, _realmProcess.OnRealmListResponse);
         }
-
-
+        
         private void ReleaseEventBus()
         {
-            _eventBus.Unsubscribe<LogonChallengeResponse>(AuthCommands.LOGON_CHALLENGE, OnLogonChallengeResponse);
-            _eventBus.Unsubscribe<AuthProofResponse>(AuthCommands.LOGON_PROOF, OnAuthProofResponse);
-            _eventBus.Unsubscribe<RealmListResponse>(AuthCommands.REALM_LIST, OnRealmListResponse);
+            _eventBus.Unsubscribe<LogonChallengeResponse>(AuthCommands.LOGON_CHALLENGE, _authenticationProcess.OnLogonChallengeResponse);
+            _eventBus.Unsubscribe<AuthProofResponse>(AuthCommands.LOGON_PROOF, _authenticationProcess.OnAuthProofResponse);
+            _eventBus.Unsubscribe<RealmListResponse>(AuthCommands.REALM_LIST, _realmProcess.OnRealmListResponse);
         }
 
         private OpcodeRegistry<AuthCommands> CreateOpcodeRegistry()
@@ -130,15 +80,10 @@ namespace TrinityCore._3._3._5.ClientLibrary.AuthNetwork
 
         public void Dispose()
         {
-            _authenticateDone.Dispose();
-            _realmListDone.Dispose();
-
             _networkClient.Connected -= OnConnected;
             _networkClient.Disconnected -= OnDisconnected;
             _networkClient.Dispose();
-
-            _authenticationProcess.AuthenticationFailed -= OnAuthenticationFailed;
-            _authenticationProcess.AuthenticationSucceeded -= OnAuthenticationSucceeded;
+            
             _authenticationProcess.Dispose();
 
             _realmProcess.Dispose();

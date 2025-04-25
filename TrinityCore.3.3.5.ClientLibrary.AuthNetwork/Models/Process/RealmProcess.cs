@@ -1,25 +1,50 @@
-﻿using TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Messages;
+﻿using TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Enums;
+using TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Messages;
 using TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Results;
+using TrinityCore._3._3._5.ClientLibrary.Network;
 
 namespace TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Process;
 
 public class RealmProcess : IDisposable
 {
-    public List<Realm> Realms { get; set; } = new();
+    private const int REALM_LIST_TIMEOUT = 5000;
+    
     private readonly ManualResetEvent _realmListDone;
-    public RealmProcess(ManualResetEvent realmListDone)
+    private readonly NetworkClient<AuthCommands> _networkClient;
+    
+    private Realm[] _realms = [];
+    
+    public RealmProcess(NetworkClient<AuthCommands> networkClient)
     {
-        _realmListDone = realmListDone;
+        _networkClient = networkClient;
+        _realmListDone = new ManualResetEvent(false);
+    }
+
+    public async Task<Realm[]?> GetRealmListAsync()
+    {
+        try
+        {
+            _realms = [];
+            await _networkClient.SendAsync(new RealmListRequest());
+            _realmListDone.Reset();
+            _realmListDone.WaitOne(REALM_LIST_TIMEOUT);
+            return _realms;
+        }
+        catch
+        {
+            _realmListDone.Set();
+            return null;
+        }
     }
     public void OnRealmListResponse(RealmListResponse realmListResponse)
     {
-        Realms = new List<Realm>();
-        Realms = realmListResponse.Realms;
+        _realms = realmListResponse.Realms.ToArray();
         _realmListDone.Set();
     }
 
     public void Dispose()
     {
         _realmListDone.Dispose();
+        _networkClient.Dispose();
     }
 }
