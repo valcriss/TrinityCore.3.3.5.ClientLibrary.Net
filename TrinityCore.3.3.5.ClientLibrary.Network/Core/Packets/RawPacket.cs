@@ -13,6 +13,6 @@ public class RawPacket<TCommands> where TCommands : struct, Enum
         Payload = payload;
     }
 
-    public TCommands Opcode { get; }
-    public byte[] Payload { get; }
+    public TCommands Opcode { get; set; }
+    public byte[] Payload { get; set; }
 }

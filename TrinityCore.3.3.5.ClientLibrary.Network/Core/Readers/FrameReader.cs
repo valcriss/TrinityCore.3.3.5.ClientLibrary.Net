@@ -1,4 +1,5 @@
 ﻿using TrinityCore._3._3._5.ClientLibrary.Network.Core.Packets;
+using TrinityCore._3._3._5.ClientLibrary.Network.Core.Tools;
 
 namespace TrinityCore._3._3._5.ClientLibrary.Network.Core.Readers;
 
@@ -6,6 +7,7 @@ public class FrameReader<TCommands> where TCommands : struct, Enum
 {
     private readonly List<byte> _buffer = new();
     private readonly FrameHeaderReader<TCommands> _headerReader;
+    private readonly Dictionary<TCommands,TCommands> _compressedCommandsMap = new();
     private readonly object _lock = new();
 
     public FrameReader(FrameHeaderReader<TCommands> headerReader)
@@ -29,6 +31,12 @@ public class FrameReader<TCommands> where TCommands : struct, Enum
             ProcessBuffer();
         }
     }
+    
+    protected void AddCompressedCommand(TCommands command, TCommands compressedCommand)
+    {
+        if (!_compressedCommandsMap.TryAdd(command, compressedCommand))
+            throw new ArgumentException($"Opcode {command} already registered in compressed commands.");
+    }
 
     /// <summary>
     ///     Lit le buffer tant qu'il contient des paquets complets,
@@ -47,7 +55,11 @@ public class FrameReader<TCommands> where TCommands : struct, Enum
             if (_headerReader.IsValid)
             {
                 RawPacket<TCommands> packet = new(_headerReader.Command, payload);
-
+                if (_compressedCommandsMap.TryGetValue(packet.Opcode, out TCommands uncompressedCommand))
+                {
+                    packet.Opcode = uncompressedCommand;
+                    packet.Payload = packet.Payload.Decompress();
+                }
                 PacketExtracted?.Invoke(packet);
             }
 

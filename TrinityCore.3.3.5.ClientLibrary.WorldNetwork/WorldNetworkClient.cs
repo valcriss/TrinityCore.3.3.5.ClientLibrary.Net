@@ -29,7 +29,7 @@ public class WorldNetworkClient : IDisposable
     {
         _eventBus = eventBus;
         AuthenticationCrypto crypto = new(sessionKey);
-        FrameReader<WorldCommands> frameReader = new(new WorldFrameHeaderReader(crypto));
+        WorldFrameReader frameReader = new(new WorldFrameHeaderReader(crypto));
         FrameWriter<WorldCommands> frameWriter = new(new WorldFrameHeaderWriter(crypto));
         PacketParser<WorldCommands> authPacketParser = new(_opcodeRegistryFactory.Create());
 
