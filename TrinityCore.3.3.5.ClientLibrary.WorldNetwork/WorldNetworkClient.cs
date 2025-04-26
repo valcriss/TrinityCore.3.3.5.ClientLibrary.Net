@@ -24,9 +24,9 @@ public class WorldNetworkClient : IDisposable
     public Action? Connected;
     public Action? Disconnected;
 
-    public WorldNetworkClient(string host, int port, uint realmId, string username, byte[] sessionKey, NetworkEventBus<WorldCommands> eventBus)
+    public WorldNetworkClient(string host, int port, uint realmId, string username, byte[] sessionKey)
     {
-        _eventBus = eventBus;
+        _eventBus = new NetworkEventBus<WorldCommands>();
         AuthenticationCrypto crypto = new(sessionKey);
         WorldFrameReader frameReader = new(new WorldFrameHeaderReader(crypto));
         FrameWriter<WorldCommands> frameWriter = new(new WorldFrameHeaderWriter(crypto));

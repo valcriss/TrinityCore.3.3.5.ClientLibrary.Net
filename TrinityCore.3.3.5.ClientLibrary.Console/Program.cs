@@ -1,10 +1,8 @@
 ﻿using TrinityCore._3._3._5.ClientLibrary.AuthNetwork;
 using TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Results;
-using TrinityCore._3._3._5.ClientLibrary.Network.Core;
 using TrinityCore._3._3._5.ClientLibrary.Network.Core.Tools;
 using TrinityCore._3._3._5.ClientLibrary.Shared.Logger;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork;
-using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Enums;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Results;
 
 namespace TrinityCore._3._3._5.ClientLibrary.Console;
@@ -29,8 +27,7 @@ internal class Program
                 Log.Success($"Récupération de la liste des royaumes réussie. Nombre de royaumes : {realms.Length}");
                 Realm realm = realms.First();
                 Log.Info($"Sélection du royaume : {realm.Name}, IP : {realm.Address}, Port : {realm.Port}");
-                NetworkEventBus<WorldCommands> eventBus = new();
-                WorldNetworkClient worldNetworkClient = new(realm.Address, realm.Port, realm.Id, authentication.Username, authentication.SessionKey.ToCleanByteArray(), eventBus);
+                WorldNetworkClient worldNetworkClient = new(realm.Address, realm.Port, realm.Id, authentication.Username, authentication.SessionKey.ToCleanByteArray());
                 worldNetworkClient.Connected += () => Log.Success("Connecté au royaume.");
                 worldNetworkClient.Disconnected += () => Log.Error("Déconnecté du royaume.");
                 bool authenticate = await worldNetworkClient.AuthenticateAsync();
