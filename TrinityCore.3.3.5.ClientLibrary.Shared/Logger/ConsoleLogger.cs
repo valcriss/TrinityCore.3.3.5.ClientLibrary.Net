@@ -2,38 +2,86 @@
 
 public class ConsoleLogger : ILog
 {
+    private readonly object _lockObject = new();
+
+    private readonly Queue<ConsoleItem> _queue = new();
+
     public void Debug(string message)
     {
-        Console.ForegroundColor = ConsoleColor.DarkGray;
-        Console.WriteLine(message);
-        Console.ResetColor();
+        lock (_lockObject)
+        {
+            _queue.Enqueue(new ConsoleItem(ConsoleColor.DarkGray, message));
+            Process();
+        }
     }
 
     public void Info(string message)
     {
-        Console.ForegroundColor = ConsoleColor.White;
-        Console.WriteLine(message);
-        Console.ResetColor();
+        lock (_lockObject)
+        {
+            _queue.Enqueue(new ConsoleItem(ConsoleColor.White, message));
+            Process();
+        }
     }
 
     public void Warn(string message)
     {
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine(message);
-        Console.ResetColor();
+        lock (_lockObject)
+        {
+            _queue.Enqueue(new ConsoleItem(ConsoleColor.Yellow, message));
+            Process();
+        }
     }
 
     public void Error(string message)
     {
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine(message);
-        Console.ResetColor();
+        lock (_lockObject)
+        {
+            _queue.Enqueue(new ConsoleItem(ConsoleColor.Red, message));
+            Process();
+        }
     }
 
     public void Success(string message)
     {
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine(message);
-        Console.ResetColor();
+        lock (_lockObject)
+        {
+            _queue.Enqueue(new ConsoleItem(ConsoleColor.Green, message));
+            Process();
+        }
+    }
+
+    private void Process()
+    {
+        while (_queue.Count > 0)
+        {
+            Console.ResetColor();
+            ConsoleItem item = _queue.Dequeue();
+            Console.ForegroundColor = item.GetColor();
+            Console.WriteLine(item.GetMessage());
+            Console.ResetColor();
+        }
+    }
+
+    private class ConsoleItem
+    {
+        private readonly ConsoleColor _color;
+        private readonly string _message;
+
+        public ConsoleItem(ConsoleColor color, string message)
+        {
+            _color = color;
+            _message = message;
+        }
+
+        public ConsoleColor GetColor()
+        {
+            return _color;
+        }
+
+        public string GetMessage()
+        {
+            return _message;
+        }
     }
 }

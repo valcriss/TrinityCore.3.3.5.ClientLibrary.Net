@@ -9,57 +9,155 @@ namespace TrinityCore._3._3._5.ClientLibrary.Console;
 
 internal class Program
 {
+    private const string HOST = "127.0.0.1";
+    private const int AUTH_PORT = 3724;
+    private const string USERNAME = "test";
+    private const string PASSWORD = "test";
+
+    private static AuthNetworkClient? _authNetworkClient;
+    private static WorldNetworkClient? _worldNetworkClient;
+
     private static async Task Main(string[] args)
+    {
+        ConfigureLogger();
+
+        try
+        {
+            await RunClientAsync();
+            WaitForQuitCommand();
+        }
+        catch (Exception ex)
+        {
+            Log.Error($"Une erreur est survenue : {ex.Message}");
+        }
+        finally
+        {
+            await DisconnectAsync();
+        }
+    }
+
+    private static void ConfigureLogger()
     {
         Log.SetLogger(new ConsoleLogger());
         Log.SetLogLevel(LogLevel.Info);
         Log.Success("Démarrage du client AuthNetwork...");
+    }
 
-        AuthNetworkClient authNetworkClient = new("127.0.0.1", 3724, "test", "test");
-        AuthenticationResult authentication = await authNetworkClient.AuthenticateAsync();
-
-        if (authentication.IsAuthenticated)
+    private static async Task RunClientAsync()
+    {
+        AuthenticationResult authResult = await AuthenticateToServerAsync();
+        if (!authResult.IsAuthenticated)
         {
-            Log.Success($"Authentifié avec succès. Bienvenue {authentication.Username}");
-            Realm[]? realms = await authNetworkClient.GetRealmListAsync();
-            if (realms != null)
-            {
-                Log.Success($"Récupération de la liste des royaumes réussie. Nombre de royaumes : {realms.Length}");
-                Realm realm = realms.First();
-                Log.Info($"Sélection du royaume : {realm.Name}, IP : {realm.Address}, Port : {realm.Port}");
-                WorldNetworkClient worldNetworkClient = new(realm.Address, realm.Port, realm.Id, authentication.Username, authentication.SessionKey.ToCleanByteArray());
-                worldNetworkClient.Connected += () => Log.Success("Connecté au royaume.");
-                worldNetworkClient.Disconnected += () => Log.Error("Déconnecté du royaume.");
-                bool authenticate = await worldNetworkClient.AuthenticateAsync();
-                if (authenticate)
-                {
-                    Log.Success("Authentification au royaume réussie.");
-                    Character[] characters = await worldNetworkClient.GetCharacterListAsync();
-                    foreach (Character character in characters) Log.Info($"Personnage : {character.Name}, Niveau : {character.Level}, Classe : {character.Class}");
-                    Character selectedCharacter = characters.First();
-                    bool loggedIn = await worldNetworkClient.LoginCharacter(selectedCharacter.GUID);
-                    if (loggedIn)
-                        Log.Success($"Connecté au personnage : {selectedCharacter.Name}");
-                    else
-                        Log.Error($"Échec de la connexion au personnage : {selectedCharacter.Name}");
-                }
-                else
-                {
-                    Log.Error("Échec de l'authentification au royaume.");
-                }
-            }
-            else
-            {
-                Log.Error("Échec de la récupération de la liste des royaumes.");
-            }
+            Log.Error($"Échec d'authentification : {authResult.ConnexionResult}");
+            return;
         }
+
+        Log.Success($"Authentifié avec succès. Bienvenue {authResult.Username}");
+
+        Realm? realm = await SelectRealmAsync();
+        if (realm == null) return;
+
+        await ConnectToWorldAsync(realm, authResult);
+    }
+
+    private static async Task<AuthenticationResult> AuthenticateToServerAsync()
+    {
+        _authNetworkClient = new AuthNetworkClient(HOST, AUTH_PORT, USERNAME, PASSWORD);
+        return await _authNetworkClient.AuthenticateAsync();
+    }
+
+    private static async Task<Realm?> SelectRealmAsync()
+    {
+        if (_authNetworkClient == null) return null;
+
+        Realm[]? realms = await _authNetworkClient.GetRealmListAsync();
+        if (realms == null || realms.Length == 0)
+        {
+            Log.Error("Échec de la récupération de la liste des royaumes.");
+            return null;
+        }
+
+        Log.Success($"Récupération de la liste des royaumes réussie. Nombre de royaumes : {realms.Length}");
+        Realm realm = realms.First();
+        Log.Info($"Sélection du royaume : {realm.Name}, IP : {realm.Address}, Port : {realm.Port}");
+
+        return realm;
+    }
+
+    private static async Task ConnectToWorldAsync(Realm realm, AuthenticationResult authResult)
+    {
+        _worldNetworkClient = new WorldNetworkClient(
+            realm.Address,
+            realm.Port,
+            realm.Id,
+            authResult.Username,
+            authResult.SessionKey.ToCleanByteArray()
+        );
+
+        ConfigureWorldClientEvents();
+
+        if (!await _worldNetworkClient.AuthenticateAsync())
+        {
+            Log.Error("Échec de l'authentification au royaume.");
+            return;
+        }
+
+        Log.Success("Authentification au royaume réussie.");
+        await SelectAndLoginCharacterAsync();
+    }
+
+    private static void ConfigureWorldClientEvents()
+    {
+        if (_worldNetworkClient == null) return;
+
+        _worldNetworkClient.Connected += () => Log.Success("Connecté au royaume.");
+        _worldNetworkClient.Disconnected += () => Log.Error("Déconnecté du royaume.");
+    }
+
+    private static async Task SelectAndLoginCharacterAsync()
+    {
+        if (_worldNetworkClient == null) return;
+
+        Character[] characters = await _worldNetworkClient.GetCharacterListAsync();
+        if (characters.Length == 0)
+        {
+            Log.Warn("Aucun personnage trouvé sur ce compte.");
+            return;
+        }
+
+        DisplayCharacters(characters);
+
+        Character selectedCharacter = characters.First();
+        bool loggedIn = await _worldNetworkClient.LoginCharacter(selectedCharacter.GUID);
+
+        if (loggedIn)
+            Log.Success($"Connecté au personnage : {selectedCharacter.Name}");
         else
+            Log.Error($"Échec de la connexion au personnage : {selectedCharacter.Name}");
+    }
+
+    private static void DisplayCharacters(Character[] characters)
+    {
+        foreach (Character character in characters) Log.Info($"Personnage : {character.Name}, Niveau : {character.Level}, Classe : {character.Class}");
+    }
+
+    private static void WaitForQuitCommand()
+    {
+        while (System.Console.ReadKey(true).Key != ConsoleKey.Q) Task.Delay(100).Wait();
+    }
+
+    private static async Task DisconnectAsync()
+    {
+        if (_authNetworkClient != null)
         {
-            Log.Error($"Échec d'authentification : {authentication.ConnexionResult}");
+            await _authNetworkClient.DisconnectAsync();
+            _authNetworkClient.Dispose();
         }
 
-        while (System.Console.ReadKey(true).Key != ConsoleKey.Q) await Task.Delay(100);
-
-        await authNetworkClient.DisconnectAsync();
+        if (_worldNetworkClient != null)
+        {
+            await _worldNetworkClient.DisconnectAsync();
+            _worldNetworkClient.Dispose();
+        }
     }
 }

@@ -68,6 +68,11 @@ public class WorldNetworkClient : IDisposable
         return await _characterLoginProcess.LoginCharacter(guid);
     }
 
+    public async Task DisconnectAsync()
+    {
+        await _networkClient.DisconnectAsync();
+    }
+
     private void OnConnected()
     {
         Connected?.Invoke();
