@@ -13,12 +13,14 @@ public class GameState
         Account = new AccountState(_worldStateEventBus);
         Social = new SocialState(_worldStateEventBus);
         Player = new PlayerState(_worldStateEventBus);
+        Entities = new EntitiesState(_worldStateEventBus);
     }
 
     public ServerState Server { get; private set; }
     public AccountState Account { get; private set; }
     public SocialState Social { get; private set; }
     public PlayerState Player { get; private set; }
+    public EntitiesState Entities { get; private set; }
 
     public WorldStateEventBus GetWorldStateEventBus()
     {

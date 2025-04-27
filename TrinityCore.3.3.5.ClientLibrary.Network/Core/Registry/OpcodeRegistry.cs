@@ -28,7 +28,7 @@ public class OpcodeRegistry<TCommands> where TCommands : struct, Enum
 
         if (!_missingCommands.Contains(opcode))
         {
-            Log.Warn($"OpcodeRegistry : Parser not found for opcode: {opcode}");
+            Log.Warn($"Parser not found for : {opcode}");
             _missingCommands.Add(opcode);
         }
 

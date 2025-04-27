@@ -4,13 +4,14 @@ using TrinityCore._3._3._5.ClientLibrary.WorldState.Models.Account;
 
 namespace TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages.States.Player;
 
-public class ServerAllAchievementDataInfo: ParsedPacket<WorldCommands>
+public class ServerAllAchievementDataInfo : ParsedPacket<WorldCommands>
 {
-    public Achievements Achievements { get; set; } = new();
     public ServerAllAchievementDataInfo(byte[]? data = null) : base(WorldCommands.SMSG_ALL_ACHIEVEMENT_DATA, data)
     {
     }
-    
+
+    public Achievements Achievements { get; set; } = new();
+
     public static ServerAllAchievementDataInfo Parse(RawPacket<WorldCommands> rawPacket)
     {
         ServerAllAchievementDataInfo packet = new(rawPacket.Payload);

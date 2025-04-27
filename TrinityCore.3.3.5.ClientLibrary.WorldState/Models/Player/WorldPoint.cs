@@ -7,7 +7,7 @@ public class WorldPoint
     public uint AreaId { get; set; }
     public uint MapId { get; set; }
     public Coord Position { get; set; }
-    
+
     public override string ToString()
     {
         return $"MapId:{MapId}, AreaId:{AreaId}, Position:{Position}";

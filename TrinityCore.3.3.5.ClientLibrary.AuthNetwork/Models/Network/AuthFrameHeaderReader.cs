@@ -9,16 +9,9 @@ public class AuthFrameHeaderReader : FrameHeaderReader<AuthCommands>
     {
         if (data == null || data.Count == 0)
             return false;
-        ExpectedTotalLength = data.Count;
+        ExpectedPayloadLength = data.Count - 1;
         HeaderLength = 1;
-        IsValid = true;
-        byte commandData = data[0];
-        if (!Enum.IsDefined(typeof(AuthCommands), commandData))
-        {
-            IsValid = false;
-            return true;
-        }
-
+        IsValid = Enum.IsDefined(typeof(AuthCommands), data[0]);
         Command = (AuthCommands)data[0];
         return true;
     }

@@ -26,6 +26,13 @@ public class WorldOpcodeRegistryFactory
         registry.Register(WorldCommands.SMSG_CONTACT_LIST, ServerContactListInfo.Parse);
         registry.Register(WorldCommands.SMSG_ALL_ACHIEVEMENT_DATA, ServerAllAchievementDataInfo.Parse);
         registry.Register(WorldCommands.SMSG_BINDPOINTUPDATE, ServerBindPointUpdate.Parse);
+        registry.Register(WorldCommands.MSG_SET_DUNGEON_DIFFICULTY, ServerDungeonDifficultyInfo.Parse);
+        registry.Register(WorldCommands.SMSG_INSTANCE_DIFFICULTY, ServerInstanceDifficultyInfo.Parse);
+        registry.Register(WorldCommands.SMSG_TALENTS_INFO, ServerTalentsInfo.Parse);
+        registry.Register(WorldCommands.SMSG_INITIAL_SPELLS, ServerInitialSpellsInfo.Parse);
+        registry.Register(WorldCommands.SMSG_SEND_UNLEARN_SPELLS, ServerUnlearnedSpellsInfo.Parse);
+        registry.Register(WorldCommands.SMSG_POWER_UPDATE, ServerPowerUpdateInfo.Parse);
+
         return registry;
     }
 }

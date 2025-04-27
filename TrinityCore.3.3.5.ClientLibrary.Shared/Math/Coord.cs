@@ -12,14 +12,14 @@ public struct Coord
         Y = 0;
         Z = 0;
     }
-    
+
     public Coord(float x, float y, float z)
     {
         X = x;
         Y = y;
         Z = z;
     }
-    
+
     public override string ToString()
     {
         return $"X:{X}, Y:{Y}, Z:{Z}";

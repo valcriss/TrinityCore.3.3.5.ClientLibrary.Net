@@ -250,7 +250,7 @@ public class Packet
     {
         return new Vector3(ReadSingle(), ReadSingle(), ReadSingle());
     }
-    
+
     public Coord ReadCoord()
     {
         return new Coord(ReadSingle(), ReadSingle(), ReadSingle());

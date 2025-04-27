@@ -1,5 +1,6 @@
 ﻿using TrinityCore._3._3._5.ClientLibrary.Network.Core.Packets;
 using TrinityCore._3._3._5.ClientLibrary.Network.Core.Tools;
+using TrinityCore._3._3._5.ClientLibrary.Shared.Logger;
 
 namespace TrinityCore._3._3._5.ClientLibrary.Network.Core.Readers;
 
@@ -47,14 +48,15 @@ public class FrameReader<TCommands> where TCommands : struct, Enum
         // tant qu'on a au moins 4 octets pour length+opcode
         while (_headerReader.ReadHeader(_buffer))
         {
-            if (_buffer.Count < _headerReader.ExpectedTotalLength)
+            if (_buffer.Count < _headerReader.ExpectedPayloadLength + _headerReader.HeaderLength)
                 break;
 
-            byte[] payload = _buffer.Skip(_headerReader.HeaderLength).Take(_headerReader.ContentLength).ToArray();
+            byte[] payload = _buffer.Skip(_headerReader.HeaderLength).Take(_headerReader.ExpectedPayloadLength).ToArray();
 
             if (_headerReader.IsValid)
             {
                 RawPacket<TCommands> packet = new(_headerReader.Command, payload);
+
                 if (_compressedCommandsMap.TryGetValue(packet.Opcode, out TCommands uncompressedCommand))
                 {
                     packet.Opcode = uncompressedCommand;
@@ -63,8 +65,12 @@ public class FrameReader<TCommands> where TCommands : struct, Enum
 
                 PacketExtracted?.Invoke(packet);
             }
+            else
+            {
+                Log.Error($"Invalid packet received: {BitConverter.ToString(_buffer.ToArray())}");
+            }
 
-            _buffer.RemoveRange(0, _headerReader.ExpectedTotalLength);
+            _buffer.RemoveRange(0, _headerReader.ExpectedPayloadLength + _headerReader.HeaderLength);
         }
     }
 }

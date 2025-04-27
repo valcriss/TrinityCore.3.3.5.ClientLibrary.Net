@@ -1,5 +1,4 @@
-﻿using TrinityCore._3._3._5.ClientLibrary.Shared.Logger;
-using TrinityCore._3._3._5.ClientLibrary.WorldState.Core;
+﻿using TrinityCore._3._3._5.ClientLibrary.WorldState.Core;
 using TrinityCore._3._3._5.ClientLibrary.WorldState.Models.Account;
 
 namespace TrinityCore._3._3._5.ClientLibrary.WorldState.States;
@@ -12,7 +11,7 @@ public class AccountState : State
 
     public uint[] TutorialFlags { get; private set; } = [];
     public AccountDataTimes AccountDataTimes { get; private set; } = new();
-    
+
 
     protected override void RegisterWorldStateBusEvents()
     {

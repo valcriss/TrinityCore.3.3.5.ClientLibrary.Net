@@ -28,9 +28,9 @@ public class WorldNetworkClient : IDisposable
 
     private readonly NetworkClient<WorldCommands> _networkClient;
     private readonly WorldOpcodeRegistryFactory _opcodeRegistryFactory = new();
+    private readonly PlayerStateHandler _playerStateHandler;
     private readonly ServerStateHandler _serverStateHandler;
     private readonly SocialStateHandler _socialStateHandler;
-    private readonly PlayerStateHandler _playerStateHandler;
 
     public Action? Connected;
     public Action? Disconnected;
@@ -114,6 +114,12 @@ public class WorldNetworkClient : IDisposable
         _eventBus.Subscribe<ServerContactListInfo>(WorldCommands.SMSG_CONTACT_LIST, _socialStateHandler.OnServerContactListInfo);
         _eventBus.Subscribe<ServerAllAchievementDataInfo>(WorldCommands.SMSG_ALL_ACHIEVEMENT_DATA, _playerStateHandler.OnServerAllAchievementDataInfo);
         _eventBus.Subscribe<ServerBindPointUpdate>(WorldCommands.SMSG_BINDPOINTUPDATE, _playerStateHandler.OnServerBindPointUpdate);
+        _eventBus.Subscribe<ServerDungeonDifficultyInfo>(WorldCommands.MSG_SET_DUNGEON_DIFFICULTY, _playerStateHandler.OnServerDungeonDifficultyInfo);
+        _eventBus.Subscribe<ServerInstanceDifficultyInfo>(WorldCommands.SMSG_INSTANCE_DIFFICULTY, _playerStateHandler.OnServerInstanceDifficultyInfo);
+        _eventBus.Subscribe<ServerTalentsInfo>(WorldCommands.SMSG_TALENTS_INFO, _playerStateHandler.OnServerTalentsInfo);
+        _eventBus.Subscribe<ServerInitialSpellsInfo>(WorldCommands.SMSG_INITIAL_SPELLS, _playerStateHandler.OnServerInitialSpellsInfo);
+        _eventBus.Subscribe<ServerUnlearnedSpellsInfo>(WorldCommands.SMSG_SEND_UNLEARN_SPELLS, _playerStateHandler.OnServerUnlearnedSpellsInfo);
+        _eventBus.Subscribe<ServerPowerUpdateInfo>(WorldCommands.SMSG_POWER_UPDATE, _playerStateHandler.OnServerPowerUpdateInfo);
     }
 
     private void ReleaseEventBus()
@@ -131,5 +137,11 @@ public class WorldNetworkClient : IDisposable
         _eventBus.Unsubscribe<ServerContactListInfo>(WorldCommands.SMSG_CONTACT_LIST, _socialStateHandler.OnServerContactListInfo);
         _eventBus.Unsubscribe<ServerAllAchievementDataInfo>(WorldCommands.SMSG_ALL_ACHIEVEMENT_DATA, _playerStateHandler.OnServerAllAchievementDataInfo);
         _eventBus.Unsubscribe<ServerBindPointUpdate>(WorldCommands.SMSG_BINDPOINTUPDATE, _playerStateHandler.OnServerBindPointUpdate);
+        _eventBus.Unsubscribe<ServerDungeonDifficultyInfo>(WorldCommands.MSG_SET_DUNGEON_DIFFICULTY, _playerStateHandler.OnServerDungeonDifficultyInfo);
+        _eventBus.Unsubscribe<ServerInstanceDifficultyInfo>(WorldCommands.SMSG_INSTANCE_DIFFICULTY, _playerStateHandler.OnServerInstanceDifficultyInfo);
+        _eventBus.Unsubscribe<ServerTalentsInfo>(WorldCommands.SMSG_TALENTS_INFO, _playerStateHandler.OnServerTalentsInfo);
+        _eventBus.Unsubscribe<ServerInitialSpellsInfo>(WorldCommands.SMSG_INITIAL_SPELLS, _playerStateHandler.OnServerInitialSpellsInfo);
+        _eventBus.Unsubscribe<ServerUnlearnedSpellsInfo>(WorldCommands.SMSG_SEND_UNLEARN_SPELLS, _playerStateHandler.OnServerUnlearnedSpellsInfo);
+        _eventBus.Unsubscribe<ServerPowerUpdateInfo>(WorldCommands.SMSG_POWER_UPDATE, _playerStateHandler.OnServerPowerUpdateInfo);
     }
 }

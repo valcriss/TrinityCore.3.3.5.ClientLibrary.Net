@@ -14,6 +14,7 @@ internal class Program
     private const int AUTH_PORT = 3724;
     private const string USERNAME = "test";
     private const string PASSWORD = "test";
+    private const LogLevel LOG_LEVEL = LogLevel.INFO;
 
     private static AuthNetworkClient? _authNetworkClient;
     private static WorldNetworkClient? _worldNetworkClient;
@@ -42,7 +43,7 @@ internal class Program
     private static void ConfigureLogger()
     {
         Log.SetLogger(new ConsoleLogger());
-        Log.SetLogLevel(LogLevel.DEBUG);
+        Log.SetLogLevel(LOG_LEVEL);
         Log.Success("Démarrage du client AuthNetwork...");
     }
 
