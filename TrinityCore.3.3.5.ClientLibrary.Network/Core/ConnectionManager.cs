@@ -109,7 +109,7 @@ public class ConnectionManager : IDisposable
                 // Copie des données reçues dans un tableau à la taille exacte
                 byte[] data = new byte[bytesRead];
                 Array.Copy(buffer, data, bytesRead);
-                Log.Debug("<- Receiving data: " + BitConverter.ToString(data));
+                Log.Verbose("<- Receiving data: " + BitConverter.ToString(data));
                 DataReceived?.Invoke(data);
             }
         }
@@ -138,7 +138,7 @@ public class ConnectionManager : IDisposable
             throw new InvalidOperationException("Connexion closed.");
         if (data == null || data.Length == 0)
             return;
-        Log.Debug("-> Sending data: " + BitConverter.ToString(data));
+        Log.Verbose("-> Sending data: " + BitConverter.ToString(data));
         try
         {
             await _stream.WriteAsync(data, 0, data.Length);

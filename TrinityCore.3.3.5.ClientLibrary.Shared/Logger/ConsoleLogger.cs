@@ -6,11 +6,20 @@ public class ConsoleLogger : ILog
 
     private readonly Queue<ConsoleItem> _queue = new();
 
-    public void Debug(string message)
+    public void Verbose(string message)
     {
         lock (_lockObject)
         {
             _queue.Enqueue(new ConsoleItem(ConsoleColor.DarkGray, message));
+            Process();
+        }
+    }
+
+    public void Debug(string message)
+    {
+        lock (_lockObject)
+        {
+            _queue.Enqueue(new ConsoleItem(ConsoleColor.Gray, message));
             Process();
         }
     }

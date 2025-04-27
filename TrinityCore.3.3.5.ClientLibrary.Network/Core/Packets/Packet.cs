@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using System.Text;
 using TrinityCore._3._3._5.ClientLibrary.Network.Core.Tools;
+using TrinityCore._3._3._5.ClientLibrary.Shared.Math;
 
 namespace TrinityCore._3._3._5.ClientLibrary.Network.Core.Packets;
 
@@ -12,32 +13,32 @@ public class Packet
         Data = content ?? [];
     }
 
-    private int ReadIndex { get; set; }
-    private byte[] Data { get; set; }
+    protected int ReadIndex { get; private set; }
+    protected byte[]? Data { get; set; }
 
-    public byte[] GetData()
+    public byte[]? GetData()
     {
         return Data;
     }
 
     public void Append(byte value)
     {
-        Data = Data.Append(value);
+        Data = Data?.Append(value);
     }
 
     public void Append(ushort value)
     {
-        Data = Data.Append(BitConverter.GetBytes(value));
+        Data = Data?.Append(BitConverter.GetBytes(value));
     }
 
     public void Append(float value)
     {
-        Data = Data.Append(BitConverter.GetBytes(value));
+        Data = Data?.Append(BitConverter.GetBytes(value));
     }
 
     public void Append(uint value)
     {
-        Data = Data.Append(BitConverter.GetBytes(value));
+        Data = Data?.Append(BitConverter.GetBytes(value));
     }
 
     public void Append(string message)
@@ -50,12 +51,12 @@ public class Packet
 
     public void Append(ulong value)
     {
-        Data = Data.Append(BitConverter.GetBytes(value));
+        Data = Data?.Append(BitConverter.GetBytes(value));
     }
 
     public void Append(byte[] value)
     {
-        Data = Data.Append(value);
+        Data = Data?.Append(value);
     }
 
     public DateTime ReadPackedTime()
@@ -73,11 +74,13 @@ public class Packet
 
     public bool IsDataLeft()
     {
-        return Data.Length > ReadIndex;
+        return Data?.Length > ReadIndex;
     }
 
     public byte PeekByte()
     {
+        if (Data == null)
+            return 0;
         return Data[ReadIndex];
     }
 
@@ -89,6 +92,8 @@ public class Packet
 
     public byte ReadByte()
     {
+        if (Data == null)
+            return 0;
         byte value = Data[ReadIndex];
         ReadIndex++;
         return value;
@@ -96,6 +101,8 @@ public class Packet
 
     public byte[] ReadBytes(int length)
     {
+        if (Data == null || Data.Length < ReadIndex + length)
+            return [];
         byte[] buffer = new byte[length];
         Array.ConstrainedCopy(Data, ReadIndex, buffer, 0, length);
         ReadIndex += length;
@@ -104,6 +111,8 @@ public class Packet
 
     public string ReadCString()
     {
+        if (Data == null)
+            return string.Empty;
         string value = Data.ReadCString(ReadIndex, out int length);
         ReadIndex += length;
         return value;
@@ -111,6 +120,8 @@ public class Packet
 
     public int ReadInt32()
     {
+        if (Data == null || Data.Length < ReadIndex + 4)
+            return 0;
         int value = BitConverter.ToInt32(Data, ReadIndex);
         ReadIndex += 4;
         return value;
@@ -130,6 +141,8 @@ public class Packet
 
     public long ReadInt64()
     {
+        if (Data == null || Data.Length <= ReadIndex + 8)
+            return 0;
         long value = BitConverter.ToInt64(Data, ReadIndex);
         ReadIndex += 8;
         return value;
@@ -171,6 +184,8 @@ public class Packet
 
     public sbyte ReadSByte()
     {
+        if (Data == null || Data.Length <= ReadIndex)
+            return 0;
         sbyte value = (sbyte)Data[ReadIndex];
         ReadIndex++;
         return value;
@@ -178,6 +193,8 @@ public class Packet
 
     public float ReadSingle()
     {
+        if (Data == null || Data.Length < ReadIndex + 4)
+            return 0;
         if (Data.Length - 4 > ReadIndex)
         {
             float value = BitConverter.ToSingle(Data, ReadIndex);
@@ -191,6 +208,8 @@ public class Packet
 
     public ushort ReadUInt16()
     {
+        if (Data == null || Data.Length < ReadIndex + 2)
+            return 0;
         ushort value = BitConverter.ToUInt16(Data, ReadIndex);
         ReadIndex += 2;
         return value;
@@ -198,6 +217,8 @@ public class Packet
 
     public uint ReadUInt32()
     {
+        if (Data == null || Data.Length < ReadIndex + 4)
+            return 0;
         uint value = BitConverter.ToUInt32(Data, ReadIndex);
         ReadIndex += 4;
         return value;
@@ -218,6 +239,8 @@ public class Packet
 
     public ulong ReadUInt64()
     {
+        if (Data == null || Data.Length < ReadIndex + 8)
+            return 0;
         ulong value = BitConverter.ToUInt64(Data, ReadIndex);
         ReadIndex += 8;
         return value;
@@ -226,5 +249,10 @@ public class Packet
     public Vector3 ReadVector3()
     {
         return new Vector3(ReadSingle(), ReadSingle(), ReadSingle());
+    }
+    
+    public Coord ReadCoord()
+    {
+        return new Coord(ReadSingle(), ReadSingle(), ReadSingle());
     }
 }

@@ -1,5 +1,6 @@
 ﻿using TrinityCore._3._3._5.ClientLibrary.Network.Core.Packets;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Enums;
+using TrinityCore._3._3._5.ClientLibrary.WorldState.Enums;
 
 namespace TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Results;
 
@@ -8,7 +9,7 @@ public class Character
     public Character(ParsedPacket<WorldCommands> packet)
     {
         Items = new Item[19];
-        GUID = packet.ReadUInt64();
+        Guid = packet.ReadUInt64();
         Name = packet.ReadCString();
         Race = (Race)packet.ReadByte();
         Class = (Class)packet.ReadByte();
@@ -44,7 +45,7 @@ public class Character
     public Class Class { get; set; }
     public uint Flags { get; set; }
     public Gender Gender { get; set; }
-    public ulong GUID { get; set; }
+    public ulong Guid { get; set; }
     public uint GuildId { get; set; }
     public Item[] Items { get; set; }
     public byte Level { get; set; }

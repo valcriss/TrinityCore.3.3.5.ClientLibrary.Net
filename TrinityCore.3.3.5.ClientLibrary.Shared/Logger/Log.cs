@@ -18,35 +18,42 @@ public static class Log
     public static void Debug(string message)
     {
         if (_logger == null) return;
-        if (_logLevel > (int)LogLevel.Debug) return;
+        if (_logLevel > (int)LogLevel.DEBUG) return;
         _logger.Debug(message);
     }
 
     public static void Info(string message)
     {
         if (_logger == null) return;
-        if (_logLevel > (int)LogLevel.Info) return;
+        if (_logLevel > (int)LogLevel.INFO) return;
         _logger.Info(message);
     }
 
     public static void Warn(string message)
     {
         if (_logger == null) return;
-        if (_logLevel > (int)LogLevel.Warning) return;
+        if (_logLevel > (int)LogLevel.WARNING) return;
         _logger.Warn(message);
     }
 
     public static void Error(string message)
     {
         if (_logger == null) return;
-        if (_logLevel > (int)LogLevel.Error) return;
+        if (_logLevel > (int)LogLevel.ERROR) return;
         _logger.Error(message);
     }
 
     public static void Success(string message)
     {
         if (_logger == null) return;
-        if (_logLevel > (int)LogLevel.Success) return;
+        if (_logLevel > (int)LogLevel.SUCCESS) return;
         _logger.Success(message);
+    }
+
+    public static void Verbose(string message)
+    {
+        if (_logger == null) return;
+        if (_logLevel > (int)LogLevel.VERBOSE) return;
+        _logger.Verbose(message);
     }
 }

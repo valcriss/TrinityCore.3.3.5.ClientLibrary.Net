@@ -18,7 +18,8 @@ public class FrameWriter<TCommands> where TCommands : struct, Enum
         if (header == null) return null;
 
         // Combine header and packet data
-        byte[] packetData = packet.GetData();
+        byte[]? packetData = packet.GetData();
+        if (packetData == null) return null;
         byte[] data = new byte[header.Length + packetData.Length];
         Buffer.BlockCopy(header, 0, data, 0, header.Length);
         Buffer.BlockCopy(packetData, 0, data, header.Length, packetData.Length);

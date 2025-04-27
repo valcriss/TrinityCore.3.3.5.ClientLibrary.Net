@@ -17,7 +17,9 @@ public class WorldFrameHeaderWriter : FrameHeaderWriter<WorldCommands>
 
     public override byte[]? Create(OutgoingPacket<WorldCommands> packet)
     {
-        byte[] buffer = packet.GetData();
+        byte[]? buffer = packet.GetData();
+        if (buffer == null)
+            return null;
         byte[] data = new byte[6];
         byte[] size = EncryptedSize(buffer.Length);
         byte[] command = EncryptedCommand(packet.Command);

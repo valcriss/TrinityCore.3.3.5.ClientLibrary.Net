@@ -4,6 +4,7 @@ using TrinityCore._3._3._5.ClientLibrary.Network.Core.Tools;
 using TrinityCore._3._3._5.ClientLibrary.Shared.Logger;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Results;
+using TrinityCore._3._3._5.ClientLibrary.WorldState;
 
 namespace TrinityCore._3._3._5.ClientLibrary.Console;
 
@@ -16,9 +17,11 @@ internal class Program
 
     private static AuthNetworkClient? _authNetworkClient;
     private static WorldNetworkClient? _worldNetworkClient;
+    private static GameState? _worldState;
 
     private static async Task Main(string[] args)
     {
+        _worldState = new GameState();
         ConfigureLogger();
 
         try
@@ -39,7 +42,7 @@ internal class Program
     private static void ConfigureLogger()
     {
         Log.SetLogger(new ConsoleLogger());
-        Log.SetLogLevel(LogLevel.Info);
+        Log.SetLogLevel(LogLevel.DEBUG);
         Log.Success("Démarrage du client AuthNetwork...");
     }
 
@@ -86,12 +89,15 @@ internal class Program
 
     private static async Task ConnectToWorldAsync(Realm realm, AuthenticationResult authResult)
     {
+        if (_worldState == null) return;
+
         _worldNetworkClient = new WorldNetworkClient(
             realm.Address,
             realm.Port,
             realm.Id,
             authResult.Username,
-            authResult.SessionKey.ToCleanByteArray()
+            authResult.SessionKey.ToCleanByteArray(),
+            _worldState.GetWorldStateEventBus()
         );
 
         ConfigureWorldClientEvents();
@@ -128,7 +134,7 @@ internal class Program
         DisplayCharacters(characters);
 
         Character selectedCharacter = characters.First();
-        bool loggedIn = await _worldNetworkClient.LoginCharacter(selectedCharacter.GUID);
+        bool loggedIn = await _worldNetworkClient.LoginCharacter(selectedCharacter.Guid);
 
         if (loggedIn)
             Log.Success($"Connecté au personnage : {selectedCharacter.Name}");

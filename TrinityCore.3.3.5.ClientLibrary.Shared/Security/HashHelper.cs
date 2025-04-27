@@ -6,7 +6,7 @@ public static class HashHelper
 {
     #region Private Fields
 
-    private static readonly Dictionary<HashAlgorithm, HashFunction> HashFunctions = new() { [HashAlgorithm.SHA1] = Sha1 };
+    private static readonly Dictionary<HashAlgorithm, HashFunction> _hashFunctions = new() { [HashAlgorithm.SHA1] = Sha1 };
 
     #endregion Private Fields
 
@@ -14,7 +14,7 @@ public static class HashHelper
 
     public static byte[] Hash(this HashAlgorithm algorithm, params byte[][] data)
     {
-        return HashFunctions[algorithm](data);
+        return _hashFunctions[algorithm](data);
     }
 
     #endregion Internal Methods

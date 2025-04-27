@@ -12,5 +12,4 @@ public abstract class ParsedPacket<TCommands> : Packet
     }
 
     public TCommands Command { get; }
-    protected byte[]? Data { get; }
 }
