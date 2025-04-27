@@ -3,7 +3,7 @@
 [Flags]
 public enum AccountDataTimesTypes
 {
-    None = 0, // 0x01 g
+    NONE = 0, // 0x01 g
     PER_CHARACTER_CONFIG_CACHE = 1, // 0x02 p
     GLOBAL_BINDINGS_CACHE = 2, // 0x04 g
     PER_CHARACTER_BINDINGS_CACHE = 3, // 0x08 p

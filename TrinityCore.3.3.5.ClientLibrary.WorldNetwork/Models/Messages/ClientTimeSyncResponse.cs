@@ -3,7 +3,7 @@ using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Enums;
 
 namespace TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages;
 
-public class ClientTimeSyncResponse: OutgoingPacket<WorldCommands>
+public class ClientTimeSyncResponse : OutgoingPacket<WorldCommands>
 {
     public ClientTimeSyncResponse(uint counter) : base(WorldCommands.CMSG_TIME_SYNC_RESP)
     {

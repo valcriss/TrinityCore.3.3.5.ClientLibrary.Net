@@ -61,4 +61,34 @@ public class PlayerStateHandler
     {
         _worldStateEventBus.Publish(serverInitializeFactionsInfo.Factions);
     }
+
+    public void OnServerActionButtons(ServerActionButtons serverActionButtons)
+    {
+        _worldStateEventBus.Publish(serverActionButtons.Buttons);
+    }
+
+    public void OnServerEquipmentSetList(ServerEquipmentSetList serverEquipmentSetList)
+    {
+        _worldStateEventBus.Publish(serverEquipmentSetList.EquipmentSets);
+    }
+
+    public void OnServerForcedReactions(ServerForcedReactions serverForcedReactions)
+    {
+        _worldStateEventBus.Publish(serverForcedReactions.Overrides);
+    }
+
+    public void OnServerInitWorldStates(ServerInitWorldStates serverInitWorldStates)
+    {
+        _worldStateEventBus.Publish(serverInitWorldStates.WorldState);
+    }
+
+    public void OnServerUpdateWorldState(ServerUpdateWorldState serverUpdateWorldState)
+    {
+        _worldStateEventBus.Publish(serverUpdateWorldState.WorldStateValue);
+    }
+
+    public void OnServerProficiency(ServerProficiency serverProficiency)
+    {
+        _worldStateEventBus.Publish(serverProficiency.Proficiency);
+    }
 }

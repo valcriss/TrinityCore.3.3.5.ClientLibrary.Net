@@ -14,6 +14,7 @@ public class GameState
         Social = new SocialState(_worldStateEventBus);
         Player = new PlayerState(_worldStateEventBus);
         Entities = new EntitiesState(_worldStateEventBus);
+        Environment = new EnvironmentState(_worldStateEventBus);
     }
 
     public ServerState Server { get; private set; }
@@ -21,6 +22,7 @@ public class GameState
     public SocialState Social { get; private set; }
     public PlayerState Player { get; private set; }
     public EntitiesState Entities { get; private set; }
+    public EnvironmentState Environment { get; private set; }
 
     public WorldStateEventBus GetWorldStateEventBus()
     {

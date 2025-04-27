@@ -4,13 +4,13 @@ using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages;
 
 namespace TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Process;
 
-public class InternalProcess: IDisposable
+public class InternalProcess : IDisposable
 {
     private readonly NetworkClient<WorldCommands> _networkClient;
-    
+
     public InternalProcess(NetworkClient<WorldCommands> networkClient)
     {
-         _networkClient  = networkClient; 
+        _networkClient = networkClient;
     }
 
     public void Dispose()

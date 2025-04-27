@@ -6,6 +6,7 @@ using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Enums;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Handlers;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages.States.Account;
+using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages.States.Environment;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages.States.Player;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages.States.Server;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages.States.Social;
@@ -24,8 +25,9 @@ public class WorldNetworkClient : IDisposable
     private readonly AuthChallengeProcess _authChallengeProcess;
     private readonly CharacterLoginProcess _characterLoginProcess;
     private readonly CharactersListProcess _charactersListProcess;
-    private readonly InternalProcess _internalProcess;
+    private readonly EnvironmentStateHandler _environmentStateHandler;
     private readonly NetworkEventBus<WorldCommands> _eventBus;
+    private readonly InternalProcess _internalProcess;
 
     private readonly NetworkClient<WorldCommands> _networkClient;
     private readonly WorldOpcodeRegistryFactory _opcodeRegistryFactory = new();
@@ -57,6 +59,7 @@ public class WorldNetworkClient : IDisposable
         _accountStateHandler = new AccountStateHandler(worldStateEventBus);
         _socialStateHandler = new SocialStateHandler(worldStateEventBus);
         _playerStateHandler = new PlayerStateHandler(worldStateEventBus);
+        _environmentStateHandler = new EnvironmentStateHandler(worldStateEventBus);
 
         InitializeEventBus();
     }
@@ -124,6 +127,14 @@ public class WorldNetworkClient : IDisposable
         _eventBus.Subscribe<ServerPowerUpdateInfo>(WorldCommands.SMSG_POWER_UPDATE, _playerStateHandler.OnServerPowerUpdateInfo);
         _eventBus.Subscribe<ServerInitializeFactionsInfo>(WorldCommands.SMSG_INITIALIZE_FACTIONS, _playerStateHandler.OnServerInitializeFactionsInfo);
         _eventBus.Subscribe<ServerTimeSyncRequest>(WorldCommands.SMSG_TIME_SYNC_REQ, _internalProcess.OnServerTimeSyncRequest);
+        _eventBus.Subscribe<ServerActionButtons>(WorldCommands.SMSG_ACTION_BUTTONS, _playerStateHandler.OnServerActionButtons);
+        _eventBus.Subscribe<ServerWeather>(WorldCommands.SMSG_WEATHER, _environmentStateHandler.OnServerWeather);
+        _eventBus.Subscribe<ServerEquipmentSetList>(WorldCommands.SMSG_EQUIPMENT_SET_LIST, _playerStateHandler.OnServerEquipmentSetList);
+        _eventBus.Subscribe<ServerForcedReactions>(WorldCommands.SMSG_SET_FORCED_REACTIONS, _playerStateHandler.OnServerForcedReactions);
+        _eventBus.Subscribe<ServerInitWorldStates>(WorldCommands.SMSG_INIT_WORLD_STATES, _playerStateHandler.OnServerInitWorldStates);
+        _eventBus.Subscribe<ServerUpdateWorldState>(WorldCommands.SMSG_UPDATE_WORLD_STATE, _playerStateHandler.OnServerUpdateWorldState);
+        _eventBus.Subscribe<ServerProficiency>(WorldCommands.SMSG_SET_PROFICIENCY, _playerStateHandler.OnServerProficiency);
+        _eventBus.Subscribe<ServerUpdateObjectInfo>(WorldCommands.SMSG_UPDATE_OBJECT, _environmentStateHandler.OnServerUpdateObjectInfo);
     }
 
     private void ReleaseEventBus()
@@ -149,5 +160,13 @@ public class WorldNetworkClient : IDisposable
         _eventBus.Unsubscribe<ServerPowerUpdateInfo>(WorldCommands.SMSG_POWER_UPDATE, _playerStateHandler.OnServerPowerUpdateInfo);
         _eventBus.Unsubscribe<ServerInitializeFactionsInfo>(WorldCommands.SMSG_INITIALIZE_FACTIONS, _playerStateHandler.OnServerInitializeFactionsInfo);
         _eventBus.Unsubscribe<ServerTimeSyncRequest>(WorldCommands.SMSG_TIME_SYNC_REQ, _internalProcess.OnServerTimeSyncRequest);
+        _eventBus.Unsubscribe<ServerActionButtons>(WorldCommands.SMSG_ACTION_BUTTONS, _playerStateHandler.OnServerActionButtons);
+        _eventBus.Unsubscribe<ServerWeather>(WorldCommands.SMSG_WEATHER, _environmentStateHandler.OnServerWeather);
+        _eventBus.Unsubscribe<ServerEquipmentSetList>(WorldCommands.SMSG_EQUIPMENT_SET_LIST, _playerStateHandler.OnServerEquipmentSetList);
+        _eventBus.Unsubscribe<ServerForcedReactions>(WorldCommands.SMSG_SET_FORCED_REACTIONS, _playerStateHandler.OnServerForcedReactions);
+        _eventBus.Unsubscribe<ServerInitWorldStates>(WorldCommands.SMSG_INIT_WORLD_STATES, _playerStateHandler.OnServerInitWorldStates);
+        _eventBus.Unsubscribe<ServerUpdateWorldState>(WorldCommands.SMSG_UPDATE_WORLD_STATE, _playerStateHandler.OnServerUpdateWorldState);
+        _eventBus.Unsubscribe<ServerProficiency>(WorldCommands.SMSG_SET_PROFICIENCY, _playerStateHandler.OnServerProficiency);
+        _eventBus.Unsubscribe<ServerUpdateObjectInfo>(WorldCommands.SMSG_UPDATE_OBJECT, _environmentStateHandler.OnServerUpdateObjectInfo);
     }
 }

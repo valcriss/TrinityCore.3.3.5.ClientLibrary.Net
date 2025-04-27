@@ -52,10 +52,7 @@ public class WorldFrameHeaderReader : FrameHeaderReader<WorldCommands>
         }
 
         IsValid = Enum.IsDefined(typeof(WorldCommands), Command);
-        if (!IsValid)
-        {
-            Log.Error($"WorldFrameHeaderReader: Invalid command: {HeaderLength} {Command}");
-        }
+        if (!IsValid) Log.Error($"WorldFrameHeaderReader: Invalid command: {HeaderLength} {Command}");
         return true;
     }
 
@@ -66,13 +63,11 @@ public class WorldFrameHeaderReader : FrameHeaderReader<WorldCommands>
             Log.Error($"WorldFrameHeaderReader: Invalid data length: {data?.Length}");
             return data;
         }
-        if(!_crypto.IsInitialized)
-        {
-            return data;
-        }
+
+        if (!_crypto.IsInitialized) return data;
         byte[] headerData = new byte[6]; // Taille maximale possible de l'en-tête (pour les paquets larges)
         Array.Copy(data, headerData, Math.Min(6, data.Length));
-        _crypto.Decrypt(headerData,0, headerData.Length);
+        _crypto.Decrypt(headerData, 0, headerData.Length);
         return headerData;
     }
 }

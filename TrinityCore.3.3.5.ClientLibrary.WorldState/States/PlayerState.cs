@@ -19,6 +19,11 @@ public class PlayerState : State
     public List<Spell> Spells { get; private set; } = new();
     public List<Spell> UnlearnedSpells { get; private set; } = new();
     public List<Reputation> Factions { get; private set; } = new();
+    public ActionButtons Buttons { get; private set; } = new();
+    public EquipmentSets EquipmentSets { get; private set; } = new();
+    public FactionsOverrides FactionsOverrides { get; private set; } = new();
+    public Proficiencies Proficiencies { get; } = new();
+    public Models.Player.WorldState WorldState { get; private set; } = new();
 
     protected override void RegisterWorldStateBusEvents()
     {
@@ -31,6 +36,12 @@ public class PlayerState : State
         WorldStateEventBus.Register<SpellsList>(spellsInformations => Spells = spellsInformations.Spells);
         WorldStateEventBus.Register<UnlearnedSpellsList>(unlearnedSpellsList => UnlearnedSpells = unlearnedSpellsList.Spells);
         WorldStateEventBus.Register<Factions>(factions => Factions = factions.Reputations);
+        WorldStateEventBus.Register<ActionButtons>(buttons => Buttons = buttons);
+        WorldStateEventBus.Register<EquipmentSets>(equipmentSets => EquipmentSets = equipmentSets);
+        WorldStateEventBus.Register<FactionsOverrides>(factionsOverrides => FactionsOverrides = factionsOverrides);
+        WorldStateEventBus.Register<Models.Player.WorldState>(worldState => WorldState = worldState);
+        WorldStateEventBus.Register<WorldStateValue>(worldStateValue => WorldState.UpdateWorldStateValue(worldStateValue));
+        WorldStateEventBus.Register<Proficiency>(proficiency => Proficiencies.UpdateProficiency(proficiency));
     }
 
     protected override void UnregisterWorldStateBusEvents()
@@ -44,5 +55,11 @@ public class PlayerState : State
         WorldStateEventBus.Unregister<SpellsList>(spellsInformations => Spells = spellsInformations.Spells);
         WorldStateEventBus.Unregister<UnlearnedSpellsList>(unlearnedSpellsList => UnlearnedSpells = unlearnedSpellsList.Spells);
         WorldStateEventBus.Unregister<Factions>(factions => Factions = factions.Reputations);
+        WorldStateEventBus.Unregister<ActionButtons>(buttons => Buttons = buttons);
+        WorldStateEventBus.Unregister<EquipmentSets>(equipmentSets => EquipmentSets = equipmentSets);
+        WorldStateEventBus.Unregister<FactionsOverrides>(factionsOverrides => FactionsOverrides = factionsOverrides);
+        WorldStateEventBus.Unregister<Models.Player.WorldState>(worldState => WorldState = worldState);
+        WorldStateEventBus.Unregister<WorldStateValue>(worldStateValue => WorldState.UpdateWorldStateValue(worldStateValue));
+        WorldStateEventBus.Unregister<Proficiency>(proficiency => Proficiencies.UpdateProficiency(proficiency));
     }
 }

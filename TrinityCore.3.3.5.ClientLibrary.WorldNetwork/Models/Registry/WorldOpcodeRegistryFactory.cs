@@ -2,6 +2,7 @@
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Enums;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages.States.Account;
+using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages.States.Environment;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages.States.Player;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages.States.Server;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages.States.Social;
@@ -13,6 +14,11 @@ public class WorldOpcodeRegistryFactory
     public OpcodeRegistry<WorldCommands> Create()
     {
         OpcodeRegistry<WorldCommands> registry = new();
+
+        // Ignored commands
+        registry.Register(WorldCommands.SMSG_LEARNED_DANCE_MOVES, IgnoredServerMessage.Parse);
+        registry.Register(WorldCommands.SMSG_ADDON_INFO, IgnoredServerMessage.Parse);
+        // Client commands
         registry.Register(WorldCommands.SERVER_AUTH_CHALLENGE, ServerAuthChallengeRequest.Parse);
         registry.Register(WorldCommands.SERVER_AUTH_RESPONSE, ServerAuthChallengeResult.Parse);
         registry.Register(WorldCommands.SMSG_CHAR_ENUM, ServerCharactersListResponse.Parse);
@@ -34,6 +40,14 @@ public class WorldOpcodeRegistryFactory
         registry.Register(WorldCommands.SMSG_POWER_UPDATE, ServerPowerUpdateInfo.Parse);
         registry.Register(WorldCommands.SMSG_INITIALIZE_FACTIONS, ServerInitializeFactionsInfo.Parse);
         registry.Register(WorldCommands.SMSG_TIME_SYNC_REQ, ServerTimeSyncRequest.Parse);
+        registry.Register(WorldCommands.SMSG_ACTION_BUTTONS, ServerActionButtons.Parse);
+        registry.Register(WorldCommands.SMSG_WEATHER, ServerWeather.Parse);
+        registry.Register(WorldCommands.SMSG_EQUIPMENT_SET_LIST, ServerEquipmentSetList.Parse);
+        registry.Register(WorldCommands.SMSG_SET_FORCED_REACTIONS, ServerForcedReactions.Parse);
+        registry.Register(WorldCommands.SMSG_INIT_WORLD_STATES, ServerInitWorldStates.Parse);
+        registry.Register(WorldCommands.SMSG_UPDATE_WORLD_STATE, ServerUpdateWorldState.Parse);
+        registry.Register(WorldCommands.SMSG_SET_PROFICIENCY, ServerProficiency.Parse);
+        registry.Register(WorldCommands.SMSG_UPDATE_OBJECT, ServerUpdateObjectInfo.Parse);
 
         return registry;
     }
