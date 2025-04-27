@@ -67,7 +67,7 @@ public class FrameReader<TCommands> where TCommands : struct, Enum
             }
             else
             {
-                Log.Error($"Invalid packet received: {BitConverter.ToString(_buffer.ToArray())}");
+                Log.Verbose($"Invalid packet received: {BitConverter.ToString(_buffer.ToArray())}");
             }
 
             _buffer.RemoveRange(0, _headerReader.ExpectedPayloadLength + _headerReader.HeaderLength);

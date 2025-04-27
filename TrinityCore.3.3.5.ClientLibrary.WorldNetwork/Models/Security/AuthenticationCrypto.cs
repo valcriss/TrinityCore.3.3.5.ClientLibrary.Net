@@ -19,7 +19,7 @@ public class AuthenticationCrypto
     private readonly Arc4 _decryptionStream;
     private readonly Arc4 _encryptionStream;
 
-    private CryptoAuthStatus _status = CryptoAuthStatus.WAITING;
+    private CryptoAuthStatus _status;
 
     public AuthenticationCrypto(byte[] sessionKey)
     {
@@ -42,14 +42,11 @@ public class AuthenticationCrypto
         _status = CryptoAuthStatus.WAITING;
     }
 
+    public bool IsInitialized => _status == CryptoAuthStatus.READY;
+
     public void Activate()
     {
         _status = CryptoAuthStatus.READY;
-    }
-
-    public void Deactivate()
-    {
-        _status = CryptoAuthStatus.WAITING;
     }
 
     internal void Decrypt(byte[] data, int start, int count)

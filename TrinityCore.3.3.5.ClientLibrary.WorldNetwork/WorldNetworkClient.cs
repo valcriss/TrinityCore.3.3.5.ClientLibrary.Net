@@ -24,6 +24,7 @@ public class WorldNetworkClient : IDisposable
     private readonly AuthChallengeProcess _authChallengeProcess;
     private readonly CharacterLoginProcess _characterLoginProcess;
     private readonly CharactersListProcess _charactersListProcess;
+    private readonly InternalProcess _internalProcess;
     private readonly NetworkEventBus<WorldCommands> _eventBus;
 
     private readonly NetworkClient<WorldCommands> _networkClient;
@@ -50,6 +51,7 @@ public class WorldNetworkClient : IDisposable
         _authChallengeProcess = new AuthChallengeProcess(_networkClient, realmId, username, sessionKey, crypto);
         _charactersListProcess = new CharactersListProcess(_networkClient);
         _characterLoginProcess = new CharacterLoginProcess(_networkClient);
+        _internalProcess = new InternalProcess(_networkClient);
 
         _serverStateHandler = new ServerStateHandler(worldStateEventBus);
         _accountStateHandler = new AccountStateHandler(worldStateEventBus);
@@ -120,6 +122,8 @@ public class WorldNetworkClient : IDisposable
         _eventBus.Subscribe<ServerInitialSpellsInfo>(WorldCommands.SMSG_INITIAL_SPELLS, _playerStateHandler.OnServerInitialSpellsInfo);
         _eventBus.Subscribe<ServerUnlearnedSpellsInfo>(WorldCommands.SMSG_SEND_UNLEARN_SPELLS, _playerStateHandler.OnServerUnlearnedSpellsInfo);
         _eventBus.Subscribe<ServerPowerUpdateInfo>(WorldCommands.SMSG_POWER_UPDATE, _playerStateHandler.OnServerPowerUpdateInfo);
+        _eventBus.Subscribe<ServerInitializeFactionsInfo>(WorldCommands.SMSG_INITIALIZE_FACTIONS, _playerStateHandler.OnServerInitializeFactionsInfo);
+        _eventBus.Subscribe<ServerTimeSyncRequest>(WorldCommands.SMSG_TIME_SYNC_REQ, _internalProcess.OnServerTimeSyncRequest);
     }
 
     private void ReleaseEventBus()
@@ -143,5 +147,7 @@ public class WorldNetworkClient : IDisposable
         _eventBus.Unsubscribe<ServerInitialSpellsInfo>(WorldCommands.SMSG_INITIAL_SPELLS, _playerStateHandler.OnServerInitialSpellsInfo);
         _eventBus.Unsubscribe<ServerUnlearnedSpellsInfo>(WorldCommands.SMSG_SEND_UNLEARN_SPELLS, _playerStateHandler.OnServerUnlearnedSpellsInfo);
         _eventBus.Unsubscribe<ServerPowerUpdateInfo>(WorldCommands.SMSG_POWER_UPDATE, _playerStateHandler.OnServerPowerUpdateInfo);
+        _eventBus.Unsubscribe<ServerInitializeFactionsInfo>(WorldCommands.SMSG_INITIALIZE_FACTIONS, _playerStateHandler.OnServerInitializeFactionsInfo);
+        _eventBus.Unsubscribe<ServerTimeSyncRequest>(WorldCommands.SMSG_TIME_SYNC_REQ, _internalProcess.OnServerTimeSyncRequest);
     }
 }

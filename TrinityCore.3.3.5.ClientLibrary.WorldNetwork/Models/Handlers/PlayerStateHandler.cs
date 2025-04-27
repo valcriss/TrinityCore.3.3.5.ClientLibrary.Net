@@ -56,4 +56,9 @@ public class PlayerStateHandler
     {
         _worldStateEventBus.Publish(serverPowerUpdateInfo.PowerUpdate);
     }
+
+    public void OnServerInitializeFactionsInfo(ServerInitializeFactionsInfo serverInitializeFactionsInfo)
+    {
+        _worldStateEventBus.Publish(serverInitializeFactionsInfo.Factions);
+    }
 }

@@ -14,12 +14,11 @@ public class PlayerState : State
     public WorldPoint BindPoint { get; private set; } = new();
     public DungeonDifficulty DungeonDifficulty { get; private set; } = new();
     public InstanceDifficulty InstanceDifficulty { get; private set; } = new();
-
     public PlayerTalentsInformations PlayerTalents { get; private set; } = new();
     public PetTalentsInformations PetTalents { get; private set; } = new();
-
     public List<Spell> Spells { get; private set; } = new();
     public List<Spell> UnlearnedSpells { get; private set; } = new();
+    public List<Reputation> Factions { get; private set; } = new();
 
     protected override void RegisterWorldStateBusEvents()
     {
@@ -31,6 +30,7 @@ public class PlayerState : State
         WorldStateEventBus.Register<PetTalentsInformations>(talents => PetTalents = talents);
         WorldStateEventBus.Register<SpellsList>(spellsInformations => Spells = spellsInformations.Spells);
         WorldStateEventBus.Register<UnlearnedSpellsList>(unlearnedSpellsList => UnlearnedSpells = unlearnedSpellsList.Spells);
+        WorldStateEventBus.Register<Factions>(factions => Factions = factions.Reputations);
     }
 
     protected override void UnregisterWorldStateBusEvents()
@@ -43,5 +43,6 @@ public class PlayerState : State
         WorldStateEventBus.Unregister<PetTalentsInformations>(talents => PetTalents = talents);
         WorldStateEventBus.Unregister<SpellsList>(spellsInformations => Spells = spellsInformations.Spells);
         WorldStateEventBus.Unregister<UnlearnedSpellsList>(unlearnedSpellsList => UnlearnedSpells = unlearnedSpellsList.Spells);
+        WorldStateEventBus.Unregister<Factions>(factions => Factions = factions.Reputations);
     }
 }

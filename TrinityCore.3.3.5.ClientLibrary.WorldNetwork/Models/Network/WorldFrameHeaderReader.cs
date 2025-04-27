@@ -1,4 +1,5 @@
 ﻿using TrinityCore._3._3._5.ClientLibrary.Network.Core.Readers;
+using TrinityCore._3._3._5.ClientLibrary.Shared.Logger;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Enums;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Security;
 
@@ -45,12 +46,33 @@ public class WorldFrameHeaderReader : FrameHeaderReader<WorldCommands>
                 Command = (WorldCommands)BitConverter.ToUInt16(dataBuffer, 3);
                 break;
             default:
+                Log.Error($"WorldFrameHeaderReader: Invalid header length: {HeaderLength}");
                 IsValid = false;
                 break;
         }
 
         IsValid = Enum.IsDefined(typeof(WorldCommands), Command);
-
+        if (!IsValid)
+        {
+            Log.Error($"WorldFrameHeaderReader: Invalid command: {HeaderLength} {Command}");
+        }
         return true;
+    }
+
+    private byte[]? DecryptHeaderData(byte[]? data)
+    {
+        if (data == null || data.Length < 4)
+        {
+            Log.Error($"WorldFrameHeaderReader: Invalid data length: {data?.Length}");
+            return data;
+        }
+        if(!_crypto.IsInitialized)
+        {
+            return data;
+        }
+        byte[] headerData = new byte[6]; // Taille maximale possible de l'en-tête (pour les paquets larges)
+        Array.Copy(data, headerData, Math.Min(6, data.Length));
+        _crypto.Decrypt(headerData,0, headerData.Length);
+        return headerData;
     }
 }

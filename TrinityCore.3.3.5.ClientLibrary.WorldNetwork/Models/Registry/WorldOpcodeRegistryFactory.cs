@@ -32,6 +32,8 @@ public class WorldOpcodeRegistryFactory
         registry.Register(WorldCommands.SMSG_INITIAL_SPELLS, ServerInitialSpellsInfo.Parse);
         registry.Register(WorldCommands.SMSG_SEND_UNLEARN_SPELLS, ServerUnlearnedSpellsInfo.Parse);
         registry.Register(WorldCommands.SMSG_POWER_UPDATE, ServerPowerUpdateInfo.Parse);
+        registry.Register(WorldCommands.SMSG_INITIALIZE_FACTIONS, ServerInitializeFactionsInfo.Parse);
+        registry.Register(WorldCommands.SMSG_TIME_SYNC_REQ, ServerTimeSyncRequest.Parse);
 
         return registry;
     }
