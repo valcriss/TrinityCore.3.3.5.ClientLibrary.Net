@@ -1,4 +1,5 @@
-﻿using TrinityCore._3._3._5.ClientLibrary.WorldState.States;
+﻿using TrinityCore._3._3._5.ClientLibrary.Dbc;
+using TrinityCore._3._3._5.ClientLibrary.WorldState.States;
 
 namespace TrinityCore._3._3._5.ClientLibrary.WorldState;
 
@@ -6,15 +7,15 @@ public class GameState
 {
     private readonly WorldStateEventBus _worldStateEventBus;
 
-    public GameState()
+    public GameState(DbcCollection dbcCollection)
     {
         _worldStateEventBus = new WorldStateEventBus();
-        Server = new ServerState(_worldStateEventBus);
-        Account = new AccountState(_worldStateEventBus);
-        Social = new SocialState(_worldStateEventBus);
-        Player = new PlayerState(_worldStateEventBus);
-        Entities = new EntitiesState(_worldStateEventBus);
-        Environment = new EnvironmentState(_worldStateEventBus);
+        Server = new ServerState(_worldStateEventBus, dbcCollection);
+        Account = new AccountState(_worldStateEventBus, dbcCollection);
+        Social = new SocialState(_worldStateEventBus, dbcCollection);
+        Player = new PlayerState(_worldStateEventBus, dbcCollection);
+        Entities = new EntitiesState(_worldStateEventBus, dbcCollection);
+        Environment = new EnvironmentState(_worldStateEventBus, dbcCollection);
     }
 
     public ServerState Server { get; private set; }

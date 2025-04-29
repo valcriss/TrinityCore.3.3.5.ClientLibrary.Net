@@ -70,7 +70,10 @@ public class FrameReader<TCommands> where TCommands : struct, Enum
                 Log.Verbose($"Invalid packet received: {BitConverter.ToString(_buffer.ToArray())}");
             }
 
-            _buffer.RemoveRange(0, _headerReader.ExpectedPayloadLength + _headerReader.HeaderLength);
+            lock (_lock)
+            {
+                _buffer.RemoveRange(0, _headerReader.ExpectedPayloadLength + _headerReader.HeaderLength);
+            }
         }
     }
 }

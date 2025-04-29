@@ -71,7 +71,11 @@ public class ServerUpdateObjectInfo : ParsedPacket<WorldCommands>
             UpdateLiving(movementInfo, packet);
         else if ((flags & (ushort)ObjectUpdateOptions.UPDATEFLAG_POSITION) != 0)
             UpdatePosition(movementInfo, packet);
-        else if ((flags & (ushort)ObjectUpdateOptions.UPDATEFLAG_STATIONARY_POSITION) != 0) movementInfo.MovementStationary.Stationary = new Position(packet.ReadSingle(), packet.ReadSingle(), packet.ReadSingle(), packet.ReadSingle());
+        else if ((flags & (ushort)ObjectUpdateOptions.UPDATEFLAG_STATIONARY_POSITION) != 0)
+            movementInfo.MovementStationary = new MovementStationary
+            {
+                Stationary = new Position(packet.ReadSingle(), packet.ReadSingle(), packet.ReadSingle(), packet.ReadSingle())
+            };
 
         if ((flags & (ushort)ObjectUpdateOptions.UPDATEFLAG_UNKNOWN) != 0) packet.ReadUInt32();
 
@@ -80,7 +84,10 @@ public class ServerUpdateObjectInfo : ParsedPacket<WorldCommands>
         if ((flags & (ushort)ObjectUpdateOptions.UPDATEFLAG_HAS_TARGET) != 0)
         {
             if (packet.PeekByte() != 0)
-                movementInfo.MovementHasTarget.Target = packet.ReadPackedGuid();
+                movementInfo.MovementHasTarget = new MovementHasTarget
+                {
+                    Target = packet.ReadPackedGuid()
+                };
             else
                 packet.ReadSByte();
         }
@@ -93,12 +100,17 @@ public class ServerUpdateObjectInfo : ParsedPacket<WorldCommands>
             packet.ReadSingle();
         }
 
-        if ((flags & (ushort)ObjectUpdateOptions.UPDATEFLAG_ROTATION) != 0) movementInfo.MovementRotation.Rotation = packet.ReadInt64();
+        if ((flags & (ushort)ObjectUpdateOptions.UPDATEFLAG_ROTATION) != 0)
+            movementInfo.MovementRotation = new MovementRotation
+            {
+                Rotation = packet.ReadInt64()
+            };
         return movementInfo;
     }
 
     private static void UpdatePosition(MovementInfo movementInfo, ServerUpdateObjectInfo packet)
     {
+        movementInfo.MovementPosition = new MovementPosition();
         movementInfo.MovementPosition.Transport = packet.PeekByte() != 0;
 
         if (movementInfo.MovementPosition.Transport)
@@ -116,13 +128,18 @@ public class ServerUpdateObjectInfo : ParsedPacket<WorldCommands>
         float o = packet.ReadSingle();
 
         movementInfo.MovementPosition.Position.O = o;
-        if (movementInfo.MovementPosition.Transport) movementInfo.MovementPosition.TransportPosition.O = o;
+        if (movementInfo.MovementPosition.Transport)
+            movementInfo.MovementPosition.TransportPosition = new Position
+            {
+                O = o
+            };
 
         packet.ReadSingle();
     }
 
     private static void UpdateLiving(MovementInfo movementInfo, ServerUpdateObjectInfo packet)
     {
+        movementInfo.MovementLiving = new MovementLiving();
         movementInfo.MovementLiving.MovementFlags = (MovementTypes)packet.ReadUInt32();
         movementInfo.MovementLiving.ExtraMovementFlags = (MovementOptions)packet.ReadUInt16();
         movementInfo.MovementLiving.Time = packet.ReadUInt32();

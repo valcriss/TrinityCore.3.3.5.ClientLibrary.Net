@@ -13,12 +13,12 @@ public class MovementSpline
     public int EffectStartTime { get; set; }
     public float? FacingAngle { get; set; }
     public float? FacingTarget { get; set; }
-    public Position FinalDestination { get; set; }
-    public Position FinalPosition { get; set; }
+    public Position? FinalDestination { get; set; }
+    public Position? FinalPosition { get; set; }
     public SplineEvaluationMode SplineEvaluationMode { get; set; }
     public SplineTypes? SplineFlags { get; set; }
     public uint SplineId { get; set; }
-    public Position[] SplineNodes { get; set; }
+    public Position[] SplineNodes { get; set; } = [];
     public int TimePassed { get; set; }
     public float VerticalAcceleration { get; set; }
 
@@ -26,7 +26,7 @@ public class MovementSpline
     private DateTime SplineStart { get; }
 
 
-    public Position CurrentPosition(float speed)
+    public Position? CurrentPosition(float speed)
     {
         float totalTimePassed = (float)DateTime.Now.Subtract(SplineStart).TotalMilliseconds + TimePassed;
         float totalDistanceDone = speed * totalTimePassed;

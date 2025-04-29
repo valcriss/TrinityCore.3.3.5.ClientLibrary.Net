@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrinityCore.3.3.5.ClientLib
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrinityCore.3.3.5.ClientLibrary.WorldState", "TrinityCore.3.3.5.ClientLibrary.WorldState\TrinityCore.3.3.5.ClientLibrary.WorldState.csproj", "{03BBC77A-07E2-4392-9555-E0A579DA47DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrinityCore.3.3.5.ClientLibrary.Dbc", "TrinityCore.3.3.5.ClientLibrary.Dbc\TrinityCore.3.3.5.ClientLibrary.Dbc.csproj", "{4FA65DEA-7EFD-4F2F-A2B0-56198CBD594B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{03BBC77A-07E2-4392-9555-E0A579DA47DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03BBC77A-07E2-4392-9555-E0A579DA47DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03BBC77A-07E2-4392-9555-E0A579DA47DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FA65DEA-7EFD-4F2F-A2B0-56198CBD594B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FA65DEA-7EFD-4F2F-A2B0-56198CBD594B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FA65DEA-7EFD-4F2F-A2B0-56198CBD594B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FA65DEA-7EFD-4F2F-A2B0-56198CBD594B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

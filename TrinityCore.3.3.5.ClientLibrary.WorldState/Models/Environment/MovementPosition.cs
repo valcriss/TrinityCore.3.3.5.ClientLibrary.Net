@@ -2,8 +2,8 @@
 
 public class MovementPosition
 {
-    public Position Position { get; set; } = new();
+    public Position? Position { get; set; } = null;
     public bool Transport { get; set; }
     public ulong? TransportGuid { get; set; }
-    public Position TransportPosition { get; set; } = new();
+    public Position? TransportPosition { get; set; } = null;
 }

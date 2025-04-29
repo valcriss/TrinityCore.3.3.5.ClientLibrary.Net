@@ -1,4 +1,5 @@
-﻿using TrinityCore._3._3._5.ClientLibrary.WorldState.Core;
+﻿using TrinityCore._3._3._5.ClientLibrary.Dbc;
+using TrinityCore._3._3._5.ClientLibrary.WorldState.Core;
 using TrinityCore._3._3._5.ClientLibrary.WorldState.Models.Account;
 using TrinityCore._3._3._5.ClientLibrary.WorldState.Models.Player;
 
@@ -6,7 +7,7 @@ namespace TrinityCore._3._3._5.ClientLibrary.WorldState.States;
 
 public class PlayerState : State
 {
-    public PlayerState(WorldStateEventBus worldStateEventBus) : base(worldStateEventBus)
+    public PlayerState(WorldStateEventBus worldStateEventBus, DbcCollection dbcCollection) : base(worldStateEventBus, dbcCollection)
     {
     }
 

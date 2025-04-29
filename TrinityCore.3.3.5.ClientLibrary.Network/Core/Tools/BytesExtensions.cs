@@ -1,6 +1,6 @@
-﻿using System.Numerics;
+﻿using System.IO.Compression;
+using System.Numerics;
 using System.Text;
-using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
 
 namespace TrinityCore._3._3._5.ClientLibrary.Network.Core.Tools;
 
@@ -37,15 +37,14 @@ public static class BytesExtensions
             int length = (int)BitConverter.ToUInt32(data, 0);
             byte[] output = new byte[length];
             byte[] buffer = data.Split(4, data.Length - 4);
-
-            Stream s = new InflaterInputStream(new MemoryStream(buffer));
-            int offset = 0;
-            while (true)
+            using (MemoryStream compressedStream = new(buffer, 0, buffer.Length))
+            using (ZLibStream zLibStream = new(compressedStream, CompressionMode.Decompress))
             {
-                int size = s.Read(output, offset, length);
-                if (size == length) break;
-                offset += size;
-                length -= size;
+                int bytesRead = zLibStream.Read(output, 0, length);
+
+                // Vérification que nous avons lu toutes les données attendues
+                if (bytesRead != length)
+                    throw new InvalidDataException($"La taille décompressée ne correspond pas: attendu {length}, obtenu {bytesRead}");
             }
 
             return output;

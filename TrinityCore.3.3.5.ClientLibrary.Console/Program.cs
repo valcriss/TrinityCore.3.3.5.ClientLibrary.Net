@@ -1,5 +1,6 @@
 ﻿using TrinityCore._3._3._5.ClientLibrary.AuthNetwork;
 using TrinityCore._3._3._5.ClientLibrary.AuthNetwork.Models.Results;
+using TrinityCore._3._3._5.ClientLibrary.Dbc;
 using TrinityCore._3._3._5.ClientLibrary.Network.Core.Tools;
 using TrinityCore._3._3._5.ClientLibrary.Shared.Logger;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork;
@@ -14,6 +15,7 @@ internal class Program
     private const int AUTH_PORT = 3724;
     private const string USERNAME = "test";
     private const string PASSWORD = "test";
+    private const string DBC_PATH = @"D:\Développement\clientdata\3.3.5\dbc";
     private const LogLevel LOG_LEVEL = LogLevel.INFO;
 
     private static AuthNetworkClient? _authNetworkClient;
@@ -22,7 +24,7 @@ internal class Program
 
     private static async Task Main(string[] args)
     {
-        _worldState = new GameState();
+        _worldState = new GameState(new DbcCollection(DBC_PATH));
         ConfigureLogger();
 
         try

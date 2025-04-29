@@ -21,4 +21,9 @@ public class EnvironmentStateHandler
     {
         _worldStateEventBus.Publish(serverUpdateObjectInfo.UpdatePackage);
     }
+
+    public void OnServerMonsterMove(ServerMonsterMove serverMonsterMove)
+    {
+        _worldStateEventBus.Publish(serverMonsterMove.MonsterMoveData);
+    }
 }

@@ -135,6 +135,7 @@ public class WorldNetworkClient : IDisposable
         _eventBus.Subscribe<ServerUpdateWorldState>(WorldCommands.SMSG_UPDATE_WORLD_STATE, _playerStateHandler.OnServerUpdateWorldState);
         _eventBus.Subscribe<ServerProficiency>(WorldCommands.SMSG_SET_PROFICIENCY, _playerStateHandler.OnServerProficiency);
         _eventBus.Subscribe<ServerUpdateObjectInfo>(WorldCommands.SMSG_UPDATE_OBJECT, _environmentStateHandler.OnServerUpdateObjectInfo);
+        _eventBus.Subscribe<ServerMonsterMove>(WorldCommands.SMSG_MONSTER_MOVE, _environmentStateHandler.OnServerMonsterMove);
     }
 
     private void ReleaseEventBus()
@@ -168,5 +169,6 @@ public class WorldNetworkClient : IDisposable
         _eventBus.Unsubscribe<ServerUpdateWorldState>(WorldCommands.SMSG_UPDATE_WORLD_STATE, _playerStateHandler.OnServerUpdateWorldState);
         _eventBus.Unsubscribe<ServerProficiency>(WorldCommands.SMSG_SET_PROFICIENCY, _playerStateHandler.OnServerProficiency);
         _eventBus.Unsubscribe<ServerUpdateObjectInfo>(WorldCommands.SMSG_UPDATE_OBJECT, _environmentStateHandler.OnServerUpdateObjectInfo);
+        _eventBus.Unsubscribe<ServerMonsterMove>(WorldCommands.SMSG_MONSTER_MOVE, _environmentStateHandler.OnServerMonsterMove);
     }
 }

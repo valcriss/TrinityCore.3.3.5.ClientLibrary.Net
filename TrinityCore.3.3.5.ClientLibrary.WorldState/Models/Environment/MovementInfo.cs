@@ -2,9 +2,9 @@
 
 public class MovementInfo
 {
-    public MovementHasTarget MovementHasTarget { get; set; } = new();
-    public MovementLiving MovementLiving { get; set; } = new();
-    public MovementPosition MovementPosition { get; set; } = new();
-    public MovementRotation MovementRotation { get; set; } = new();
-    public MovementStationary MovementStationary { get; set; } = new();
+    public MovementHasTarget? MovementHasTarget { get; set; } = null;
+    public MovementLiving? MovementLiving { get; set; } = null;
+    public MovementPosition? MovementPosition { get; set; } = null;
+    public MovementRotation? MovementRotation { get; set; } = null;
+    public MovementStationary? MovementStationary { get; set; } = null;
 }

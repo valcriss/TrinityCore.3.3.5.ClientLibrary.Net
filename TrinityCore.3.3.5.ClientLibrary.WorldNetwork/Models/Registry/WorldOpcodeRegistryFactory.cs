@@ -48,6 +48,7 @@ public class WorldOpcodeRegistryFactory
         registry.Register(WorldCommands.SMSG_UPDATE_WORLD_STATE, ServerUpdateWorldState.Parse);
         registry.Register(WorldCommands.SMSG_SET_PROFICIENCY, ServerProficiency.Parse);
         registry.Register(WorldCommands.SMSG_UPDATE_OBJECT, ServerUpdateObjectInfo.Parse);
+        registry.Register(WorldCommands.SMSG_MONSTER_MOVE, ServerMonsterMove.Parse);
 
         return registry;
     }

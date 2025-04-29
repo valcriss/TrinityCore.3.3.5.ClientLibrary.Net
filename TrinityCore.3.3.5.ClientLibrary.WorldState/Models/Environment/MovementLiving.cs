@@ -25,7 +25,7 @@ public class MovementLiving
     // MOVEMENTFLAG_SWIMMING || MOVEMENTFLAG_FLYING || MOVEMENTFLAG2_ALWAYS_ALLOW_PITCHING
     public float? Pitch { get; set; }
 
-    public Position Position { get; set; } = new();
+    public Position? Position { get; set; } = null;
 
     // SPEEDS
     public Dictionary<UnitMoveType, float> Speeds { get; set; } = new();
@@ -38,7 +38,7 @@ public class MovementLiving
     // MOVEMENTFLAG_ONTRANSPORT
     public ulong? TransportGuid { get; set; }
 
-    public Position TransportPosition { get; set; } = new();
+    public Position? TransportPosition { get; set; } = null;
 
     public byte? TransportSeat { get; set; }
 
