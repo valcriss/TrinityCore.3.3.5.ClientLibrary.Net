@@ -11,9 +11,8 @@ public class ConnectionManager : IDisposable
 {
     private readonly string _host;
     private readonly int _port;
-    private TcpClient? _client;
+    private Socket? _socket;
     private CancellationTokenSource? _cts;
-    private NetworkStream? _stream;
 
     public ConnectionManager(string host, int port)
     {
@@ -52,12 +51,18 @@ public class ConnectionManager : IDisposable
     /// </summary>
     public async Task ConnectAsync()
     {
-        if (_client != null)
+        if (_socket != null)
             throw new InvalidOperationException("Déjà connecté.");
 
-        _client = new TcpClient();
-        await _client.ConnectAsync(_host, _port);
-        _stream = _client.GetStream();
+        _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        
+        // Résolution du nom d'hôte en adresse IP
+        IPHostEntry hostEntry = await Dns.GetHostEntryAsync(_host);
+        IPAddress ipAddress = hostEntry.AddressList.FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork) 
+                             ?? throw new InvalidOperationException("Impossible de résoudre l'adresse IP.");
+        
+        // Connexion au serveur
+        await _socket.ConnectAsync(ipAddress, _port);
 
         Connected?.Invoke();
 
@@ -73,8 +78,15 @@ public class ConnectionManager : IDisposable
         if (_cts != null && !_cts.IsCancellationRequested)
             await _cts.CancelAsync();
 
-        _stream?.Close();
-        _client?.Close();
+        if (_socket != null)
+        {
+            if (_socket.Connected)
+            {
+                _socket.Shutdown(SocketShutdown.Both);
+            }
+            _socket.Close();
+            _socket = null;
+        }
 
         // On notifie la déconnexion
         Disconnected?.Invoke();
@@ -87,19 +99,19 @@ public class ConnectionManager : IDisposable
     /// </summary>
     private async Task ReceiveLoopAsync(CancellationToken token)
     {
-        byte[] buffer = new byte[8192];
+        byte[] buffer = new byte[44000];
 
         try
         {
             while (!token.IsCancellationRequested)
             {
-                if (_stream == null)
+                if (_socket == null || !_socket.Connected)
                 {
-                    Log.Error("Socket stream is null.");
+                    Log.Error("Socket is null or disconnected.");
                     break;
                 }
 
-                int bytesRead = await _stream.ReadAsync(buffer, 0, buffer.Length, token);
+                int bytesRead = await _socket.ReceiveAsync(new ArraySegment<byte>(buffer), SocketFlags.None);
                 if (bytesRead == 0)
                 {
                     Log.Warn("Server closed the connection.");
@@ -123,7 +135,7 @@ public class ConnectionManager : IDisposable
         }
         finally
         {
-            // en cas d’erreur ou de fin de boucle, on notifie la déconnexion
+            // en cas d'erreur ou de fin de boucle, on notifie la déconnexion
             Disconnected?.Invoke();
         }
     }
@@ -134,14 +146,14 @@ public class ConnectionManager : IDisposable
     /// <param name="data">Le tableau d'octets à envoyer.</param>
     public async Task SendAsync(byte[]? data)
     {
-        if (_stream == null)
+        if (_socket == null || !_socket.Connected)
             throw new InvalidOperationException("Connexion closed.");
         if (data == null || data.Length == 0)
             return;
         Log.Verbose("-> Sending data: " + BitConverter.ToString(data));
         try
         {
-            await _stream.WriteAsync(data, 0, data.Length);
+            await _socket.SendAsync(new ArraySegment<byte>(data), SocketFlags.None);
         }
         catch (Exception ex)
         {
@@ -153,7 +165,7 @@ public class ConnectionManager : IDisposable
 
     public IPAddress GetIpAddress()
     {
-        IPAddress? ipAddress = ((IPEndPoint?)_client?.Client.LocalEndPoint)?.Address;
+        IPAddress? ipAddress = ((IPEndPoint?)_socket?.LocalEndPoint)?.Address;
         if (ipAddress == null) return IPAddress.None;
         return ipAddress;
     }
