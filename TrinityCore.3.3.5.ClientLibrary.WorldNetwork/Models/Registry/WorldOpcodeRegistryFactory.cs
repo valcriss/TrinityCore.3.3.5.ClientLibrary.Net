@@ -20,7 +20,7 @@ public class WorldOpcodeRegistryFactory
         registry.Register(WorldCommands.SMSG_LEARNED_DANCE_MOVES, IgnoredServerMessage.Parse);
         registry.Register(WorldCommands.SMSG_ADDON_INFO, IgnoredServerMessage.Parse);
         registry.Register(WorldCommands.SMSG_AURA_UPDATE_ALL, IgnoredServerMessage.Parse);
-        
+        registry.Register(WorldCommands.SMSG_AURA_UPDATE, IgnoredServerMessage.Parse);
         // Movement Update commands
         registry.Register(WorldCommands.MSG_MOVE_START_FORWARD, ServerMoveUpdate.Parse);
         registry.Register(WorldCommands.MSG_MOVE_START_BACKWARD, ServerMoveUpdate.Parse);
@@ -82,7 +82,6 @@ public class WorldOpcodeRegistryFactory
         registry.Register(WorldCommands.SMSG_DESTROY_OBJECT, ServerDestroyObject.Parse);
         registry.Register(WorldCommands.SMSG_HIGHEST_THREAT_UPDATE, ServerHighestThreatUpdate.Parse);
         registry.Register(WorldCommands.SMSG_AI_REACTION, ServerAiReaction.Parse);
-        
         registry.Register(WorldCommands.SMSG_ATTACKSTART, ServerAttackStartInfo.Parse);
         registry.Register(WorldCommands.SMSG_ATTACKSTOP, ServerAttackStopInfo.Parse);
         registry.Register(WorldCommands.SMSG_THREAT_CLEAR, ServerThreatClear.Parse);
