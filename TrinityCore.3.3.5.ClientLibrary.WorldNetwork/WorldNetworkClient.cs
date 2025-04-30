@@ -142,7 +142,7 @@ public class WorldNetworkClient : IDisposable
         _eventBus.Subscribe<ServerDestroyObject>(WorldCommands.SMSG_DESTROY_OBJECT, _environmentStateHandler.OnServerDestroyObject);
         _eventBus.Subscribe<ServerHighestThreatUpdate>(WorldCommands.SMSG_HIGHEST_THREAT_UPDATE, _environmentStateHandler.OnServerHighestThreatUpdate);
         _eventBus.Subscribe<ServerAiReaction>(WorldCommands.SMSG_AI_REACTION, _environmentStateHandler.OnServerAiReaction);
-        _eventBus.Subscribe<ServerMoveSetFacing>(WorldCommands.MSG_MOVE_SET_FACING, _environmentStateHandler.OnServerMoveSetFacing);
+        _eventBus.Subscribe<ServerMoveUpdate>(WorldCommands.MSG_MOVE_SET_FACING, _environmentStateHandler.OnServerMoveSetFacing);
         _eventBus.Subscribe<ServerAttackStartInfo>(WorldCommands.SMSG_ATTACKSTART, _environmentStateHandler.OnServerAttackStartInfo);
         _eventBus.Subscribe<ServerAttackStopInfo>(WorldCommands.SMSG_ATTACKSTOP, _environmentStateHandler.OnServerAttackStopInfo);
         _eventBus.Subscribe<ServerThreatClear>(WorldCommands.SMSG_THREAT_CLEAR, _environmentStateHandler.OnServerThreatClear);
@@ -185,7 +185,7 @@ public class WorldNetworkClient : IDisposable
         _eventBus.Unsubscribe<ServerDestroyObject>(WorldCommands.SMSG_DESTROY_OBJECT, _environmentStateHandler.OnServerDestroyObject);
         _eventBus.Unsubscribe<ServerHighestThreatUpdate>(WorldCommands.SMSG_HIGHEST_THREAT_UPDATE, _environmentStateHandler.OnServerHighestThreatUpdate);
         _eventBus.Unsubscribe<ServerAiReaction>(WorldCommands.SMSG_AI_REACTION, _environmentStateHandler.OnServerAiReaction);
-        _eventBus.Unsubscribe<ServerMoveSetFacing>(WorldCommands.MSG_MOVE_SET_FACING, _environmentStateHandler.OnServerMoveSetFacing);
+        _eventBus.Unsubscribe<ServerMoveUpdate>(WorldCommands.MSG_MOVE_SET_FACING, _environmentStateHandler.OnServerMoveSetFacing);
         _eventBus.Unsubscribe<ServerAttackStartInfo>(WorldCommands.SMSG_ATTACKSTART, _environmentStateHandler.OnServerAttackStartInfo);
         _eventBus.Unsubscribe<ServerAttackStopInfo>(WorldCommands.SMSG_ATTACKSTOP, _environmentStateHandler.OnServerAttackStopInfo);
         _eventBus.Unsubscribe<ServerThreatClear>(WorldCommands.SMSG_THREAT_CLEAR, _environmentStateHandler.OnServerThreatClear);

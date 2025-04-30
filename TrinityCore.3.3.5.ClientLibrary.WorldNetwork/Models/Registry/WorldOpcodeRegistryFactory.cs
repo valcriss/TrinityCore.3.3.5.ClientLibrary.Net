@@ -19,6 +19,33 @@ public class WorldOpcodeRegistryFactory
         // Ignored commands
         registry.Register(WorldCommands.SMSG_LEARNED_DANCE_MOVES, IgnoredServerMessage.Parse);
         registry.Register(WorldCommands.SMSG_ADDON_INFO, IgnoredServerMessage.Parse);
+        registry.Register(WorldCommands.SMSG_AURA_UPDATE_ALL, IgnoredServerMessage.Parse);
+        
+        // Movement Update commands
+        registry.Register(WorldCommands.MSG_MOVE_START_FORWARD, ServerMoveUpdate.Parse);
+        registry.Register(WorldCommands.MSG_MOVE_START_BACKWARD, ServerMoveUpdate.Parse);
+        registry.Register(WorldCommands.MSG_MOVE_STOP, ServerMoveUpdate.Parse);
+        registry.Register(WorldCommands.MSG_MOVE_START_STRAFE_LEFT, ServerMoveUpdate.Parse);
+        registry.Register(WorldCommands.MSG_MOVE_START_STRAFE_RIGHT, ServerMoveUpdate.Parse);
+        registry.Register(WorldCommands.MSG_MOVE_STOP_STRAFE, ServerMoveUpdate.Parse);
+        registry.Register(WorldCommands.MSG_MOVE_JUMP, ServerMoveUpdate.Parse);
+        registry.Register(WorldCommands.MSG_MOVE_START_TURN_LEFT, ServerMoveUpdate.Parse);
+        registry.Register(WorldCommands.MSG_MOVE_START_TURN_RIGHT, ServerMoveUpdate.Parse);
+        registry.Register(WorldCommands.MSG_MOVE_STOP_TURN, ServerMoveUpdate.Parse);
+        registry.Register(WorldCommands.MSG_MOVE_START_PITCH_UP, ServerMoveUpdate.Parse);
+        registry.Register(WorldCommands.MSG_MOVE_START_PITCH_DOWN, ServerMoveUpdate.Parse);
+        registry.Register(WorldCommands.MSG_MOVE_STOP_PITCH, ServerMoveUpdate.Parse);
+        registry.Register(WorldCommands.MSG_MOVE_SET_RUN_MODE, ServerMoveUpdate.Parse);
+        registry.Register(WorldCommands.MSG_MOVE_SET_WALK_MODE, ServerMoveUpdate.Parse);
+        registry.Register(WorldCommands.MSG_MOVE_FALL_LAND, ServerMoveUpdate.Parse);
+        registry.Register(WorldCommands.MSG_MOVE_START_SWIM, ServerMoveUpdate.Parse);
+        registry.Register(WorldCommands.MSG_MOVE_STOP_SWIM, ServerMoveUpdate.Parse);
+        registry.Register(WorldCommands.MSG_MOVE_SET_FACING, ServerMoveUpdate.Parse);
+        registry.Register(WorldCommands.MSG_MOVE_SET_PITCH, ServerMoveUpdate.Parse);
+        registry.Register(WorldCommands.MSG_MOVE_HEARTBEAT, ServerMoveUpdate.Parse);
+        registry.Register(WorldCommands.MSG_MOVE_START_ASCEND, ServerMoveUpdate.Parse);
+        registry.Register(WorldCommands.MSG_MOVE_STOP_ASCEND, ServerMoveUpdate.Parse);
+        registry.Register(WorldCommands.MSG_MOVE_START_DESCEND, ServerMoveUpdate.Parse);
         // Client commands
         registry.Register(WorldCommands.SERVER_AUTH_CHALLENGE, ServerAuthChallengeRequest.Parse);
         registry.Register(WorldCommands.SERVER_AUTH_RESPONSE, ServerAuthChallengeResult.Parse);
@@ -55,7 +82,7 @@ public class WorldOpcodeRegistryFactory
         registry.Register(WorldCommands.SMSG_DESTROY_OBJECT, ServerDestroyObject.Parse);
         registry.Register(WorldCommands.SMSG_HIGHEST_THREAT_UPDATE, ServerHighestThreatUpdate.Parse);
         registry.Register(WorldCommands.SMSG_AI_REACTION, ServerAiReaction.Parse);
-        registry.Register(WorldCommands.MSG_MOVE_SET_FACING, ServerMoveSetFacing.Parse);
+        
         registry.Register(WorldCommands.SMSG_ATTACKSTART, ServerAttackStartInfo.Parse);
         registry.Register(WorldCommands.SMSG_ATTACKSTOP, ServerAttackStopInfo.Parse);
         registry.Register(WorldCommands.SMSG_THREAT_CLEAR, ServerThreatClear.Parse);

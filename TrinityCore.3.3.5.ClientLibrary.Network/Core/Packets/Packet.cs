@@ -76,6 +76,11 @@ public class Packet
     {
         return Data?.Length > ReadIndex;
     }
+    
+    public int DataLeftLength()
+    {
+        return Data?.Length - ReadIndex ?? 0;
+    }
 
     public byte PeekByte()
     {

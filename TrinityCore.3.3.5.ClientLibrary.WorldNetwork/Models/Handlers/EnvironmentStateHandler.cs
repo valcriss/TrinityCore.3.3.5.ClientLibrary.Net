@@ -52,9 +52,9 @@ public class EnvironmentStateHandler
         _worldStateEventBus.Publish(serverAiReaction.AiReaction);
     }
 
-    public void OnServerMoveSetFacing(ServerMoveSetFacing serverMoveSetFacing)
+    public void OnServerMoveSetFacing(ServerMoveUpdate serverMoveUpdate)
     {
-        _worldStateEventBus.Publish(serverMoveSetFacing.MovementUpdate);
+        _worldStateEventBus.Publish(serverMoveUpdate.MovementUpdate);
     }
 
     public void OnServerAttackStartInfo(ServerAttackStartInfo serverAttackStartInfo)

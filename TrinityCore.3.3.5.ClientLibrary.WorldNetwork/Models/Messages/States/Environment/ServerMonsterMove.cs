@@ -71,6 +71,9 @@ public class ServerMonsterMove : ParsedPacket<WorldCommands>
                     packet.MonsterMoveData.WayPoints.Add(packet.ReadCoord());
         }
 
+        // TODO: Fix paquet data read 1 byte left
+        packet.ReadBytes(packet.DataLeftLength());
+        
         return packet;
     }
 }

@@ -64,7 +64,7 @@ public class FrameReader<TCommands> where TCommands : struct, Enum
                         packet.Opcode = uncompressedCommand;
                         packet.Payload = packet.Payload.Decompress();
                     }
-
+                    
                     PacketExtracted?.Invoke(packet);
                 }
                 else

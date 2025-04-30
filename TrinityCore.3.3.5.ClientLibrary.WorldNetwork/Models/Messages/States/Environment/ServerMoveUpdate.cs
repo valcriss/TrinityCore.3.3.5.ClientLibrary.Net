@@ -11,16 +11,16 @@ using TrinityCore._3._3._5.ClientLibrary.WorldState.Models.Environment;
 
 namespace TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages.States.Environment
 {
-    public class ServerMoveSetFacing : ParsedPacket<WorldCommands>
+    public class ServerMoveUpdate : ParsedPacket<WorldCommands>
     {
         public MovementUpdate MovementUpdate { get; set; } = new();
-        public ServerMoveSetFacing(byte[]? data = null) : base(WorldCommands.MSG_MOVE_SET_FACING, data)
+        public ServerMoveUpdate(byte[]? data = null) : base(WorldCommands.MSG_MOVE_SET_FACING, data)
         {
         }
 
-        public static ServerMoveSetFacing Parse(RawPacket<WorldCommands> rawPacket)
+        public static ServerMoveUpdate Parse(RawPacket<WorldCommands> rawPacket)
         {
-            ServerMoveSetFacing packet = new(rawPacket.Payload);
+            ServerMoveUpdate packet = new(rawPacket.Payload);
             packet.MovementUpdate = MovementUpdate.Parse(packet);
             return packet;
         }

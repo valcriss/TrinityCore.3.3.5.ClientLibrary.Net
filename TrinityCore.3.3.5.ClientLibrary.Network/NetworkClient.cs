@@ -4,6 +4,7 @@ using TrinityCore._3._3._5.ClientLibrary.Network.Core.Packets;
 using TrinityCore._3._3._5.ClientLibrary.Network.Core.Parsers;
 using TrinityCore._3._3._5.ClientLibrary.Network.Core.Readers;
 using TrinityCore._3._3._5.ClientLibrary.Network.Core.Writers;
+using TrinityCore._3._3._5.ClientLibrary.Shared.Logger;
 
 namespace TrinityCore._3._3._5.ClientLibrary.Network;
 
@@ -71,6 +72,10 @@ public class NetworkClient<TCommands> : IDisposable where TCommands : struct, En
     private void OnPacketExtracted(RawPacket<TCommands> rawPacket)
     {
         ParsedPacket<TCommands>? packet = _packetParser.Parse(rawPacket);
+        if (packet != null && packet.IsDataLeft())
+        {
+            Log.Warn($"Data left in packet {packet.Command} : {packet.DataLeftLength()} bytes");
+        }
         if (packet != null) _eventBus.Dispatch(packet.Command, packet.GetType(), packet);
     }
 

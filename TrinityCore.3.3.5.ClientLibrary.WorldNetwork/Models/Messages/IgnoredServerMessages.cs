@@ -13,6 +13,7 @@ public class IgnoredServerMessage : ParsedPacket<WorldCommands>
     public static IgnoredServerMessage Parse(RawPacket<WorldCommands> rawPacket)
     {
         IgnoredServerMessage packet = new(rawPacket.Opcode, rawPacket.Payload);
+        packet.ReadBytes(packet.DataLeftLength());
         return packet;
     }
 }
