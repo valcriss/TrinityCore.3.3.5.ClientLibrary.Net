@@ -1,4 +1,5 @@
 ﻿using TrinityCore._3._3._5.ClientLibrary.Network;
+using TrinityCore._3._3._5.ClientLibrary.Shared.Enums;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Enums;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Security;

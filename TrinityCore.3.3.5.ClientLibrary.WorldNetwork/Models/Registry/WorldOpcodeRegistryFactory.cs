@@ -1,4 +1,5 @@
 ﻿using TrinityCore._3._3._5.ClientLibrary.Network.Core.Registry;
+using TrinityCore._3._3._5.ClientLibrary.Shared.Enums;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Enums;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages.States.Account;
@@ -49,7 +50,16 @@ public class WorldOpcodeRegistryFactory
         registry.Register(WorldCommands.SMSG_SET_PROFICIENCY, ServerProficiency.Parse);
         registry.Register(WorldCommands.SMSG_UPDATE_OBJECT, ServerUpdateObjectInfo.Parse);
         registry.Register(WorldCommands.SMSG_MONSTER_MOVE, ServerMonsterMove.Parse);
-
+        registry.Register(WorldCommands.SMSG_SPELL_GO, ServerSpellGo.Parse);
+        registry.Register(WorldCommands.SMSG_QUESTGIVER_STATUS_MULTIPLE, ServerQuestGiverStatusMultiple.Parse);
+        registry.Register(WorldCommands.SMSG_DESTROY_OBJECT, ServerDestroyObject.Parse);
+        registry.Register(WorldCommands.SMSG_HIGHEST_THREAT_UPDATE, ServerHighestThreatUpdate.Parse);
+        registry.Register(WorldCommands.SMSG_AI_REACTION, ServerAiReaction.Parse);
+        registry.Register(WorldCommands.MSG_MOVE_SET_FACING, ServerMoveSetFacing.Parse);
+        registry.Register(WorldCommands.SMSG_ATTACKSTART, ServerAttackStartInfo.Parse);
+        registry.Register(WorldCommands.SMSG_ATTACKSTOP, ServerAttackStopInfo.Parse);
+        registry.Register(WorldCommands.SMSG_THREAT_CLEAR, ServerThreatClear.Parse);
+        
         return registry;
     }
 }

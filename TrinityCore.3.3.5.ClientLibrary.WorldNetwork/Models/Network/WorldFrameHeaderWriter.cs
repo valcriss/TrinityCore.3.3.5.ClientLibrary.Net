@@ -1,6 +1,7 @@
 ﻿using TrinityCore._3._3._5.ClientLibrary.Network.Core.Packets;
 using TrinityCore._3._3._5.ClientLibrary.Network.Core.Tools;
 using TrinityCore._3._3._5.ClientLibrary.Network.Core.Writers;
+using TrinityCore._3._3._5.ClientLibrary.Shared.Enums;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Enums;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Security;
 

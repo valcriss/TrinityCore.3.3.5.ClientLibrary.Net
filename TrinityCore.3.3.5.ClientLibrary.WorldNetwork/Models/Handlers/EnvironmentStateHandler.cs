@@ -26,4 +26,49 @@ public class EnvironmentStateHandler
     {
         _worldStateEventBus.Publish(serverMonsterMove.MonsterMoveData);
     }
+
+    public void OnServerSpellGo(ServerSpellGo serverSpellGo)
+    {
+        _worldStateEventBus.Publish(serverSpellGo.SpellGoInfo);
+    }
+
+    public void OnServerQuestGiverStatusMultiple(ServerQuestGiverStatusMultiple questGiverStatusMultiple)
+    {
+        _worldStateEventBus.Publish(questGiverStatusMultiple.QuestGiverInfoMultiple);
+    }
+
+    public void OnServerDestroyObject(ServerDestroyObject serverDestroyObject)
+    {
+        _worldStateEventBus.Publish(serverDestroyObject.DestroyObject);
+    }
+
+    public void OnServerHighestThreatUpdate(ServerHighestThreatUpdate serverHighestThreatUpdate)
+    {
+        _worldStateEventBus.Publish(serverHighestThreatUpdate.ThreatData);
+    }
+
+    public void OnServerAiReaction(ServerAiReaction serverAiReaction)
+    {
+        _worldStateEventBus.Publish(serverAiReaction.AiReaction);
+    }
+
+    public void OnServerMoveSetFacing(ServerMoveSetFacing serverMoveSetFacing)
+    {
+        _worldStateEventBus.Publish(serverMoveSetFacing.MovementUpdate);
+    }
+
+    public void OnServerAttackStartInfo(ServerAttackStartInfo serverAttackStartInfo)
+    {
+        _worldStateEventBus.Publish(serverAttackStartInfo.AttackStartInfo);
+    }
+
+    public void OnServerAttackStopInfo(ServerAttackStopInfo serverAttackStopInfo)
+    {
+        _worldStateEventBus.Publish(serverAttackStopInfo.AttackStopInfo);
+    }
+
+    public void OnServerThreatClear(ServerThreatClear serverThreatClear)
+    {
+        _worldStateEventBus.Publish(serverThreatClear.ThreatClear);
+    }
 }

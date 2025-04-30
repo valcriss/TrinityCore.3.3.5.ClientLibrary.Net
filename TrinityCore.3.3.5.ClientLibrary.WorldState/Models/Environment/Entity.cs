@@ -5,13 +5,14 @@ namespace TrinityCore._3._3._5.ClientLibrary.WorldState.Models.Environment;
 public class Entity
 {
     public ulong Guid { get; set; }
+    public bool IsAttacking { get; set; } = false;
+    public ulong? TargetGuid { get; set; } = null;
     public TypeId ObjectType { get; set; }
-
     public Dictionary<UpdateFields, uint> Values { get; set; } = new();
-
     public MovementInfo Movement { get; set; } = new();
-
     public MonsterMoveData? MonsterMoveData { get; set; }
+    public ThreatData? ThreatData { get; set; } = null;
+    public AiReaction? AiReaction { get; set; } = null;
 
     public void UpdateValues(Dictionary<UpdateFields, uint> values)
     {
@@ -22,12 +23,16 @@ public class Entity
                 Values[pair.Key] = pair.Value;
     }
 
+    public void UpdateMovement(MovementUpdate movementUpdate)
+    {
+        Movement.MovementLiving = movementUpdate.MovementLiving;
+    }
+
     public void UpdateMovement(MovementInfo movement)
     {
         if (movement.MovementLiving != null)
         {
             Movement.MovementLiving = movement.MovementLiving;
-            Movement.MovementLiving.Position = null;
         }
 
         if (movement.MovementPosition != null)
@@ -36,7 +41,6 @@ public class Entity
             Movement.MovementPosition.TransportGuid = movement.MovementPosition.TransportGuid;
             Movement.MovementPosition.Position = movement.MovementPosition.Position;
             Movement.MovementPosition.TransportPosition = movement.MovementPosition.TransportPosition;
-            Movement.MovementPosition.Position = null;
         }
 
         if (movement.MovementStationary != null)
@@ -50,5 +54,32 @@ public class Entity
     public void UpdateMove(MonsterMoveData monsterMoveData)
     {
         MonsterMoveData = monsterMoveData;
+    }
+
+    public void UpdateThreat(ThreatData threatData)
+    {
+        ThreatData = threatData;
+    }
+
+    public void UpdateAiReaction(AiReaction aiReaction)
+    {
+        AiReaction = aiReaction;
+    }
+
+    public void UpdateAttackStart(AttackStartInfo attackStartInfo)
+    {
+        IsAttacking = true;
+        TargetGuid = attackStartInfo.TargetGuid;
+    }
+
+    public void UpdateAttackStop(AttackStopInfo attackStopInfo)
+    {
+        IsAttacking = false;
+        TargetGuid = null;
+    }
+
+    public void ClearThreat()
+    {
+        ThreatData = null;
     }
 }

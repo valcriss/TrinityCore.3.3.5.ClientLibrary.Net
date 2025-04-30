@@ -1,4 +1,5 @@
 ﻿using TrinityCore._3._3._5.ClientLibrary.Network.Core.Readers;
+using TrinityCore._3._3._5.ClientLibrary.Shared.Enums;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Enums;
 
 namespace TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Network;

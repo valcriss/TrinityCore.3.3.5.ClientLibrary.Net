@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Enums;
+namespace TrinityCore._3._3._5.ClientLibrary.Shared.Enums;
 
 [SuppressMessage("Design", "CA1069:Les valeurs enum ne doivent pas être dupliquées", Justification = "Mixed CMSG and SMSG")]
 public enum WorldCommands : uint

@@ -2,6 +2,7 @@
 using TrinityCore._3._3._5.ClientLibrary.Network.Core;
 using TrinityCore._3._3._5.ClientLibrary.Network.Core.Parsers;
 using TrinityCore._3._3._5.ClientLibrary.Network.Core.Writers;
+using TrinityCore._3._3._5.ClientLibrary.Shared.Enums;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Enums;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Handlers;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages;
@@ -136,6 +137,15 @@ public class WorldNetworkClient : IDisposable
         _eventBus.Subscribe<ServerProficiency>(WorldCommands.SMSG_SET_PROFICIENCY, _playerStateHandler.OnServerProficiency);
         _eventBus.Subscribe<ServerUpdateObjectInfo>(WorldCommands.SMSG_UPDATE_OBJECT, _environmentStateHandler.OnServerUpdateObjectInfo);
         _eventBus.Subscribe<ServerMonsterMove>(WorldCommands.SMSG_MONSTER_MOVE, _environmentStateHandler.OnServerMonsterMove);
+        _eventBus.Subscribe<ServerSpellGo>(WorldCommands.SMSG_SPELL_GO, _environmentStateHandler.OnServerSpellGo);
+        _eventBus.Subscribe<ServerQuestGiverStatusMultiple>(WorldCommands.SMSG_QUESTGIVER_STATUS_MULTIPLE, _environmentStateHandler.OnServerQuestGiverStatusMultiple);
+        _eventBus.Subscribe<ServerDestroyObject>(WorldCommands.SMSG_DESTROY_OBJECT, _environmentStateHandler.OnServerDestroyObject);
+        _eventBus.Subscribe<ServerHighestThreatUpdate>(WorldCommands.SMSG_HIGHEST_THREAT_UPDATE, _environmentStateHandler.OnServerHighestThreatUpdate);
+        _eventBus.Subscribe<ServerAiReaction>(WorldCommands.SMSG_AI_REACTION, _environmentStateHandler.OnServerAiReaction);
+        _eventBus.Subscribe<ServerMoveSetFacing>(WorldCommands.MSG_MOVE_SET_FACING, _environmentStateHandler.OnServerMoveSetFacing);
+        _eventBus.Subscribe<ServerAttackStartInfo>(WorldCommands.SMSG_ATTACKSTART, _environmentStateHandler.OnServerAttackStartInfo);
+        _eventBus.Subscribe<ServerAttackStopInfo>(WorldCommands.SMSG_ATTACKSTOP, _environmentStateHandler.OnServerAttackStopInfo);
+        _eventBus.Subscribe<ServerThreatClear>(WorldCommands.SMSG_THREAT_CLEAR, _environmentStateHandler.OnServerThreatClear);
     }
 
     private void ReleaseEventBus()
@@ -170,5 +180,14 @@ public class WorldNetworkClient : IDisposable
         _eventBus.Unsubscribe<ServerProficiency>(WorldCommands.SMSG_SET_PROFICIENCY, _playerStateHandler.OnServerProficiency);
         _eventBus.Unsubscribe<ServerUpdateObjectInfo>(WorldCommands.SMSG_UPDATE_OBJECT, _environmentStateHandler.OnServerUpdateObjectInfo);
         _eventBus.Unsubscribe<ServerMonsterMove>(WorldCommands.SMSG_MONSTER_MOVE, _environmentStateHandler.OnServerMonsterMove);
+        _eventBus.Unsubscribe<ServerSpellGo>(WorldCommands.SMSG_SPELL_GO, _environmentStateHandler.OnServerSpellGo);
+        _eventBus.Unsubscribe<ServerQuestGiverStatusMultiple>(WorldCommands.SMSG_QUESTGIVER_STATUS_MULTIPLE, _environmentStateHandler.OnServerQuestGiverStatusMultiple);
+        _eventBus.Unsubscribe<ServerDestroyObject>(WorldCommands.SMSG_DESTROY_OBJECT, _environmentStateHandler.OnServerDestroyObject);
+        _eventBus.Unsubscribe<ServerHighestThreatUpdate>(WorldCommands.SMSG_HIGHEST_THREAT_UPDATE, _environmentStateHandler.OnServerHighestThreatUpdate);
+        _eventBus.Unsubscribe<ServerAiReaction>(WorldCommands.SMSG_AI_REACTION, _environmentStateHandler.OnServerAiReaction);
+        _eventBus.Unsubscribe<ServerMoveSetFacing>(WorldCommands.MSG_MOVE_SET_FACING, _environmentStateHandler.OnServerMoveSetFacing);
+        _eventBus.Unsubscribe<ServerAttackStartInfo>(WorldCommands.SMSG_ATTACKSTART, _environmentStateHandler.OnServerAttackStartInfo);
+        _eventBus.Unsubscribe<ServerAttackStopInfo>(WorldCommands.SMSG_ATTACKSTOP, _environmentStateHandler.OnServerAttackStopInfo);
+        _eventBus.Unsubscribe<ServerThreatClear>(WorldCommands.SMSG_THREAT_CLEAR, _environmentStateHandler.OnServerThreatClear);
     }
 }

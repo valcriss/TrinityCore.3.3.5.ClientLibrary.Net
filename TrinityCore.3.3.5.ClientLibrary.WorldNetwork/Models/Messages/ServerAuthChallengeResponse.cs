@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using TrinityCore._3._3._5.ClientLibrary.Network.Core.Packets;
 using TrinityCore._3._3._5.ClientLibrary.Network.Core.Tools;
+using TrinityCore._3._3._5.ClientLibrary.Shared.Enums;
 using TrinityCore._3._3._5.ClientLibrary.Shared.Security;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Enums;
 using HashAlgorithm = TrinityCore._3._3._5.ClientLibrary.Shared.Security.HashAlgorithm;

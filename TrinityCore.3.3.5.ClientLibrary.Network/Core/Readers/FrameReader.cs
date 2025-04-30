@@ -48,31 +48,40 @@ public class FrameReader<TCommands> where TCommands : struct, Enum
         // tant qu'on a au moins 4 octets pour length+opcode
         while (_headerReader.ReadHeader(_buffer))
         {
-            if (_buffer.Count < _headerReader.ExpectedPayloadLength + _headerReader.HeaderLength)
-                break;
-
-            byte[] payload = _buffer.Skip(_headerReader.HeaderLength).Take(_headerReader.ExpectedPayloadLength).ToArray();
-
-            if (_headerReader.IsValid)
+            try
             {
-                RawPacket<TCommands> packet = new(_headerReader.Command, payload);
+                if (_buffer.Count < _headerReader.ExpectedPayloadLength + _headerReader.HeaderLength)
+                    break;
 
-                if (_compressedCommandsMap.TryGetValue(packet.Opcode, out TCommands uncompressedCommand))
+                byte[] payload = _buffer.Skip(_headerReader.HeaderLength).Take(_headerReader.ExpectedPayloadLength).ToArray();
+
+                if (_headerReader.IsValid)
                 {
-                    packet.Opcode = uncompressedCommand;
-                    packet.Payload = packet.Payload.Decompress();
+                    RawPacket<TCommands> packet = new(_headerReader.Command, payload);
+
+                    if (_compressedCommandsMap.TryGetValue(packet.Opcode, out TCommands uncompressedCommand))
+                    {
+                        packet.Opcode = uncompressedCommand;
+                        packet.Payload = packet.Payload.Decompress();
+                    }
+
+                    PacketExtracted?.Invoke(packet);
                 }
-
-                PacketExtracted?.Invoke(packet);
+                else
+                {
+                    Log.Verbose($"Invalid packet received: {BitConverter.ToString(_buffer.ToArray())}");
+                }
             }
-            else
+            catch (Exception e)
             {
-                Log.Verbose($"Invalid packet received: {BitConverter.ToString(_buffer.ToArray())}");
+                Log.Error($"Error processing buffer: {_headerReader.Command} {e.Message}");
             }
-
-            lock (_lock)
+            finally
             {
-                _buffer.RemoveRange(0, _headerReader.ExpectedPayloadLength + _headerReader.HeaderLength);
+                lock (_lock)
+                {
+                    _buffer.RemoveRange(0, _headerReader.ExpectedPayloadLength + _headerReader.HeaderLength);
+                } 
             }
         }
     }

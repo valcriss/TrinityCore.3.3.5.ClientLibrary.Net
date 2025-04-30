@@ -131,7 +131,7 @@ public class ConnectionManager : IDisposable
         }
         catch (Exception ex)
         {
-            Log.Error(ex.Message);
+            Log.Error("ConnectionManager ReceiveLoopAsync :"+ex.Message);
         }
         finally
         {
@@ -158,7 +158,7 @@ public class ConnectionManager : IDisposable
         catch (Exception ex)
         {
             // log ou gestion d'erreur et potentiellement déclencher Disconnected
-            Log.Error(ex.Message);
+            Log.Error("ConnectionManager SendAsync :"+ex.Message);
             Disconnected?.Invoke();
         }
     }
