@@ -47,7 +47,6 @@ public class FrameReader<TCommands> where TCommands : struct, Enum
     {
         // tant qu'on a au moins 4 octets pour length+opcode
         while (_headerReader.ReadHeader(_buffer))
-        {
             try
             {
                 if (_buffer.Count < _headerReader.ExpectedPayloadLength + _headerReader.HeaderLength)
@@ -64,7 +63,7 @@ public class FrameReader<TCommands> where TCommands : struct, Enum
                         packet.Opcode = uncompressedCommand;
                         packet.Payload = packet.Payload.Decompress();
                     }
-                    
+
                     PacketExtracted?.Invoke(packet);
                 }
                 else
@@ -81,8 +80,7 @@ public class FrameReader<TCommands> where TCommands : struct, Enum
                 lock (_lock)
                 {
                     _buffer.RemoveRange(0, _headerReader.ExpectedPayloadLength + _headerReader.HeaderLength);
-                } 
+                }
             }
-        }
     }
 }

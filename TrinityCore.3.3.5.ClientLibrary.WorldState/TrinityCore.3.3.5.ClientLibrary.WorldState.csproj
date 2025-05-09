@@ -9,7 +9,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\TrinityCore.3.3.5.ClientLibrary.Dbc\TrinityCore.3.3.5.ClientLibrary.Dbc.csproj"/>
-        <ProjectReference Include="..\TrinityCore.3.3.5.ClientLibrary.Network\TrinityCore.3.3.5.ClientLibrary.Network.csproj" />
+        <ProjectReference Include="..\TrinityCore.3.3.5.ClientLibrary.Network\TrinityCore.3.3.5.ClientLibrary.Network.csproj"/>
         <ProjectReference Include="..\TrinityCore.3.3.5.ClientLibrary.Shared\TrinityCore.3.3.5.ClientLibrary.Shared.csproj"/>
     </ItemGroup>
 

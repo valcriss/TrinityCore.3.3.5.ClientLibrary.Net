@@ -6,11 +6,11 @@ namespace TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages.States
 
 public class ServerAttackStopInfo : ParsedPacket<WorldCommands>
 {
-    public AttackStopInfo AttackStopInfo { get; set; } = new();
-
     public ServerAttackStopInfo(byte[]? data = null) : base(WorldCommands.SMSG_ATTACKSTOP, data)
     {
     }
+
+    public AttackStopInfo AttackStopInfo { get; set; } = new();
 
     public static ServerAttackStopInfo Parse(RawPacket<WorldCommands> rawPacket)
     {
@@ -21,6 +21,7 @@ public class ServerAttackStopInfo : ParsedPacket<WorldCommands>
             packet.AttackStopInfo.TargetGuid = packet.ReadPackedGuid();
             packet.AttackStopInfo.IsDead = packet.ReadUInt32() > 0;
         }
+
         return packet;
     }
 }

@@ -11,8 +11,8 @@ public class ConnectionManager : IDisposable
 {
     private readonly string _host;
     private readonly int _port;
-    private Socket? _socket;
     private CancellationTokenSource? _cts;
+    private Socket? _socket;
 
     public ConnectionManager(string host, int port)
     {
@@ -55,12 +55,12 @@ public class ConnectionManager : IDisposable
             throw new InvalidOperationException("Déjà connecté.");
 
         _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        
+
         // Résolution du nom d'hôte en adresse IP
         IPHostEntry hostEntry = await Dns.GetHostEntryAsync(_host);
-        IPAddress ipAddress = hostEntry.AddressList.FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork) 
-                             ?? throw new InvalidOperationException("Impossible de résoudre l'adresse IP.");
-        
+        IPAddress ipAddress = hostEntry.AddressList.FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork)
+                              ?? throw new InvalidOperationException("Impossible de résoudre l'adresse IP.");
+
         // Connexion au serveur
         await _socket.ConnectAsync(ipAddress, _port);
 
@@ -80,10 +80,7 @@ public class ConnectionManager : IDisposable
 
         if (_socket != null)
         {
-            if (_socket.Connected)
-            {
-                _socket.Shutdown(SocketShutdown.Both);
-            }
+            if (_socket.Connected) _socket.Shutdown(SocketShutdown.Both);
             _socket.Close();
             _socket = null;
         }
@@ -131,7 +128,7 @@ public class ConnectionManager : IDisposable
         }
         catch (Exception ex)
         {
-            Log.Error("ConnectionManager ReceiveLoopAsync :"+ex.Message);
+            Log.Error("ConnectionManager ReceiveLoopAsync :" + ex.Message);
         }
         finally
         {
@@ -158,7 +155,7 @@ public class ConnectionManager : IDisposable
         catch (Exception ex)
         {
             // log ou gestion d'erreur et potentiellement déclencher Disconnected
-            Log.Error("ConnectionManager SendAsync :"+ex.Message);
+            Log.Error("ConnectionManager SendAsync :" + ex.Message);
             Disconnected?.Invoke();
         }
     }

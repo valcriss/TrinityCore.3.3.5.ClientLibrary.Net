@@ -8,7 +8,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\TrinityCore.3.3.5.ClientLibrary.AuthNetwork\TrinityCore.3.3.5.ClientLibrary.AuthNetwork.csproj"/>
         <ProjectReference Include="..\TrinityCore.3.3.5.ClientLibrary.Network\TrinityCore.3.3.5.ClientLibrary.Network.csproj"/>
+        <ProjectReference Include="..\TrinityCore.3.3.5.ClientLibrary.WorldNetwork\TrinityCore.3.3.5.ClientLibrary.WorldNetwork.csproj"/>
     </ItemGroup>
 
 </Project>

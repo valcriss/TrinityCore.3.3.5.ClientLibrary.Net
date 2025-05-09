@@ -28,7 +28,6 @@ public class EnvironmentState : State
         WorldStateEventBus.Register<AttackStartInfo>(attackStartInfo => EntitiesCollection.UpdateAttackStart(attackStartInfo));
         WorldStateEventBus.Register<AttackStopInfo>(attackStopInfo => EntitiesCollection.UpdateAttackStop(attackStopInfo));
         WorldStateEventBus.Register<ThreatClear>(threatClear => EntitiesCollection.ClearThreat(threatClear));
-
     }
 
     protected override void UnregisterWorldStateBusEvents()

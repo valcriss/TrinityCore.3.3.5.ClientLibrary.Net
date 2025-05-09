@@ -16,17 +16,17 @@ public class SpellGoInfo
     public List<ulong> HitTargets { get; set; } = [];
     public List<ulong> MissTargets { get; set; } = [];
     public List<SpellMissInfo> MissStatus { get; set; } = [];
-    
+
     // Informations de destination
     public Coord? TargetPosition { get; set; }
     public ulong TargetGUID { get; set; }
 
     // Informations de puissance
-    public SpellPowerData PowerData { get; set; } = new ();
-    
+    public SpellPowerData PowerData { get; set; } = new();
+
     // Informations d'item
     public uint ItemTargetEntry { get; set; }
-    
+
     // Targets prédits
     public List<ulong> PredictedTargets { get; set; } = [];
 
@@ -35,9 +35,9 @@ public class SpellGoInfo
     public bool HasTargetMask { get; set; }
     public bool HasExtraTargets { get; set; }
     public uint TargetMask { get; set; }
-    
+
     public List<SpellExtraTarget> ExtraTargets { get; set; } = [];
-    
+
     public override string ToString()
     {
         return $"SpellGo: ID={SpellID}, Caster={CasterGUID:X16}, Targets={HitTargets.Count}";

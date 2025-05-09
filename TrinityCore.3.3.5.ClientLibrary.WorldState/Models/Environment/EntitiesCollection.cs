@@ -21,10 +21,7 @@ public class EntitiesCollection
 
     private void ProcessUpdateOutOfRange(UpdateOutOfRange updateOutOfRange)
     {
-        foreach (ulong outOfRangeGuid in updateOutOfRange.OutOfRangeGuids)
-        {
-            DestroyEntity(outOfRangeGuid);
-        }
+        foreach (ulong outOfRangeGuid in updateOutOfRange.OutOfRangeGuids) DestroyEntity(outOfRangeGuid);
     }
 
     private void ProcessUpdateObjectValues(UpdateObjectValues updateObjectValues)
@@ -54,10 +51,7 @@ public class EntitiesCollection
 
     public void UpdateQuestGiverMultiple(QuestGiverInfoMultiple questGiverInfoMultiple)
     {
-        foreach (QuestGiverInfo questGiverInfo in questGiverInfoMultiple.Infos)
-        {
-            UpdateQuestGiver(questGiverInfo);
-        }
+        foreach (QuestGiverInfo questGiverInfo in questGiverInfoMultiple.Infos) UpdateQuestGiver(questGiverInfo);
     }
 
     public void UpdateQuestGiver(QuestGiverInfo questGiverInfo)
@@ -67,6 +61,7 @@ public class EntitiesCollection
             Log.Warn($" QuestGiverInfo {questGiverInfo.QuestGiverGuid} not found in entities collection.");
             return;
         }
+
         QuestGiverInfo? existingQuestGiverInfo = _questGivers.FirstOrDefault(q => q.QuestGiverGuid == questGiverInfo.QuestGiverGuid);
         if (existingQuestGiverInfo != null)
         {
@@ -76,6 +71,7 @@ public class EntitiesCollection
                 _questGivers.Remove(existingQuestGiverInfo);
                 return;
             }
+
             Log.Debug($"Updating quest giver: {questGiverInfo.QuestGiverGuid} with status {questGiverInfo.Status}");
             existingQuestGiverInfo.Status = questGiverInfo.Status;
             return;
@@ -92,17 +88,13 @@ public class EntitiesCollection
     {
         DestroyEntity(destroyObject.Guid);
     }
-    
+
     private void DestroyEntity(ulong guid)
     {
         if (_entities.Remove(guid, out Entity? entity))
-        {
             _questGivers.RemoveAll(q => q.QuestGiverGuid == guid);
-        }
         else
-        {
             Log.Warn($"DestroyEntity {guid} not found in entities collection.");
-        }
     }
 
     public void UpdateThreat(ThreatData threatData)
@@ -112,6 +104,7 @@ public class EntitiesCollection
             Log.Warn($"Entity {threatData.Guid} not found in entities collection for threat update.");
             return;
         }
+
         entity.UpdateThreat(threatData);
     }
 
@@ -122,6 +115,7 @@ public class EntitiesCollection
             Log.Warn($"Entity {aiReaction.Guid} not found in entities collection for ai reaction update.");
             return;
         }
+
         entity.UpdateAiReaction(aiReaction);
     }
 
@@ -132,6 +126,7 @@ public class EntitiesCollection
             Log.Warn($"Entity {movementUpdate.Guid} not found in entities collection for movement update.");
             return;
         }
+
         entity.UpdateMovement(movementUpdate);
     }
 
@@ -142,6 +137,7 @@ public class EntitiesCollection
             Log.Warn($"Entity {attackStartInfo.Guid} not found in entities collection for attack start update.");
             return;
         }
+
         entity.UpdateAttackStart(attackStartInfo);
     }
 
@@ -152,6 +148,7 @@ public class EntitiesCollection
             Log.Warn($"Entity {attackStopInfo.Guid} not found in entities collection for attack stop update.");
             return;
         }
+
         entity.UpdateAttackStop(attackStopInfo);
     }
 
@@ -162,6 +159,7 @@ public class EntitiesCollection
             Log.Warn($"Entity {threatClear.Guid} not found in entities collection for threat clear.");
             return;
         }
+
         entity.ClearThreat();
     }
 }

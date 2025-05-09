@@ -6,7 +6,7 @@ namespace TrinityCore._3._3._5.ClientLibrary.WorldState.Models.Environment;
 
 public class MovementUpdate
 {
-    public UInt64 Guid { get; set; }
+    public ulong Guid { get; set; }
     public MovementLiving MovementLiving { get; set; } = new();
 
     public static MovementUpdate Parse(ParsedPacket<WorldCommands> parsedPacket)
@@ -32,9 +32,7 @@ public class MovementUpdate
         if (movementUpdate.MovementLiving.MovementFlags.HasFlag(MovementTypes.SWIMMING) || movementUpdate.MovementLiving.MovementFlags.HasFlag(MovementTypes.FLYING)
                                                                                         || movementUpdate.MovementLiving.ExtraMovementFlags.HasFlag(MovementOptions
                                                                                             .ALWAYS_ALLOW_PITCHING))
-        {
             movementUpdate.MovementLiving.Pitch = parsedPacket.ReadSingle();
-        }
 
         movementUpdate.MovementLiving.FallTime = parsedPacket.ReadUInt32();
 
@@ -46,10 +44,7 @@ public class MovementUpdate
             movementUpdate.MovementLiving.JumpXySpeed = parsedPacket.ReadSingle();
         }
 
-        if (movementUpdate.MovementLiving.MovementFlags.HasFlag(MovementTypes.SPLINE_ELEVATION))
-        {
-            movementUpdate.MovementLiving.SplineElevation = parsedPacket.ReadSingle();
-        }
+        if (movementUpdate.MovementLiving.MovementFlags.HasFlag(MovementTypes.SPLINE_ELEVATION)) movementUpdate.MovementLiving.SplineElevation = parsedPacket.ReadSingle();
 
         return movementUpdate;
     }

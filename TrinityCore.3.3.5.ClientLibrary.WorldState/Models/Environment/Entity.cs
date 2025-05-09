@@ -5,14 +5,14 @@ namespace TrinityCore._3._3._5.ClientLibrary.WorldState.Models.Environment;
 public class Entity
 {
     public ulong Guid { get; set; }
-    public bool IsAttacking { get; set; } = false;
-    public ulong? TargetGuid { get; set; } = null;
+    public bool IsAttacking { get; set; }
+    public ulong? TargetGuid { get; set; }
     public TypeId ObjectType { get; set; }
     public Dictionary<UpdateFields, uint> Values { get; set; } = new();
     public MovementInfo Movement { get; set; } = new();
     public MonsterMoveData? MonsterMoveData { get; set; }
-    public ThreatData? ThreatData { get; set; } = null;
-    public AiReaction? AiReaction { get; set; } = null;
+    public ThreatData? ThreatData { get; set; }
+    public AiReaction? AiReaction { get; set; }
 
     public void UpdateValues(Dictionary<UpdateFields, uint> values)
     {
@@ -30,10 +30,7 @@ public class Entity
 
     public void UpdateMovement(MovementInfo movement)
     {
-        if (movement.MovementLiving != null)
-        {
-            Movement.MovementLiving = movement.MovementLiving;
-        }
+        if (movement.MovementLiving != null) Movement.MovementLiving = movement.MovementLiving;
 
         if (movement.MovementPosition != null)
         {

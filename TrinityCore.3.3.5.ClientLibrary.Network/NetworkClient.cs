@@ -72,10 +72,7 @@ public class NetworkClient<TCommands> : IDisposable where TCommands : struct, En
     private void OnPacketExtracted(RawPacket<TCommands> rawPacket)
     {
         ParsedPacket<TCommands>? packet = _packetParser.Parse(rawPacket);
-        if (packet != null && packet.IsDataLeft())
-        {
-            Log.Warn($"Data left in packet {packet.Command} : {packet.DataLeftLength()} bytes");
-        }
+        if (packet != null && packet.IsDataLeft()) Log.Warn($"Data left in packet {packet.Command} : {packet.DataLeftLength()} bytes");
         if (packet != null) _eventBus.Dispatch(packet.Command, packet.GetType(), packet);
     }
 

@@ -1,6 +1,5 @@
 ﻿using TrinityCore._3._3._5.ClientLibrary.Network.Core.Registry;
 using TrinityCore._3._3._5.ClientLibrary.Shared.Enums;
-using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Enums;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages.States.Account;
 using TrinityCore._3._3._5.ClientLibrary.WorldNetwork.Models.Messages.States.Environment;
@@ -85,7 +84,7 @@ public class WorldOpcodeRegistryFactory
         registry.Register(WorldCommands.SMSG_ATTACKSTART, ServerAttackStartInfo.Parse);
         registry.Register(WorldCommands.SMSG_ATTACKSTOP, ServerAttackStopInfo.Parse);
         registry.Register(WorldCommands.SMSG_THREAT_CLEAR, ServerThreatClear.Parse);
-        
+
         return registry;
     }
 }
