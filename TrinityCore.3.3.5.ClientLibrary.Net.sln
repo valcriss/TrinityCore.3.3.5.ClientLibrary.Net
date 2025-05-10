@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrinityCore.3.3.5.ClientLibrary.Net", "TrinityCore.3.3.5.ClientLibrary.Net\TrinityCore.3.3.5.ClientLibrary.Net.csproj", "{CF705F35-B021-4E38-8715-158DCBA561E2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrinityCore.3.3.5.ClientLibrary.Network", "TrinityCore.3.3.5.ClientLibrary.Network\TrinityCore.3.3.5.ClientLibrary.Network.csproj", "{AB95B351-EC1B-418D-BFEC-8FBD7EA0E8BD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrinityCore.3.3.5.ClientLibrary.Pathfinding", "TrinityCore.3.3.5.ClientLibrary.Pathfinding\TrinityCore.3.3.5.ClientLibrary.Pathfinding.csproj", "{63AFAC43-6D98-42E5-A4FE-122E7953AFC6}"
@@ -35,16 +33,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Map", "Map", "{16AD78D2-DAD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrinityCore.3.3.5.ClientLibrary.Map", "TrinityCore.3.3.5.ClientLibrary.Map\TrinityCore.3.3.5.ClientLibrary.Map.csproj", "{D59778DE-5795-4AB7-9EFF-AF211814E953}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{B857CC01-AF4C-4290-AE4D-46FA0619452A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CF705F35-B021-4E38-8715-158DCBA561E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CF705F35-B021-4E38-8715-158DCBA561E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CF705F35-B021-4E38-8715-158DCBA561E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CF705F35-B021-4E38-8715-158DCBA561E2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AB95B351-EC1B-418D-BFEC-8FBD7EA0E8BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AB95B351-EC1B-418D-BFEC-8FBD7EA0E8BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB95B351-EC1B-418D-BFEC-8FBD7EA0E8BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -102,6 +98,8 @@ Global
 		{4FA65DEA-7EFD-4F2F-A2B0-56198CBD594B} = {CEDE8735-623E-49D3-AC54-65324CA01E58}
 		{64E9C474-B97B-42C3-A9A5-2EDC6A8C8172} = {CEDE8735-623E-49D3-AC54-65324CA01E58}
 		{D59778DE-5795-4AB7-9EFF-AF211814E953} = {16AD78D2-DAD1-4B72-90B6-3DA63F1BAB7A}
+		{A6D51996-A726-4B63-9D27-5C92EA5CDCDA} = {B857CC01-AF4C-4290-AE4D-46FA0619452A}
+		{63AFAC43-6D98-42E5-A4FE-122E7953AFC6} = {16AD78D2-DAD1-4B72-90B6-3DA63F1BAB7A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3790F25A-8FF3-431B-9989-EBD5C954F217}
