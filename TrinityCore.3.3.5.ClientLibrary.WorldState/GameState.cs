@@ -7,15 +7,15 @@ public class GameState
 {
     private readonly WorldStateEventBus _worldStateEventBus;
 
-    public GameState(DbcCollection dbcCollection)
+    public GameState()
     {
         _worldStateEventBus = new WorldStateEventBus();
-        Server = new ServerState(_worldStateEventBus, dbcCollection);
-        Account = new AccountState(_worldStateEventBus, dbcCollection);
-        Social = new SocialState(_worldStateEventBus, dbcCollection);
-        Player = new PlayerState(_worldStateEventBus, dbcCollection);
-        Entities = new EntitiesState(_worldStateEventBus, dbcCollection);
-        Environment = new EnvironmentState(_worldStateEventBus, dbcCollection);
+        Server = new ServerState(_worldStateEventBus);
+        Account = new AccountState(_worldStateEventBus);
+        Social = new SocialState(_worldStateEventBus);
+        Player = new PlayerState(_worldStateEventBus);
+        Entities = new EntitiesState(_worldStateEventBus);
+        Environment = new EnvironmentState(_worldStateEventBus);
     }
 
     public ServerState Server { get; private set; }

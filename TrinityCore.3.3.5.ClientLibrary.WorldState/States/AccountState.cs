@@ -6,7 +6,7 @@ namespace TrinityCore._3._3._5.ClientLibrary.WorldState.States;
 
 public class AccountState : State
 {
-    public AccountState(WorldStateEventBus worldStateEventBus, DbcCollection dbcCollection) : base(worldStateEventBus, dbcCollection)
+    public AccountState(WorldStateEventBus worldStateEventBus) : base(worldStateEventBus)
     {
     }
 

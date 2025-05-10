@@ -8,7 +8,7 @@ namespace TrinityCore._3._3._5.ClientLibrary.WorldState.States;
 
 public class EntitiesState : State
 {
-    public EntitiesState(WorldStateEventBus worldStateEventBus, DbcCollection dbcCollection) : base(worldStateEventBus, dbcCollection)
+    public EntitiesState(WorldStateEventBus worldStateEventBus) : base(worldStateEventBus)
     {
     }
 

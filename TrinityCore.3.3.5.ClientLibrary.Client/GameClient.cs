@@ -11,11 +11,10 @@ namespace TrinityCore._3._3._5.ClientLibrary.Client;
 
 public class GameClient
 {
+    public GameState GameState => _gameState;
     private readonly AuthNetworkClient _authNetworkClient;
-    private readonly DbcCollection _dbcCollection;
     private readonly GameState _gameState;
     private readonly string _username;
-    private string _password;
     private WorldNetworkClient? _worldNetworkClient;
 
     public GameClient(
@@ -26,9 +25,8 @@ public class GameClient
     )
     {
         _username = username;
-        _password = password;
-        _dbcCollection = new DbcCollection(dbcPath);
-        _gameState = new GameState(_dbcCollection);
+        DbcDirectory.Initialize(dbcPath);
+        _gameState = new GameState();
         _authNetworkClient = new AuthNetworkClient(host, AuthPort, username, password);
     }
 
@@ -77,4 +75,6 @@ public class GameClient
         _authNetworkClient.Dispose();
         return true;
     }
+    
+    
 }
