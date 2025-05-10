@@ -1,6 +1,4 @@
-﻿using TrinityCore._3._3._5.ClientLibrary.Dbc;
-
-namespace TrinityCore._3._3._5.ClientLibrary.WorldState.Core;
+﻿namespace TrinityCore._3._3._5.ClientLibrary.WorldState.Core;
 
 public abstract class State : IDisposable
 {

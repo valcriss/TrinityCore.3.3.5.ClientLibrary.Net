@@ -1,13 +1,12 @@
-﻿namespace TrinityCore._3._3._5.ClientLibrary.Dbc.Attributes
-{
-    [AttributeUsage(AttributeTargets.Class)]
-    internal class DbcFileAttribute : Attribute
-    {
-        public string Filename { get; set; }
+﻿namespace TrinityCore._3._3._5.ClientLibrary.Dbc.Attributes;
 
-        public DbcFileAttribute(string filename)
-        {
-            Filename = filename;
-        }
+[AttributeUsage(AttributeTargets.Class)]
+internal class DbcFileAttribute : Attribute
+{
+    public DbcFileAttribute(string filename)
+    {
+        Filename = filename;
     }
+
+    public string Filename { get; set; }
 }

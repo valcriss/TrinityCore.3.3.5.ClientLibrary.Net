@@ -20,6 +20,41 @@ public struct Coord
         Z = z;
     }
 
+    public static float Distance(Coord a, Coord b)
+    {
+        return MathF.Sqrt(MathF.Pow(a.X - b.X, 2) + MathF.Pow(a.Y - b.Y, 2) + MathF.Pow(a.Z - b.Z, 2));
+    }
+
+    public static float DistanceSquared(Coord a, Coord b)
+    {
+        return MathF.Pow(a.X - b.X, 2) + MathF.Pow(a.Y - b.Y, 2) + MathF.Pow(a.Z - b.Z, 2);
+    }
+
+    public static Coord operator -(Coord a, Coord b)
+    {
+        return new Coord(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
+    }
+
+    public static Coord operator +(Coord a, Coord b)
+    {
+        return new Coord(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
+    }
+
+    public static Coord operator *(Coord a, float b)
+    {
+        return new Coord(a.X * b, a.Y * b, a.Z * b);
+    }
+
+    public static Coord operator /(Coord a, float b)
+    {
+        return new Coord(a.X / b, a.Y / b, a.Z / b);
+    }
+
+    public float Length()
+    {
+        return MathF.Sqrt(X * X + Y * Y + Z * Z);
+    }
+
     public override string ToString()
     {
         return $"X:{X}, Y:{Y}, Z:{Z}";

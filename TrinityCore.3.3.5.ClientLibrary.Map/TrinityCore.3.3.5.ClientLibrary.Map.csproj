@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <RootNamespace>TrinityCore._3._3._5.ClientLibrary.Map</RootNamespace>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\TrinityCore.3.3.5.ClientLibrary.Shared\TrinityCore.3.3.5.ClientLibrary.Shared.csproj"/>
+    </ItemGroup>
+
+</Project>

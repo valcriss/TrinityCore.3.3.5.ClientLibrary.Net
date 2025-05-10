@@ -31,6 +31,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dbc", "Dbc", "{CEDE8735-623
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrinityCore.3.3.5.ClientLibrary.Dbc.Tests", "TrinityCore.3.3.5.ClientLibrary.Dbc.Tests\TrinityCore.3.3.5.ClientLibrary.Dbc.Tests.csproj", "{64E9C474-B97B-42C3-A9A5-2EDC6A8C8172}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Map", "Map", "{16AD78D2-DAD1-4B72-90B6-3DA63F1BAB7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrinityCore.3.3.5.ClientLibrary.Map", "TrinityCore.3.3.5.ClientLibrary.Map\TrinityCore.3.3.5.ClientLibrary.Map.csproj", "{D59778DE-5795-4AB7-9EFF-AF211814E953}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +85,10 @@ Global
 		{64E9C474-B97B-42C3-A9A5-2EDC6A8C8172}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64E9C474-B97B-42C3-A9A5-2EDC6A8C8172}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64E9C474-B97B-42C3-A9A5-2EDC6A8C8172}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D59778DE-5795-4AB7-9EFF-AF211814E953}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D59778DE-5795-4AB7-9EFF-AF211814E953}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D59778DE-5795-4AB7-9EFF-AF211814E953}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D59778DE-5795-4AB7-9EFF-AF211814E953}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -93,6 +101,7 @@ Global
 		{03BBC77A-07E2-4392-9555-E0A579DA47DE} = {B89267A4-45A4-4A51-9316-BDAD31A21C07}
 		{4FA65DEA-7EFD-4F2F-A2B0-56198CBD594B} = {CEDE8735-623E-49D3-AC54-65324CA01E58}
 		{64E9C474-B97B-42C3-A9A5-2EDC6A8C8172} = {CEDE8735-623E-49D3-AC54-65324CA01E58}
+		{D59778DE-5795-4AB7-9EFF-AF211814E953} = {16AD78D2-DAD1-4B72-90B6-3DA63F1BAB7A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3790F25A-8FF3-431B-9989-EBD5C954F217}

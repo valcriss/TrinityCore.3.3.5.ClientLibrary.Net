@@ -1,12 +1,11 @@
 using TrinityCore._3._3._5.ClientLibrary.Dbc.Attributes;
+using TrinityCore._3._3._5.ClientLibrary.Dbc.Enums;
 
-namespace TrinityCore._3._3._5.ClientLibrary.Dbc.Definitions
+namespace TrinityCore._3._3._5.ClientLibrary.Dbc.Definitions;
+
+[DbcFile("TerrainTypeSounds.dbc")]
+public class TerrainTypeSounds : DbcFile
 {
-    [DbcFile("TerrainTypeSounds.dbc")]
-    public class TerrainTypeSounds : DbcFile
-    {
-        [DbcColumn(0, Enums.DbcColumnDataType.Int32)]
-        public int Id { get; set; }
-
-     }
+    [DbcColumn(0, DbcColumnDataType.Int32)]
+    public int Id { get; set; }
 }

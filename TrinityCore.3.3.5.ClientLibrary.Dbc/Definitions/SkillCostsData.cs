@@ -1,18 +1,17 @@
 using TrinityCore._3._3._5.ClientLibrary.Dbc.Attributes;
+using TrinityCore._3._3._5.ClientLibrary.Dbc.Enums;
 
-namespace TrinityCore._3._3._5.ClientLibrary.Dbc.Definitions
+namespace TrinityCore._3._3._5.ClientLibrary.Dbc.Definitions;
+
+[DbcFile("SkillCostsData.dbc")]
+public class SkillCostsData : DbcFile
 {
-    [DbcFile("SkillCostsData.dbc")]
-    public class SkillCostsData : DbcFile
-    {
-        [DbcColumn(0, Enums.DbcColumnDataType.Int32)]
-        public int Id { get; set; }
+    [DbcColumn(0, DbcColumnDataType.Int32)]
+    public int Id { get; set; }
 
-        [DbcColumn(1, Enums.DbcColumnDataType.Int32)]
-        public int SkillCostsId { get; set; }
+    [DbcColumn(1, DbcColumnDataType.Int32)]
+    public int SkillCostsId { get; set; }
 
-        [DbcColumn(2, Enums.DbcColumnDataType.ArrayOfUint32, 3)]
-        public int[]? Cost { get; set; }
-
-     }
+    [DbcColumn(2, DbcColumnDataType.ArrayOfUint32, 3)]
+    public int[]? Cost { get; set; }
 }

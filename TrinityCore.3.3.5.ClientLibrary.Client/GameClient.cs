@@ -11,9 +11,7 @@ namespace TrinityCore._3._3._5.ClientLibrary.Client;
 
 public class GameClient
 {
-    public GameState GameState => _gameState;
     private readonly AuthNetworkClient _authNetworkClient;
-    private readonly GameState _gameState;
     private readonly string _username;
     private WorldNetworkClient? _worldNetworkClient;
 
@@ -26,9 +24,11 @@ public class GameClient
     {
         _username = username;
         DbcDirectory.Initialize(dbcPath);
-        _gameState = new GameState();
+        GameState = new GameState();
         _authNetworkClient = new AuthNetworkClient(host, AuthPort, username, password);
     }
+
+    public GameState GameState { get; }
 
     public int AuthPort { get; set; } = 3724;
     public int WorldPort { get; set; } = 8085;
@@ -46,7 +46,7 @@ public class GameClient
         Realm? realm = SelectRealm(realms);
         if (realm == null) throw new WorldSelectionException("No realm selected");
 
-        _worldNetworkClient = new WorldNetworkClient(realm.Address, WorldPort, realm.Id, _username, authenticationResult.SessionKey.ToByteArray(), _gameState.GetWorldStateEventBus());
+        _worldNetworkClient = new WorldNetworkClient(realm.Address, WorldPort, realm.Id, _username, authenticationResult.SessionKey.ToByteArray(), GameState.GetWorldStateEventBus());
 
         bool worldConnectionResult = await _worldNetworkClient.AuthenticateAsync();
         if (!worldConnectionResult) throw new WorldConnexionFailedException("World connection failed");
@@ -75,6 +75,4 @@ public class GameClient
         _authNetworkClient.Dispose();
         return true;
     }
-    
-    
 }
