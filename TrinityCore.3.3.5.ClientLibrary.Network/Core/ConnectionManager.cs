@@ -126,9 +126,9 @@ public class ConnectionManager : IDisposable
         {
             // cancellation demandée, on sort proprement
         }
-        catch (Exception ex)
+        catch (SocketException)
         {
-            Log.Error("ConnectionManager ReceiveLoopAsync :" + ex.Message);
+            // cancellation demandée, on sort proprement
         }
         finally
         {
