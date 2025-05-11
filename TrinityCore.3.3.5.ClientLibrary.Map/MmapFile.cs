@@ -80,6 +80,11 @@ public class MmapFile
     {
         int tileX = (int)(32 - position.X / TileWidth);
         int tileY = (int)(32 - position.Y / TileHeight);
+        return GetMmapTileKeyFromValues(tileX, tileY);
+    }
+
+    public string GetMmapTileKeyFromValues(int tileX, int tileY)
+    {
         return MapId.ToString("000") + tileX.ToString("00") + tileY.ToString("00");
     }
 

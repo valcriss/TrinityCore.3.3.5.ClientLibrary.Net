@@ -46,18 +46,30 @@ public class MmapMeshPoly
         return _center.Value;
     }
 
-    public List<MmapMeshPoly> GetNeighbors(MmapTileFile? tile)
+    public List<NeighbourTileMeshPoly> GetNeighbors(List<MmapTileFile> tiles)
     {
-        if (tile == null) return new List<MmapMeshPoly>();
-        if (FirstLink == DT_NULL_LINK) return new List<MmapMeshPoly>();
-        if (tile.Mesh == null) return new List<MmapMeshPoly>();
-        List<MmapMeshPoly> results = [];
+        List<NeighbourTileMeshPoly> results = [];
+        foreach (MmapTileFile tile in tiles) results.AddRange(GetNeighbors(tile));
+
+        return results;
+    }
+
+    public List<NeighbourTileMeshPoly> GetNeighbors(MmapTileFile? tile)
+    {
+        if (tile == null) return new List<NeighbourTileMeshPoly>();
+        if (FirstLink == DT_NULL_LINK) return new List<NeighbourTileMeshPoly>();
+        if (tile.Mesh == null) return new List<NeighbourTileMeshPoly>();
+        List<NeighbourTileMeshPoly> results = [];
         for (uint i = FirstLink; i != DT_NULL_LINK; i = tile.Mesh.Links[(int)i].Next)
         {
             long neighbourRef = tile.Mesh.Links[(int)i].Reference;
             uint polyIndex = GetPolyRefIndex(neighbourRef);
             MmapMeshPoly nextPoly = tile.Mesh.Polys[(int)polyIndex];
-            results.Add(nextPoly);
+            results.Add(new NeighbourTileMeshPoly
+            {
+                Tile = tile,
+                Poly = nextPoly
+            });
         }
 
         return results;
