@@ -71,26 +71,26 @@ public class MmapFile
         return list;
     }
 
-    public string GetMmapTileKeyFromVector3(float x, float y, float z)
+    public string GetMmapTileKeyFromCoord(float x, float y, float z)
     {
-        return GetMmapTileKeyFromVector3(new Coord(x, y, z));
+        return GetMmapTileKeyFromCoord(new Coord(x, y, z));
     }
 
-    public string GetMmapTileKeyFromVector3(Coord position)
+    public string GetMmapTileKeyFromCoord(Coord position)
     {
         int tileX = (int)(32 - position.X / TileWidth);
         int tileY = (int)(32 - position.Y / TileHeight);
         return MapId.ToString("000") + tileX.ToString("00") + tileY.ToString("00");
     }
 
-    public MmapTileFile? GetMmapTileFileFromVector3(float x, float y, float z)
+    public MmapTileFile? GetMmapTileFileFromCoord(float x, float y, float z)
     {
-        return GetMmapTileFileFromVector3(new Coord(x, y, z));
+        return GetMmapTileFileFromCoord(new Coord(x, y, z));
     }
 
-    public MmapTileFile? GetMmapTileFileFromVector3(Coord position)
+    public MmapTileFile? GetMmapTileFileFromCoord(Coord position)
     {
-        string key = GetMmapTileKeyFromVector3(position);
+        string key = GetMmapTileKeyFromCoord(position);
         return GetMmapTileFileFromKey(key);
     }
 

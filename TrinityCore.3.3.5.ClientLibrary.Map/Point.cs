@@ -73,6 +73,11 @@ public class Point
         return Equals((Point)obj);
     }
 
+    public static double Distance(Point a, Point b)
+    {
+        return Math.Sqrt(Math.Pow(a.X - b.X, 2) + Math.Pow(a.Y - b.Y, 2) + Math.Pow(a.Z - b.Z, 2));
+    }
+
     public override int GetHashCode()
     {
         return HashCode.Combine(X, Y, Z);
